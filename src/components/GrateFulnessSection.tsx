@@ -20,7 +20,7 @@ const GrateFulnessSection = () => {
         bg={"blue.400"}
         color={"white"}
         // border={"1px solid blue.400"}
-        placeholder="Here is a sample placeholder"
+        placeholder="Write down thing you have been grateful for today"
         h="23%"
         resize={"none"}
       />

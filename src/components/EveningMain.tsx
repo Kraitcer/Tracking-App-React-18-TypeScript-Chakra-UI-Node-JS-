@@ -4,6 +4,7 @@ import ProgressSlider from "./ProgressSlider";
 import CheckBoxList from "./CheckBoxList";
 import SectionButton from "./SectionButton";
 import GrateFulnessSection from "./GrateFulnessSection";
+import VotesCastHabits from "./VotesCastHabits";
 
 const EveningMain = () => {
   const HeadingNames = {
@@ -28,8 +29,12 @@ const EveningMain = () => {
         <GrateFulnessSection />
       </Box>
       {/* <Divider orientation={"vertical"} size="20px" colorScheme="pink" /> */}
-      <Box w="280px" h={727} bg="red.400" flexDirection={"column"}>
+      <Box w="280px" h={727} flexDirection={"column"}>
         <SectionHeader HeadingName={HeadingNames.votesCast} />
+        <VotesCastHabits submitBtnName={"1"} />
+        <VotesCastHabits submitBtnName={"2"} />
+        <VotesCastHabits submitBtnName={"3"} />
+        <SectionButton buttonName="Tracking Habits on Master Plan" />
         <SectionHeader HeadingName={HeadingNames.yourEngine} />
         <SectionHeader HeadingName={HeadingNames.doodles} />
       </Box>
