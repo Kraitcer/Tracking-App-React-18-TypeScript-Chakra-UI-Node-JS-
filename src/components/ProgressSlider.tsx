@@ -21,7 +21,9 @@ const ProgressSlider = ({ sliderName }: Props) => {
   const [sliderValue, setSliderValue] = useState(70);
   return (
     <Flex flexDirection={"column"} marginBottom={2}>
-      <Text marginBottom={1}>{sliderName}</Text>
+      <Text fontSize={18} marginBottom={1}>
+        {sliderName}
+      </Text>
       <HStack>
         <Slider
           //   aria-label="slider-ex-1"

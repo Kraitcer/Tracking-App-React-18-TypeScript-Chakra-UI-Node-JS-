@@ -5,6 +5,7 @@ import CheckBoxList from "./CheckBoxList";
 import SectionButton from "./SectionButton";
 import GrateFulnessSection from "./GrateFulnessSection";
 import VotesCastHabits from "./VotesCastHabits";
+import IconSlider from "./your_engine_section/IconSlider";
 
 const EveningMain = () => {
   const HeadingNames = {
@@ -35,6 +36,7 @@ const EveningMain = () => {
         <VotesCastHabits submitBtnName={"2"} />
         <VotesCastHabits submitBtnName={"3"} />
         <SectionButton buttonName="Tracking Habits on Master Plan" />
+        <IconSlider />
         <SectionHeader HeadingName={HeadingNames.yourEngine} />
         <SectionHeader HeadingName={HeadingNames.doodles} />
       </Box>
