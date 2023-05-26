@@ -36,8 +36,8 @@ const EveningMain = () => {
         <VotesCastHabits submitBtnName={"2"} />
         <VotesCastHabits submitBtnName={"3"} />
         <SectionButton buttonName="Tracking Habits on Master Plan" />
-        <IconSlider />
         <SectionHeader HeadingName={HeadingNames.yourEngine} />
+        <IconSlider />
         <SectionHeader HeadingName={HeadingNames.doodles} />
       </Box>
     </Flex>
