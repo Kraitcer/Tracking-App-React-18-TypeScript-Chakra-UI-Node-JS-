@@ -18,7 +18,6 @@ import intellectIcon3 from "D:/Gleb Kraitser/Front End Home Work/Практик�
 import intellectIcon4 from "D:/Gleb Kraitser/Front End Home Work/Практика/TRacking App (React TypeScript )/Tracking App/src/assets/Image/EveningPage_YourEngineSection_Icons/intellect 4.svg";
 import intellectIcon5 from "D:/Gleb Kraitser/Front End Home Work/Практика/TRacking App (React TypeScript )/Tracking App/src/assets/Image/EveningPage_YourEngineSection_Icons/intellect 5.svg";
 
-import { useState } from "react";
 import SliderItself from "./SliderItself";
 
 const IconSlider = () => {
@@ -44,10 +43,10 @@ const IconSlider = () => {
     { id: 5, image: intellectIcon5 },
   ];
   return (
-    <Flex alignItems={"center"} gap={6} flexDirection={"column"}>
-      <SliderItself icons={healthIcons} />
-      <SliderItself icons={emotionIcons} />
-      <SliderItself icons={intellectIcons} />
+    <Flex alignItems={"center"} gap={1} flexDirection={"column"}>
+      <SliderItself radioSetName={"Helth"} icons={healthIcons} />
+      <SliderItself radioSetName={"Emotions"} icons={emotionIcons} />
+      <SliderItself radioSetName={"Intellect"} icons={intellectIcons} />
     </Flex>
   );
 };
