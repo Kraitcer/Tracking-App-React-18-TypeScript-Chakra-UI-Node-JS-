@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "bootstrap/dist/css/bootstrap.css";
 import { ChakraProvider } from "@chakra-ui/react";
-import { theme } from "./components/theme";
+import { theme } from "./components/themes/theme";
 
 import App from "./App";
 import "./index.css";

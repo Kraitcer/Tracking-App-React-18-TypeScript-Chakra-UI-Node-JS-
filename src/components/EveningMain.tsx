@@ -1,4 +1,4 @@
-import { Box, Button, Center, Divider, Flex } from "@chakra-ui/react";
+import { Box, Button, Center, Divider, Flex, Textarea } from "@chakra-ui/react";
 import SectionHeader from "./SectionHeader";
 import ProgressSlider from "./ProgressSlider";
 import CheckBoxList from "./CheckBoxList";
@@ -18,7 +18,7 @@ const EveningMain = () => {
   };
   return (
     <Flex justifyContent={"center"} gap={3}>
-      <Box w="280px" h={727} bg="white" flexDirection={"column"} gap={0}>
+      <Box w="280px" bg="white" flexDirection={"column"} gap={0}>
         <SectionHeader HeadingName={HeadingNames.goals} />
         <ProgressSlider sliderName={"Goals One: complited "} />
         <ProgressSlider sliderName={"Goals Two: complited "} />
@@ -30,7 +30,7 @@ const EveningMain = () => {
         <GrateFulnessSection />
       </Box>
       {/* <Divider orientation={"vertical"} size="20px" colorScheme="pink" /> */}
-      <Box w="280px" h={727} flexDirection={"column"}>
+      <Box w="280px" flexDirection={"column"}>
         <SectionHeader HeadingName={HeadingNames.votesCast} />
         <VotesCastHabits submitBtnName={"1"} />
         <VotesCastHabits submitBtnName={"2"} />
@@ -41,6 +41,17 @@ const EveningMain = () => {
           <IconSlider />
         </Box>
         <SectionHeader HeadingName={HeadingNames.doodles} />
+        <Textarea
+          variant="brandPrimary"
+          bg={"blue.200"}
+          color={"white"}
+          // border={"1px solid blue.400"}
+          placeholder="Write down some doodles"
+          //   h="23%"
+          resize={"none"}
+          marginBottom={1}
+        />
+        <SectionButton buttonName="Note Bad Time" />
       </Box>
     </Flex>
   );

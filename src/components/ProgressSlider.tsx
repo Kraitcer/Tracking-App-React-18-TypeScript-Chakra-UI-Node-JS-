@@ -39,6 +39,7 @@ const ProgressSlider = ({ sliderName }: Props) => {
           w="52px"
           colorScheme="blue"
           borderRadius={0}
+          border={"none"}
           color={"white"}
           fontSize={26}
           paddingBottom={1}

@@ -1,4 +1,4 @@
-import { Button, HStack, Input } from "@chakra-ui/react";
+import { Button, HStack, Input, baseTheme } from "@chakra-ui/react";
 import { useRef } from "react";
 
 interface Props {
@@ -25,10 +25,11 @@ const VotesCastHabits = ({ submitBtnName }: Props) => {
           marginRight={2}
           fontSize={20}
           w={2}
+          border={"none"}
         >
           {submitBtnName}
         </Button>
-        <Input ref={habitRef} width="auto"></Input>
+        <Input ref={habitRef} width="auto" variant={"baseStyle"}></Input>
       </form>
     </HStack>
   );

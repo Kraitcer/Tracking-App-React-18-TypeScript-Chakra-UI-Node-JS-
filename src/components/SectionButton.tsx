@@ -9,6 +9,7 @@ const SectionButton = ({ buttonName }: Props) => {
   return (
     <Button
       colorScheme="orange"
+      bg={"orange"}
       w="100%"
       borderRadius={0}
       color={"white"}
@@ -16,6 +17,7 @@ const SectionButton = ({ buttonName }: Props) => {
       marginBottom={3}
       marginTop={1}
       paddingBottom={1}
+      border={"none"}
     >
       {buttonName}
     </Button>

@@ -17,7 +17,7 @@ const GrateFulnessSection = () => {
       <GratefulnessRadio />
       <Textarea
         variant="brandPrimary"
-        bg={"blue.200"}
+        bg={"blue.100"}
         color={"white"}
         // border={"1px solid blue.400"}
         placeholder="Write down thing you have been grateful for today"
