@@ -6,8 +6,11 @@ import {
   RadioGroup,
   Image,
   VStack,
+  background,
 } from "@chakra-ui/react";
 import { useState } from "react";
+import { radioAnatomy } from "@chakra-ui/anatomy";
+import { createMultiStyleConfigHelpers } from "@chakra-ui/react";
 
 interface Icons {
   id: number;
@@ -18,20 +21,42 @@ interface Props {
   icons: Icons[];
   radioSetName: string;
 }
+const { definePartsStyle, defineMultiStyleConfig } =
+  createMultiStyleConfigHelpers(radioAnatomy.keys);
+
+const outline = definePartsStyle({
+  control: {
+    border: "4px solid",
+    borderColor: "gray.300",
+
+    // Let's also provide dark mode alternatives
+    _dark: {
+      borderColor: "gray.600",
+    },
+  },
+});
+
+const radioTheme = defineMultiStyleConfig({
+  variants: { outline },
+});
 
 const SliderItself = ({ icons, radioSetName }: Props) => {
   const [radioValue, setRadioValue] = useState<string>("0");
 
   return (
-    <Flex alignItems={"center"} gap={3}>
+    <Flex alignItems={"center"} gap={2}>
       <RadioGroup defaultValue="0" onChange={(value) => setRadioValue(value)}>
         <Flex
           flexDirection={"column"}
-          bg={"blue.100"}
-          color={"white"}
           padding={3}
           paddingTop={1}
-          borderRadius={10}
+          borderRadius={2}
+          borderTop={"1px solid"}
+          borderRight={"1px solid"}
+          borderBottom={"3px solid"}
+          borderLeft={"3px solid"}
+          borderColor={"blue.100"}
+          color={"blue.400"}
         >
           <Text marginBottom={1}>{radioSetName}</Text>
           <HStack>
@@ -47,10 +72,7 @@ const SliderItself = ({ icons, radioSetName }: Props) => {
         w={"50px"}
         h={"50px"}
         src={icons[parseInt(radioValue)].image}
-        // border={"4px solid"}
         borderRadius={0}
-        // borderColor={"blue.100"}
-        // padding={1}
       />
     </Flex>
   );

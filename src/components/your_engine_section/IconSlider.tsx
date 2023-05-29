@@ -43,7 +43,7 @@ const IconSlider = () => {
     { id: 5, image: intellectIcon5 },
   ];
   return (
-    <Flex alignItems={"center"} gap={1} flexDirection={"column"}>
+    <Flex alignItems={"center"} gap={2} flexDirection={"column"}>
       <SliderItself radioSetName={"Helth"} icons={healthIcons} />
       <SliderItself radioSetName={"Emotions"} icons={emotionIcons} />
       <SliderItself radioSetName={"Intellect"} icons={intellectIcons} />
