@@ -1,4 +1,4 @@
-import { Box, Button, Center, Divider, Flex, Textarea } from "@chakra-ui/react";
+import { Box, Flex, Textarea } from "@chakra-ui/react";
 import SectionHeader from "./SectionHeader";
 import ProgressSlider from "./ProgressSlider";
 import CheckBoxList from "./CheckBoxList";
@@ -18,18 +18,32 @@ const EveningMain = () => {
   };
   return (
     <Flex justifyContent={"center"} gap={3}>
-      <Box w="280px" bg="white" flexDirection={"column"} gap={0}>
+      <Box w="280px" h={727} bg="white" flexDirection={"column"} gap={0}>
         <SectionHeader HeadingName={HeadingNames.goals} />
         <ProgressSlider sliderName={"Goals One: complited "} />
         <ProgressSlider sliderName={"Goals Two: complited "} />
         <ProgressSlider sliderName={"Goals Three: complited "} />
         <SectionButton buttonName="Choose Goals For Tommorow" />
         <SectionHeader HeadingName={HeadingNames.doneList} />
-        <CheckBoxList checkboxName={"fuck"} />
+        <Box
+          w={"100%"}
+          h={"17%"}
+          border={"2px solid"}
+          borderColor={"blue.100"}
+          overflowY={"scroll"}
+          marginBottom={2}
+          padding={2}
+        >
+          <CheckBoxList checkboxName={"fuck"} />
+          <CheckBoxList checkboxName={"fuck"} />
+          <CheckBoxList checkboxName={"fuck"} />
+          <CheckBoxList checkboxName={"fuck"} />
+          <CheckBoxList checkboxName={"fuck"} />
+          <CheckBoxList checkboxName={"fuck"} />
+        </Box>
         <SectionHeader HeadingName={HeadingNames.gratefulness} />
         <GrateFulnessSection />
       </Box>
-      {/* <Divider orientation={"vertical"} size="20px" colorScheme="pink" /> */}
       <Box w="280px" flexDirection={"column"}>
         <SectionHeader HeadingName={HeadingNames.votesCast} />
         <VotesCastHabits submitBtnName={"1"} />
@@ -45,9 +59,7 @@ const EveningMain = () => {
           variant="brandPrimary"
           bg={"blue.200"}
           color={"white"}
-          // border={"1px solid blue.400"}
           placeholder="Write down some doodles"
-          //   h="23%"
           resize={"none"}
           marginBottom={1}
         />
