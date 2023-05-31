@@ -25,12 +25,9 @@ const ProgressSlider = ({ sliderName }: Props) => {
         {sliderName}
       </Text>
       <HStack>
-        <Slider
-          //   aria-label="slider-ex-1"
-          onChange={(val) => setSliderValue(val)}
-        >
+        <Slider onChange={(val) => setSliderValue(val)}>
           <SliderTrack h={8} bg={"orange.200"} borderRadius={0}>
-            <SliderFilledTrack />
+            <SliderFilledTrack bg={"blue.200"} />
           </SliderTrack>
           <SliderThumb bg={"orange"} boxSize={8} rounded={"none"} w={1} />
         </Slider>

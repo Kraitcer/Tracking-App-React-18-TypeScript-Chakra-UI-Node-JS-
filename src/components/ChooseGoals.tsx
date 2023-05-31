@@ -5,9 +5,10 @@ import SmartSurvey from "./SmartSurvey";
 
 interface Props {
   setHeaderName: () => void;
+  specificHeaderName: string;
 }
 
-const ChooseGoals = ({ setHeaderName }: Props) => {
+const ChooseGoals = ({ setHeaderName, specificHeaderName }: Props) => {
   const [ferstDisplay, setFerstDisplay] = useState("");
   const [secondDisplay, setSecondDisplay] = useState("none");
   const [goalsName, setGoalsName] = useState("");
