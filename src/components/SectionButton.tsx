@@ -1,11 +1,11 @@
 import { Button } from "@chakra-ui/react";
-import React from "react";
 
 interface Props {
   buttonName: string;
+  onClick: () => void;
 }
 
-const SectionButton = ({ buttonName }: Props) => {
+const SectionButton = ({ buttonName, onClick }: Props) => {
   return (
     <Button
       colorScheme="orange"
@@ -18,6 +18,7 @@ const SectionButton = ({ buttonName }: Props) => {
       marginTop={1}
       paddingBottom={1}
       border={"none"}
+      onClick={onClick}
     >
       {buttonName}
     </Button>
