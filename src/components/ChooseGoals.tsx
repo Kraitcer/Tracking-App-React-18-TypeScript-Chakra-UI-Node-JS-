@@ -24,11 +24,46 @@ import {
   TableCaption,
 } from "@chakra-ui/react";
 import { useRef, useState } from "react";
-import CheckboxComponent from "./CheckBoxCounter";
 import SectionButton from "./SectionButton";
+import CustomCheckbox from "./CustomCheckBox";
+import SetTime from "./SetTime";
+
+interface CheckboxData {
+  specific: boolean;
+  measureble: boolean;
+  actionable: boolean;
+  reasonable: boolean;
+  timeBound: boolean;
+  //   goalTime: number;
+  //   goalName: string;
+}
 
 const ChooseGoals = () => {
+  const [checkboxData, setCheckboxData] = useState<CheckboxData>({
+    specific: false,
+    measureble: false,
+    actionable: false,
+    reasonable: false,
+    timeBound: false,
+  });
   const [goalsName, setGoalsName] = useState("");
+  const handleCheckboxChange = (checkboxName: keyof CheckboxData) => {
+    setCheckboxData((prevData) => ({
+      ...prevData,
+      [checkboxName]: !prevData[checkboxName] as boolean,
+    }));
+  };
+
+  const handleSubmit = () => {
+    const { specific, measureble, actionable, reasonable, timeBound } =
+      checkboxData;
+    if (specific && measureble && actionable && reasonable && timeBound) {
+      // All checkboxes are checked, perform your desired action here
+      console.log("Submitting data:", checkboxData);
+    } else {
+      console.log("Please check all checkboxes");
+    }
+  };
   const goalRef = useRef<HTMLInputElement | null>(null);
   const timeRef = useRef<HTMLInputElement | null>(null);
   const steps = [
@@ -42,7 +77,7 @@ const ChooseGoals = () => {
   });
   return (
     <>
-      <Flex flexDirection={"column"}>
+      <Flex flexDirection={"column"} alignItems={"center"}>
         <form
           onSubmit={(event) => {
             event.preventDefault();
@@ -56,7 +91,7 @@ const ChooseGoals = () => {
               AT
             </Text>
             <Input ref={timeRef} type="time" w={"150px"} />
-            <Input ref={goalRef} placeholder="I WILL" w={"90%"} />
+            <Input ref={goalRef} placeholder="I WILL" />
           </Flex>
           <Flex>
             <Text textTransform={"uppercase"}>
@@ -69,20 +104,32 @@ const ChooseGoals = () => {
             <Tbody fontSize={26} textTransform={"uppercase"}>
               <Tr>
                 <Td
-                  width={"1px"}
                   bg={"white"}
                   color={"blue.400"}
                   border={"1px solid"}
                   borderColor={"blue.400"}
-                  alignItems="center"
+                  textAlign={"center"}
                 >
                   s
                 </Td>
-                <Td bg={"blue.400"} color={"white"}>
+                <Td
+                  bg={"blue.400"}
+                  color={"white"}
+                  borderTop={"1px solid"}
+                  borderTopColor={"blue.400"}
+                >
                   specific
                 </Td>
-                <Td>
-                  <Checkbox size={"lg"}></Checkbox>
+                <Td
+                  border={"1px solid"}
+                  borderColor={"blue.400"}
+                  paddingTop={1}
+                  paddingBottom={1}
+                >
+                  <CustomCheckbox
+                    checked={checkboxData.specific}
+                    onChange={() => handleCheckboxChange("specific")}
+                  />
                 </Td>
               </Tr>
               <Tr>
@@ -92,14 +139,23 @@ const ChooseGoals = () => {
                   color={"blue.400"}
                   border={"1px solid"}
                   borderColor={"blue.400"}
+                  textAlign={"center"}
                 >
                   m
                 </Td>
                 <Td bg={"blue.400"} color={"white"}>
                   measureble
                 </Td>
-                <Td>
-                  <Checkbox size={"lg"}></Checkbox>
+                <Td
+                  paddingTop={1}
+                  paddingBottom={1}
+                  border={"1px solid"}
+                  borderColor={"blue.400"}
+                >
+                  <CustomCheckbox
+                    checked={checkboxData.measureble}
+                    onChange={() => handleCheckboxChange("measureble")}
+                  />
                 </Td>
               </Tr>
               <Tr>
@@ -109,14 +165,23 @@ const ChooseGoals = () => {
                   color={"blue.400"}
                   border={"1px solid"}
                   borderColor={"blue.400"}
+                  textAlign={"center"}
                 >
                   a
                 </Td>
                 <Td bg={"blue.400"} color={"white"}>
                   actionable
                 </Td>
-                <Td>
-                  <Checkbox size={"lg"}></Checkbox>
+                <Td
+                  paddingTop={1}
+                  paddingBottom={1}
+                  border={"1px solid"}
+                  borderColor={"blue.400"}
+                >
+                  <CustomCheckbox
+                    checked={checkboxData.actionable}
+                    onChange={() => handleCheckboxChange("actionable")}
+                  />
                 </Td>
               </Tr>
               <Tr>
@@ -126,14 +191,23 @@ const ChooseGoals = () => {
                   color={"blue.400"}
                   border={"1px solid"}
                   borderColor={"blue.400"}
+                  textAlign={"center"}
                 >
                   r
                 </Td>
                 <Td bg={"blue.400"} color={"white"}>
                   reasonable
                 </Td>
-                <Td>
-                  <Checkbox size={"lg"}></Checkbox>
+                <Td
+                  paddingTop={1}
+                  paddingBottom={1}
+                  border={"1px solid"}
+                  borderColor={"blue.400"}
+                >
+                  <CustomCheckbox
+                    checked={checkboxData.reasonable}
+                    onChange={() => handleCheckboxChange("reasonable")}
+                  />
                 </Td>
               </Tr>
               <Tr>
@@ -143,24 +217,36 @@ const ChooseGoals = () => {
                   color={"blue.400"}
                   border={"1px solid"}
                   borderColor={"blue.400"}
+                  textAlign={"center"}
                 >
                   t
                 </Td>
-                <Td bg={"blue.400"} color={"white"}>
+                <Td
+                  bg={"blue.400"}
+                  color={"white"}
+                  borderBottom={"1px solid"}
+                  borderBottomColor={"blue.400"}
+                >
                   time-bound
                 </Td>
-                <Td>
-                  <Checkbox size={"lg"}></Checkbox>
+                <Td
+                  paddingTop={1}
+                  paddingBottom={1}
+                  border={"1px solid"}
+                  borderColor={"blue.400"}
+                >
+                  <CustomCheckbox
+                    checked={checkboxData.timeBound}
+                    onChange={() => handleCheckboxChange("timeBound")}
+                  />
                 </Td>
               </Tr>
             </Tbody>
           </Table>
         </TableContainer>
       </Flex>
-      <SectionButton
-        buttonName="Next Goal"
-        onClick={() => console.log("fuck")}
-      />
+
+      <SectionButton buttonName="Next Goal" onClick={handleSubmit} />
       <Box marginTop={2} marginBottom={2}>
         <Stepper index={activeStep}>
           {steps.map((step, index) => (

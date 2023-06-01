@@ -20,13 +20,7 @@ export default function AllModal({ isOpen, onClose }: Props) {
   const headers = ["CHOSE GOALS FOR TOMORROW", "DOES YOUR GOAL :"];
   return (
     <>
-      <Modal
-        // colorScheme="blue"
-        size={"lg"}
-        isOpen={isOpen}
-        onClose={onClose}
-        isCentered
-      >
+      <Modal size={"lg"} isOpen={isOpen} onClose={onClose} isCentered>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>{headers[headerName]}</ModalHeader>

@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import "bootstrap/dist/css/bootstrap.css";
 import { ChakraProvider } from "@chakra-ui/react";
 import { theme } from "./components/themes/theme";
+// import icons from "react-icons/md";
 
 import App from "./App";
 import "./index.css";
