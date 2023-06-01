@@ -17,12 +17,7 @@ interface Props {
 }
 export default function AllModal({ isOpen, onClose }: Props) {
   const [headerName, setHeaderName] = useState(0);
-  const goalname = "";
-  const headers = [
-    "CHOSE GOALS FOR TOMORROW",
-    "DOES YOUR GOAL :",
-    `DOES YOUR GOAL : "${goalname}"`,
-  ];
+  const headers = ["CHOSE GOALS FOR TOMORROW", "DOES YOUR GOAL :"];
   return (
     <>
       <Modal
@@ -37,12 +32,7 @@ export default function AllModal({ isOpen, onClose }: Props) {
           <ModalHeader>{headers[headerName]}</ModalHeader>
           <ModalCloseButton onClick={() => setHeaderName(0)} />
           <ModalBody>
-            <ChooseGoals
-              setHeaderName={() => {
-                setHeaderName(1);
-              }}
-              specificHeaderName={goalname}
-            />
+            <ChooseGoals />
           </ModalBody>
         </ModalContent>
       </Modal>
