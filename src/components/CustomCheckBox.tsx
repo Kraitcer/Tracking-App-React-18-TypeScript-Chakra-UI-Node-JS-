@@ -4,11 +4,13 @@ import { FaQuestion, FaExclamation } from "react-icons/fa";
 
 interface Props {
   onChange: () => void;
+  //   refresher: boolean;
   checked: boolean;
 }
 
 const CustomCheckbox = ({ onChange, checked }: Props) => {
   const [isChecked, setIsChecked] = useState(false);
+  //   setIsChecked(refresher);
 
   const handleCheckboxChange = () => {
     onChange();

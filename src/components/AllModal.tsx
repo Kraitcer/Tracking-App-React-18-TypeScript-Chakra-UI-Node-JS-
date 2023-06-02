@@ -23,7 +23,7 @@ export default function AllModal({ isOpen, onClose }: Props) {
           <ModalHeader>{headers[headerName]}</ModalHeader>
           <ModalCloseButton onClick={() => setHeaderName(0)} />
           <ModalBody>
-            <ChooseGoals />
+            <ChooseGoals onClose={onClose} />
           </ModalBody>
         </ModalContent>
       </Modal>

@@ -38,8 +38,12 @@ interface CheckboxData {
   goalName: string;
 }
 
-const ChooseGoals = () => {
-  const [checkboxData, setCheckboxData] = useState<CheckboxData>({
+interface Props {
+  onClose: () => void;
+}
+
+const ChooseGoals = ({ onClose }: Props) => {
+  const checkboxDataObject = {
     specific: false,
     measureble: false,
     actionable: false,
@@ -47,7 +51,10 @@ const ChooseGoals = () => {
     timeBound: false,
     goalTime: "",
     goalName: "",
-  });
+  };
+  const [checkboxData, setCheckboxData] =
+    useState<CheckboxData>(checkboxDataObject);
+  const [refreshKey, setRefreshKey] = useState(0);
   const [goalsName, setGoalsName] = useState("");
   const handleCheckboxChange = (checkboxName: keyof CheckboxData) => {
     setCheckboxData((prevData) => ({
@@ -67,17 +74,23 @@ const ChooseGoals = () => {
     index: 1,
     count: steps.length,
   });
+  function stepThree() {
+    setCheckboxData(checkboxDataObject);
+    if (goalRef.current && timeRef.current) {
+      goalRef.current.value = "";
+      timeRef.current.value = "";
+    }
+    setActiveStep(3);
+    setGoalsName("");
+  }
   function stepTwo() {
-    setCheckboxData({
-      specific: false,
-      measureble: false,
-      actionable: false,
-      reasonable: false,
-      timeBound: false,
-      goalTime: "",
-      goalName: "",
-    });
+    setCheckboxData(checkboxDataObject);
     setActiveStep(2);
+    if (goalRef.current && timeRef.current) {
+      goalRef.current.value = "";
+      timeRef.current.value = "";
+    }
+    setGoalsName("");
   }
   const handleSubmit = () => {
     const {
@@ -99,7 +112,8 @@ const ChooseGoals = () => {
       goalName
     ) {
       // All checkboxes are checked, perform your desired action here
-      activeStep == 1 ? stepTwo() : setActiveStep(3);
+      setRefreshKey((prevKey) => prevKey + 1);
+      activeStep == 1 ? stepTwo() : stepThree();
       console.log(activeStep);
       console.log("Submitting data:", checkboxData);
     } else {
@@ -160,6 +174,7 @@ const ChooseGoals = () => {
                   paddingBottom={2}
                 >
                   <CustomCheckbox
+                    key={refreshKey}
                     checked={checkboxData.specific}
                     onChange={() => handleCheckboxChange("specific")}
                   />
@@ -186,6 +201,7 @@ const ChooseGoals = () => {
                   borderColor={"blue.400"}
                 >
                   <CustomCheckbox
+                    key={refreshKey}
                     checked={checkboxData.measureble}
                     onChange={() => handleCheckboxChange("measureble")}
                   />
@@ -212,6 +228,7 @@ const ChooseGoals = () => {
                   borderColor={"blue.400"}
                 >
                   <CustomCheckbox
+                    key={refreshKey}
                     checked={checkboxData.actionable}
                     onChange={() => handleCheckboxChange("actionable")}
                   />
@@ -238,6 +255,7 @@ const ChooseGoals = () => {
                   borderColor={"blue.400"}
                 >
                   <CustomCheckbox
+                    key={refreshKey}
                     checked={checkboxData.reasonable}
                     onChange={() => handleCheckboxChange("reasonable")}
                   />
@@ -269,6 +287,7 @@ const ChooseGoals = () => {
                   borderColor={"blue.400"}
                 >
                   <CustomCheckbox
+                    key={refreshKey}
                     checked={checkboxData.timeBound}
                     onChange={() => handleCheckboxChange("timeBound")}
                   />
@@ -279,7 +298,10 @@ const ChooseGoals = () => {
         </TableContainer>
       </Flex>
 
-      <SectionButton buttonName="Next Goal" onClick={handleSubmit} />
+      <SectionButton
+        buttonName={activeStep == 3 ? "Done With Goals" : "Next Goal"}
+        onClick={activeStep < 3 ? handleSubmit : onClose}
+      />
       <Box marginTop={2} marginBottom={2}>
         <Stepper index={activeStep}>
           {steps.map((step, index) => (
