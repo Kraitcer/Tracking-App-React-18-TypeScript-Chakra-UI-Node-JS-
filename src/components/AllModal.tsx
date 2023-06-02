@@ -1,13 +1,10 @@
 import {
-  Text,
   Modal,
   ModalOverlay,
   ModalContent,
   ModalHeader,
-  ModalFooter,
   ModalBody,
   ModalCloseButton,
-  Button,
 } from "@chakra-ui/react";
 import ChooseGoals from "./ChooseGoals";
 import { useState } from "react";
@@ -17,7 +14,7 @@ interface Props {
 }
 export default function AllModal({ isOpen, onClose }: Props) {
   const [headerName, setHeaderName] = useState(0);
-  const headers = ["CHOSE GOALS FOR TOMORROW", "DOES YOUR GOAL :"];
+  const headers = ["CHOSE GOALS FOR TOMORROW", "TRACK HABITS ON MASTERPLAN"];
   return (
     <>
       <Modal size={"lg"} isOpen={isOpen} onClose={onClose} isCentered>

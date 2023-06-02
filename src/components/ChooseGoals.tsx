@@ -34,8 +34,8 @@ interface CheckboxData {
   actionable: boolean;
   reasonable: boolean;
   timeBound: boolean;
-  //   goalTime: number;
-  //   goalName: string;
+  goalTime: string;
+  goalName: string;
 }
 
 const ChooseGoals = () => {
@@ -45,25 +45,17 @@ const ChooseGoals = () => {
     actionable: false,
     reasonable: false,
     timeBound: false,
+    goalTime: "",
+    goalName: "",
   });
   const [goalsName, setGoalsName] = useState("");
   const handleCheckboxChange = (checkboxName: keyof CheckboxData) => {
     setCheckboxData((prevData) => ({
       ...prevData,
-      [checkboxName]: !prevData[checkboxName] as boolean,
+      [checkboxName]: !prevData[checkboxName] as boolean | number | string,
     }));
   };
 
-  const handleSubmit = () => {
-    const { specific, measureble, actionable, reasonable, timeBound } =
-      checkboxData;
-    if (specific && measureble && actionable && reasonable && timeBound) {
-      // All checkboxes are checked, perform your desired action here
-      console.log("Submitting data:", checkboxData);
-    } else {
-      console.log("Please check all checkboxes");
-    }
-  };
   const goalRef = useRef<HTMLInputElement | null>(null);
   const timeRef = useRef<HTMLInputElement | null>(null);
   const steps = [
@@ -75,6 +67,45 @@ const ChooseGoals = () => {
     index: 1,
     count: steps.length,
   });
+  function stepTwo() {
+    setCheckboxData({
+      specific: false,
+      measureble: false,
+      actionable: false,
+      reasonable: false,
+      timeBound: false,
+      goalTime: "",
+      goalName: "",
+    });
+    setActiveStep(2);
+  }
+  const handleSubmit = () => {
+    const {
+      specific,
+      measureble,
+      actionable,
+      reasonable,
+      timeBound,
+      goalName,
+      goalTime,
+    } = checkboxData;
+    if (
+      specific &&
+      measureble &&
+      actionable &&
+      reasonable &&
+      timeBound &&
+      goalTime &&
+      goalName
+    ) {
+      // All checkboxes are checked, perform your desired action here
+      activeStep == 1 ? stepTwo() : setActiveStep(3);
+      console.log(activeStep);
+      console.log("Submitting data:", checkboxData);
+    } else {
+      console.log("Please check all checkboxes");
+    }
+  };
   return (
     <>
       <Flex flexDirection={"column"} alignItems={"center"}>
@@ -84,6 +115,8 @@ const ChooseGoals = () => {
             if (goalRef.current && timeRef.current) {
               setGoalsName(goalRef.current.value);
             }
+            handleCheckboxChange("goalName");
+            handleCheckboxChange("goalTime");
           }}
         >
           <Flex gap={4} justifyContent={"center"} alignItems={"center"}>
@@ -123,8 +156,8 @@ const ChooseGoals = () => {
                 <Td
                   border={"1px solid"}
                   borderColor={"blue.400"}
-                  paddingTop={1}
-                  paddingBottom={1}
+                  paddingTop={2}
+                  paddingBottom={2}
                 >
                   <CustomCheckbox
                     checked={checkboxData.specific}
@@ -147,8 +180,8 @@ const ChooseGoals = () => {
                   measureble
                 </Td>
                 <Td
-                  paddingTop={1}
-                  paddingBottom={1}
+                  paddingTop={2}
+                  paddingBottom={2}
                   border={"1px solid"}
                   borderColor={"blue.400"}
                 >
@@ -173,8 +206,8 @@ const ChooseGoals = () => {
                   actionable
                 </Td>
                 <Td
-                  paddingTop={1}
-                  paddingBottom={1}
+                  paddingTop={2}
+                  paddingBottom={2}
                   border={"1px solid"}
                   borderColor={"blue.400"}
                 >
@@ -199,8 +232,8 @@ const ChooseGoals = () => {
                   reasonable
                 </Td>
                 <Td
-                  paddingTop={1}
-                  paddingBottom={1}
+                  paddingTop={2}
+                  paddingBottom={2}
                   border={"1px solid"}
                   borderColor={"blue.400"}
                 >
@@ -230,8 +263,8 @@ const ChooseGoals = () => {
                   time-bound
                 </Td>
                 <Td
-                  paddingTop={1}
-                  paddingBottom={1}
+                  paddingTop={2}
+                  paddingBottom={2}
                   border={"1px solid"}
                   borderColor={"blue.400"}
                 >
