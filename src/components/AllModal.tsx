@@ -11,8 +11,9 @@ import { useState } from "react";
 interface Props {
   onClose: () => void;
   isOpen: boolean;
+  children: React.ReactNode;
 }
-export default function AllModal({ isOpen, onClose }: Props) {
+export default function AllModal({ isOpen, onClose, children }: Props) {
   const [headerName, setHeaderName] = useState(0);
   const headers = ["CHOSE GOALS FOR TOMORROW", "TRACK HABITS ON MASTERPLAN"];
   return (
@@ -22,9 +23,7 @@ export default function AllModal({ isOpen, onClose }: Props) {
         <ModalContent>
           <ModalHeader>{headers[headerName]}</ModalHeader>
           <ModalCloseButton onClick={() => setHeaderName(0)} />
-          <ModalBody>
-            <ChooseGoals onClose={onClose} />
-          </ModalBody>
+          <ModalBody>{children}</ModalBody>
         </ModalContent>
       </Modal>
     </>

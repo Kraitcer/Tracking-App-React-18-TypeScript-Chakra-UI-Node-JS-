@@ -1,6 +1,4 @@
 import {
-  Button,
-  Checkbox,
   Flex,
   Input,
   Table,
@@ -10,7 +8,6 @@ import {
   Text,
   Tr,
   Step,
-  StepDescription,
   StepIcon,
   StepIndicator,
   StepNumber,
@@ -20,13 +17,11 @@ import {
   Stepper,
   useSteps,
   Box,
-  Thead,
-  TableCaption,
+  useToast,
 } from "@chakra-ui/react";
 import { useRef, useState } from "react";
 import SectionButton from "./SectionButton";
 import CustomCheckbox from "./CustomCheckBox";
-import SetTime from "./SetTime";
 
 interface CheckboxData {
   specific: boolean;
@@ -52,6 +47,8 @@ const ChooseGoals = ({ onClose }: Props) => {
     goalTime: "",
     goalName: "",
   };
+  const toast = useToast();
+  const statuses = ["success", "error", "warning", "info"];
   const [checkboxData, setCheckboxData] =
     useState<CheckboxData>(checkboxDataObject);
   const [refreshKey, setRefreshKey] = useState(0);
@@ -82,6 +79,13 @@ const ChooseGoals = ({ onClose }: Props) => {
     }
     setActiveStep(3);
     setGoalsName("");
+    toast({
+      title: "Second Goal is chosen",
+      description: "Choose Third One",
+      status: "success",
+      duration: 9000,
+      isClosable: true,
+    });
   }
   function stepTwo() {
     setCheckboxData(checkboxDataObject);
@@ -91,6 +95,13 @@ const ChooseGoals = ({ onClose }: Props) => {
       timeRef.current.value = "";
     }
     setGoalsName("");
+    toast({
+      title: "First Goal is chosen",
+      description: "Choose Second One",
+      status: "success",
+      duration: 9000,
+      isClosable: true,
+    });
   }
   const handleSubmit = () => {
     const {
@@ -114,9 +125,16 @@ const ChooseGoals = ({ onClose }: Props) => {
       // All checkboxes are checked, perform your desired action here
       setRefreshKey((prevKey) => prevKey + 1);
       activeStep == 1 ? stepTwo() : stepThree();
-      console.log(activeStep);
+      //   activeStep === 3 ? onClose : return;
       console.log("Submitting data:", checkboxData);
     } else {
+      toast({
+        title: "SMART Checkboxes are requared",
+        description: "Please check all checkboxes",
+        status: "warning",
+        duration: 9000,
+        isClosable: true,
+      });
       console.log("Please check all checkboxes");
     }
   };
@@ -137,7 +155,13 @@ const ChooseGoals = ({ onClose }: Props) => {
             <Text fontSize={30} marginTop={3}>
               AT
             </Text>
-            <Input ref={timeRef} type="time" w={"150px"} />
+            <Input
+              ref={timeRef}
+              type="time"
+              w={"150px"}
+              padding={1}
+              fontSize={20}
+            />
             <Input ref={goalRef} placeholder="I WILL" />
           </Flex>
           <Flex>
@@ -300,7 +324,7 @@ const ChooseGoals = ({ onClose }: Props) => {
 
       <SectionButton
         buttonName={activeStep == 3 ? "Done With Goals" : "Next Goal"}
-        onClick={activeStep < 3 ? handleSubmit : onClose}
+        onClick={handleSubmit}
       />
       <Box marginTop={2} marginBottom={2}>
         <Stepper index={activeStep}>

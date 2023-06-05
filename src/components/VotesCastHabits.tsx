@@ -17,7 +17,7 @@ const VotesCastHabits = ({ submitBtnName }: Props) => {
       >
         <Button
           type="submit"
-          colorScheme="orange"
+          bg="orange.300"
           rounded={"none"}
           paddingBottom={1}
           color={"white"}

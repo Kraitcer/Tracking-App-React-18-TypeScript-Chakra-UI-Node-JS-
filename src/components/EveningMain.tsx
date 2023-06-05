@@ -7,9 +7,12 @@ import GrateFulnessSection from "./GrateFulnessSection";
 import VotesCastHabits from "./VotesCastHabits";
 import IconSlider from "./your_engine_section/IconSlider";
 import AllModal from "./AllModal";
+import ChooseGoals from "./ChooseGoals";
+import TrackHabitsOnMasterPlan from "./TrackHabitsOnMasterPlan";
 
 const EveningMain = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+
   const HeadingNames = {
     goals: "goals",
     doneList: "done list",
@@ -20,7 +23,16 @@ const EveningMain = () => {
   };
   return (
     <>
-      <AllModal isOpen={isOpen} onClose={onClose} />
+      <AllModal
+        isOpen={isOpen}
+        onClose={onClose}
+        children={<ChooseGoals onClose={onClose} />}
+      />
+      {/* <AllModal
+        isOpen={isOpen}
+        onClose={onClose}
+        children={<TrackHabitsOnMasterPlan />}
+      /> */}
       <Flex justifyContent={"center"} gap={3}>
         <Box w="280px" h={727} bg="white" flexDirection={"column"} gap={0}>
           <SectionHeader HeadingName={HeadingNames.goals} />
