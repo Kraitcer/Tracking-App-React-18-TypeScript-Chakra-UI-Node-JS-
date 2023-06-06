@@ -6,23 +6,28 @@ import {
   ModalBody,
   ModalCloseButton,
 } from "@chakra-ui/react";
-import ChooseGoals from "./ChooseGoals";
 import { useState } from "react";
-interface Props {
-  onClose: () => void;
-  isOpen: boolean;
+interface CustomModalProps {
+  title: string;
   children: React.ReactNode;
+  onOpen: boolean;
+  onClose: () => void;
 }
-export default function AllModal({ isOpen, onClose, children }: Props) {
-  const [headerName, setHeaderName] = useState(0);
-  const headers = ["CHOSE GOALS FOR TOMORROW", "TRACK HABITS ON MASTERPLAN"];
+export default function AllModal({
+  title,
+  children,
+  onOpen,
+  onClose,
+}: CustomModalProps) {
   return (
     <>
-      <Modal size={"lg"} isOpen={isOpen} onClose={onClose} isCentered>
+      <Modal size={"lg"} isOpen={onOpen} onClose={onClose} isCentered>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>{headers[headerName]}</ModalHeader>
-          <ModalCloseButton onClick={() => setHeaderName(0)} />
+          <ModalHeader textTransform={"uppercase"} fontSize={22}>
+            {title}
+          </ModalHeader>
+          <ModalCloseButton />
           <ModalBody>{children}</ModalBody>
         </ModalContent>
       </Modal>

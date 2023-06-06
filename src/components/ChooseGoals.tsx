@@ -33,11 +33,7 @@ interface CheckboxData {
   goalName: string;
 }
 
-interface Props {
-  onClose: () => void;
-}
-
-const ChooseGoals = ({ onClose }: Props) => {
+const ChooseGoals = () => {
   const checkboxDataObject = {
     specific: false,
     measureble: false,

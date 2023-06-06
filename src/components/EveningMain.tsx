@@ -9,9 +9,20 @@ import IconSlider from "./your_engine_section/IconSlider";
 import AllModal from "./AllModal";
 import ChooseGoals from "./ChooseGoals";
 import TrackHabitsOnMasterPlan from "./TrackHabitsOnMasterPlan";
+import { useState } from "react";
 
 const EveningMain = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [isOpen1, setIsOpen1] = useState(false);
+  const [isOpen2, setIsOpen2] = useState(false);
+  const [isOpen3, setIsOpen3] = useState(false);
+
+  const openModal1 = () => setIsOpen1(true);
+  const openModal2 = () => setIsOpen2(true);
+  const openModal3 = () => setIsOpen3(true);
+
+  const closeModal1 = () => setIsOpen1(false);
+  const closeModal2 = () => setIsOpen2(false);
+  const closeModal3 = () => setIsOpen3(false);
 
   const HeadingNames = {
     goals: "goals",
@@ -24,15 +35,17 @@ const EveningMain = () => {
   return (
     <>
       <AllModal
-        isOpen={isOpen}
-        onClose={onClose}
-        children={<ChooseGoals onClose={onClose} />}
+        title="chose goals for tommorow"
+        onOpen={isOpen1}
+        onClose={closeModal1}
+        children={<ChooseGoals />}
       />
-      {/* <AllModal
-        isOpen={isOpen}
-        onClose={onClose}
+      <AllModal
+        title="track habits on master plan"
+        onOpen={isOpen2}
+        onClose={closeModal2}
         children={<TrackHabitsOnMasterPlan />}
-      /> */}
+      />
       <Flex justifyContent={"center"} gap={3}>
         <Box w="280px" h={727} bg="white" flexDirection={"column"} gap={0}>
           <SectionHeader HeadingName={HeadingNames.goals} />
@@ -41,7 +54,7 @@ const EveningMain = () => {
           <ProgressSlider sliderName={"Goals Three: complited "} />
           <SectionButton
             buttonName="Choose Goals For Tommorow"
-            onClick={onOpen}
+            onClick={openModal1}
           />
           <SectionHeader HeadingName={HeadingNames.doneList} />
           <Box
@@ -70,7 +83,7 @@ const EveningMain = () => {
           <VotesCastHabits submitBtnName={"3"} />
           <SectionButton
             buttonName="Tracking Habits on Master Plan"
-            onClick={onOpen}
+            onClick={openModal2}
           />
           <Box marginBottom={2}>
             <SectionHeader HeadingName={HeadingNames.yourEngine} />
@@ -85,7 +98,7 @@ const EveningMain = () => {
             resize={"none"}
             marginBottom={1}
           />
-          <SectionButton buttonName="Note Bad Time" onClick={onOpen} />
+          <SectionButton buttonName="Note Bad Time" onClick={openModal3} />
         </Box>
       </Flex>
     </>
