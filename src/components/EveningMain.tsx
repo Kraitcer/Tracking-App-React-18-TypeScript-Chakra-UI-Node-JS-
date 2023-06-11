@@ -10,6 +10,10 @@ import AllModal from "./AllModal";
 import ChooseGoals from "./ChooseGoals";
 import TrackHabitsOnMasterPlan from "./TrackHabitsOnMasterPlan";
 import { useState } from "react";
+import NoteBadTimeAndSubmitAll from "./NoteBadTimeAndSubmitAll";
+import vateOne from "../assets/Image/EveningPage_VoteCastSection_Icons/vote-cast-icon-1.svg";
+import vateTwo from "../assets/Image/EveningPage_VoteCastSection_Icons/vote-cast-icon-2-2.svg";
+import vateThree from "../assets/Image/EveningPage_VoteCastSection_Icons/vote-cast-icon-3-3.svg";
 
 const EveningMain = () => {
   const [isOpen1, setIsOpen1] = useState(false);
@@ -38,13 +42,19 @@ const EveningMain = () => {
         title="chose goals for tommorow"
         onOpen={isOpen1}
         onClose={closeModal1}
-        children={<ChooseGoals />}
+        children={<ChooseGoals onClose={closeModal1} />}
       />
       <AllModal
         title="track habits on master plan"
         onOpen={isOpen2}
         onClose={closeModal2}
         children={<TrackHabitsOnMasterPlan />}
+      />
+      <AllModal
+        title="Note Bad Time & Submit"
+        onOpen={isOpen3}
+        onClose={closeModal3}
+        children={<NoteBadTimeAndSubmitAll />}
       />
       <Flex justifyContent={"center"} gap={3}>
         <Box w="280px" h={727} bg="white" flexDirection={"column"} gap={0}>
@@ -76,11 +86,11 @@ const EveningMain = () => {
           <SectionHeader HeadingName={HeadingNames.gratefulness} />
           <GrateFulnessSection />
         </Box>
-        <Box w="280px" flexDirection={"column"}>
+        <Box w="280px" flexDirection={"column"} padding={0}>
           <SectionHeader HeadingName={HeadingNames.votesCast} />
-          <VotesCastHabits submitBtnName={"1"} />
-          <VotesCastHabits submitBtnName={"2"} />
-          <VotesCastHabits submitBtnName={"3"} />
+          <VotesCastHabits icon={vateOne} />
+          <VotesCastHabits icon={vateTwo} />
+          <VotesCastHabits icon={vateThree} />
           <SectionButton
             buttonName="Tracking Habits on Master Plan"
             onClick={openModal2}

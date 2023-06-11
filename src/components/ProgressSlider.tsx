@@ -10,6 +10,7 @@ import {
   Button,
   VStack,
   Flex,
+  Box,
 } from "@chakra-ui/react";
 import { useState } from "react";
 
@@ -31,18 +32,23 @@ const ProgressSlider = ({ sliderName }: Props) => {
           </SliderTrack>
           <SliderThumb bg={"orange"} boxSize={8} rounded={"none"} w={1} />
         </Slider>
-        <Button
+        <Box
           h={8}
-          w="52px"
-          colorScheme="blue"
+          w="60px"
+          bg="blue.400"
           borderRadius={0}
           border={"none"}
           color={"white"}
-          fontSize={26}
-          paddingBottom={1}
+          fontSize={22}
+          paddingLeft={2}
+          paddingRight={2}
+          alignItems={"left"}
+          display={"Flex"}
+          flexDirection={"row-reverse"}
+          paddingBottom={0}
         >
           {sliderValue}
-        </Button>
+        </Box>
       </HStack>
     </Flex>
   );

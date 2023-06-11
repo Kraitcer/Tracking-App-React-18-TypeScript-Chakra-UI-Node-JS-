@@ -33,7 +33,11 @@ interface CheckboxData {
   goalName: string;
 }
 
-const ChooseGoals = () => {
+interface Props {
+  onClose: () => void;
+}
+
+const ChooseGoals = ({ onClose }: Props) => {
   const checkboxDataObject = {
     specific: false,
     measureble: false,
@@ -67,6 +71,16 @@ const ChooseGoals = () => {
     index: 1,
     count: steps.length,
   });
+  function stepFour() {
+    onClose(),
+      toast({
+        title: "Well Done with Goals",
+        description: "good luck doing it",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+      });
+  }
   function stepThree() {
     setCheckboxData(checkboxDataObject);
     if (goalRef.current && timeRef.current) {
@@ -120,8 +134,13 @@ const ChooseGoals = () => {
     ) {
       // All checkboxes are checked, perform your desired action here
       setRefreshKey((prevKey) => prevKey + 1);
-      activeStep == 1 ? stepTwo() : stepThree();
-      //   activeStep === 3 ? onClose : return;
+      activeStep == 1
+        ? stepTwo()
+        : activeStep == 2
+        ? stepThree()
+        : activeStep === 3
+        ? stepFour()
+        : null;
       console.log("Submitting data:", checkboxData);
     } else {
       toast({

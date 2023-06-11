@@ -1,35 +1,39 @@
-import { Button, HStack, Input, baseTheme } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  HStack,
+  Input,
+  baseTheme,
+  Image,
+  Flex,
+} from "@chakra-ui/react";
 import { useRef } from "react";
 
 interface Props {
-  submitBtnName: string;
+  icon: string;
 }
 
-const VotesCastHabits = ({ submitBtnName }: Props) => {
+const VotesCastHabits = ({ icon }: Props) => {
   const habitRef = useRef<HTMLInputElement>(null);
   return (
-    <HStack>
+    <HStack marginTop={2}>
       <form
         onSubmit={(event) => {
           event.preventDefault();
           if (habitRef.current !== null) console.log(habitRef.current.value);
         }}
       >
-        <Button
-          type="submit"
-          bg="orange.300"
-          rounded={"none"}
-          paddingBottom={1}
-          color={"white"}
-          marginBottom={1.5}
-          marginRight={2}
-          fontSize={20}
-          w={2}
-          border={"none"}
-        >
-          {submitBtnName}
-        </Button>
-        <Input ref={habitRef} width="auto" variant={"baseStyle"}></Input>
+        <Flex gap={2}>
+          <Image boxSize="50px" src={icon} />
+          <Input
+            // onSubmit={}
+            ref={habitRef}
+            w={"auto"}
+            variant={"baseStyle"}
+            fontSize={20}
+            marginTop={3}
+          ></Input>
+        </Flex>
       </form>
     </HStack>
   );

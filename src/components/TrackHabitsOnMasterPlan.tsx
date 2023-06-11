@@ -9,13 +9,20 @@ import {
   TableCaption,
   TableContainer,
   Box,
+  Checkbox,
 } from "@chakra-ui/react";
+import SectionButton from "./SectionButton";
 
 const TrackHabitsOnMasterPlan = () => {
   return (
     <TableContainer fontSize={30}>
       <Table variant="simple">
-        <TableCaption>Imperial to metric conversion factors</TableCaption>
+        <TableCaption>
+          <SectionButton
+            buttonName="Track"
+            onClick={() => console.log("submited")}
+          />
+        </TableCaption>
         <Thead>
           <Tr bg={"blue.600"} fontSize={30}>
             <Th color={"white"} fontSize={20}>
@@ -40,49 +47,63 @@ const TrackHabitsOnMasterPlan = () => {
             <Td>sport</Td>
             <Td></Td>
             <Td></Td>
-            <Td></Td>
+            <Td>
+              <Checkbox size={"lg"} />
+            </Td>
             <Td></Td>
           </Tr>
           <Tr>
             <Td>meditation</Td>
             <Td></Td>
             <Td></Td>
-            <Td></Td>
+            <Td>
+              <Checkbox size={"lg"} />
+            </Td>
             <Td></Td>
           </Tr>
           <Tr>
             <Td>reading</Td>
             <Td></Td>
             <Td></Td>
-            <Td></Td>
+            <Td>
+              <Checkbox size={"lg"} />
+            </Td>
             <Td></Td>
           </Tr>
           <Tr>
             <Td>habit 1</Td>
             <Td></Td>
             <Td></Td>
-            <Td></Td>
+            <Td>
+              <Checkbox size={"lg"} />
+            </Td>
             <Td></Td>
           </Tr>
           <Tr>
             <Td>habit 2</Td>
             <Td></Td>
             <Td></Td>
-            <Td></Td>
+            <Td>
+              <Checkbox size={"lg"} />
+            </Td>
             <Td></Td>
           </Tr>
           <Tr>
             <Td>habit 3</Td>
             <Td></Td>
             <Td></Td>
-            <Td></Td>
+            <Td>
+              <Checkbox size={"lg"} />
+            </Td>
             <Td></Td>
           </Tr>
           <Tr>
             <Td>habit 4</Td>
             <Td></Td>
             <Td></Td>
-            <Td></Td>
+            <Td>
+              <Checkbox size={"lg"} />
+            </Td>
             <Td></Td>
           </Tr>
         </Tbody>
