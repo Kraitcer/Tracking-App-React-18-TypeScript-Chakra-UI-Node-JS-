@@ -12,8 +12,10 @@ import {
   Checkbox,
 } from "@chakra-ui/react";
 import SectionButton from "./SectionButton";
+import { useState } from "react";
 
 const TrackHabitsOnMasterPlan = () => {
+  const [] = useState();
   return (
     <TableContainer fontSize={30}>
       <Table variant="simple">
@@ -63,42 +65,6 @@ const TrackHabitsOnMasterPlan = () => {
           </Tr>
           <Tr>
             <Td>reading</Td>
-            <Td></Td>
-            <Td></Td>
-            <Td>
-              <Checkbox size={"lg"} />
-            </Td>
-            <Td></Td>
-          </Tr>
-          <Tr>
-            <Td>habit 1</Td>
-            <Td></Td>
-            <Td></Td>
-            <Td>
-              <Checkbox size={"lg"} />
-            </Td>
-            <Td></Td>
-          </Tr>
-          <Tr>
-            <Td>habit 2</Td>
-            <Td></Td>
-            <Td></Td>
-            <Td>
-              <Checkbox size={"lg"} />
-            </Td>
-            <Td></Td>
-          </Tr>
-          <Tr>
-            <Td>habit 3</Td>
-            <Td></Td>
-            <Td></Td>
-            <Td>
-              <Checkbox size={"lg"} />
-            </Td>
-            <Td></Td>
-          </Tr>
-          <Tr>
-            <Td>habit 4</Td>
             <Td></Td>
             <Td></Td>
             <Td>

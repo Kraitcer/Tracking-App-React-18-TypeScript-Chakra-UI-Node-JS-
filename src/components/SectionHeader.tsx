@@ -15,7 +15,7 @@ const SectionHeader = ({ HeadingName }: Props) => {
       fontSize="22px"
       padding={3}
       color={"white"}
-      marginBottom={1}
+      marginBottom={2}
     >
       {HeadingName}
     </Heading>
