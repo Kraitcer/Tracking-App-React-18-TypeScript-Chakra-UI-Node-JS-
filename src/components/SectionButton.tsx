@@ -14,7 +14,7 @@ const SectionButton = ({ buttonName, onClick }: Props) => {
       borderRadius={0}
       color={"white"}
       fontSize={16}
-      marginBottom={2}
+      // marginBottom={2}
       marginTop={1}
       paddingBottom={1}
       border={"none"}

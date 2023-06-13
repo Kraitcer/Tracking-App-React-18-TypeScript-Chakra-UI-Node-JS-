@@ -1,4 +1,4 @@
-import { Box, Flex, Textarea, useDisclosure } from "@chakra-ui/react";
+import { Box, Flex, Stack, Textarea, useDisclosure } from "@chakra-ui/react";
 import SectionHeader from "./SectionHeader";
 import ProgressSlider from "./ProgressSlider";
 import CheckBoxList from "./CheckBoxList";
@@ -8,12 +8,8 @@ import VotesCastHabits from "./VotesCastHabits";
 import IconSlider from "./your_engine_section/IconSlider";
 import AllModal from "./AllModal";
 import ChooseGoals from "./ChooseGoals";
-import TrackHabitsOnMasterPlan from "./TrackHabitsOnMasterPlan";
 import { useState } from "react";
 import NoteBadTimeAndSubmitAll from "./NoteBadTimeAndSubmitAll";
-import vateOne from "../assets/Image/EveningPage_VoteCastSection_Icons/vote-cast-icon-1.svg";
-import vateTwo from "../assets/Image/EveningPage_VoteCastSection_Icons/vote-cast-icon-2-2.svg";
-import vateThree from "../assets/Image/EveningPage_VoteCastSection_Icons/vote-cast-icon-3-3.svg";
 
 const EveningMain = () => {
   const [isOpen1, setIsOpen1] = useState(false);
@@ -45,12 +41,6 @@ const EveningMain = () => {
         children={<ChooseGoals onClose={closeModal1} />}
       />
       <AllModal
-        title="track habits on master plan"
-        onOpen={isOpen2}
-        onClose={closeModal2}
-        children={<TrackHabitsOnMasterPlan />}
-      />
-      <AllModal
         title="Note Bad Time & Submit"
         onOpen={isOpen3}
         onClose={closeModal3}
@@ -58,14 +48,16 @@ const EveningMain = () => {
       />
       <Flex justifyContent={"center"} gap={3}>
         <Box w="280px" h={727} bg="white" flexDirection={"column"} gap={0}>
-          <SectionHeader HeadingName={HeadingNames.goals} />
-          <ProgressSlider sliderName={"Goals One: complited "} />
-          <ProgressSlider sliderName={"Goals Two: complited "} />
-          <ProgressSlider sliderName={"Goals Three: complited "} />
-          <SectionButton
-            buttonName="Choose Goals For Tommorow"
-            onClick={openModal1}
-          />
+          <Stack marginBottom={2}>
+            <SectionHeader HeadingName={HeadingNames.goals} />
+            <ProgressSlider sliderName={"Goals One: complited "} />
+            <ProgressSlider sliderName={"Goals Two: complited "} />
+            <ProgressSlider sliderName={"Goals Three: complited "} />
+            <SectionButton
+              buttonName="Choose Goals For Tommorow"
+              onClick={openModal1}
+            />
+          </Stack>
           <SectionHeader HeadingName={HeadingNames.doneList} />
           <Box
             w={"100%"}
@@ -88,13 +80,7 @@ const EveningMain = () => {
         </Box>
         <Box w="280px" flexDirection={"column"} padding={0}>
           <SectionHeader HeadingName={HeadingNames.votesCast} />
-          <VotesCastHabits icon={vateOne} />
-          <VotesCastHabits icon={vateTwo} />
-          <VotesCastHabits icon={vateThree} />
-          <SectionButton
-            buttonName="Tracking Habits on Master Plan"
-            onClick={openModal2}
-          />
+          <VotesCastHabits />
           <Box marginBottom={2}>
             <SectionHeader HeadingName={HeadingNames.yourEngine} />
             <IconSlider />
