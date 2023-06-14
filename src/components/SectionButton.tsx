@@ -19,6 +19,7 @@ const SectionButton = ({ buttonName, onClick }: Props) => {
       paddingBottom={1}
       border={"none"}
       onClick={onClick}
+      type="submit"
     >
       {buttonName}
     </Button>

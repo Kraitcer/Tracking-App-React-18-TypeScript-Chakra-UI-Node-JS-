@@ -1,18 +1,6 @@
-import {
-  Box,
-  Button,
-  HStack,
-  Input,
-  baseTheme,
-  Image,
-  Flex,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-} from "@chakra-ui/react";
-import { BsChevronDown } from "react-icons/bs";
-import { useRef, useState } from "react";
+import { HStack, Input, Image, Flex, useToast } from "@chakra-ui/react";
+import { useState } from "react";
+import { FieldValues, useForm } from "react-hook-form";
 import SectionButton from "./SectionButton";
 import vateOne from "../assets/Image/EveningPage_VoteCastSection_Icons/vote-cast-icon-1.svg";
 import vateTwo from "../assets/Image/EveningPage_VoteCastSection_Icons/vote-cast-icon-2-2.svg";
@@ -20,65 +8,68 @@ import vateThree from "../assets/Image/EveningPage_VoteCastSection_Icons/vote-ca
 import vateFour from "../assets/Image/EveningPage_VoteCastSection_Icons/vote-cast-icon-4.svg";
 import vateFive from "../assets/Image/EveningPage_VoteCastSection_Icons/vote-cast-icon-5.svg";
 import vateSix from "../assets/Image/EveningPage_VoteCastSection_Icons/vote-cast-icon-6.svg";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { habitCategories } from "./habitCategories";
+
+const schema = z.object({
+  habitImprovement: z.string().min(3).max(12),
+  habitImprovementDetails: z.string().min(3).max(12),
+  category: z.enum(habitCategories, {
+    errorMap: () => ({ message: "Category is required" }),
+  }),
+});
+
+type FormData = z.infer<typeof schema>;
 
 const VotesCastHabits = () => {
-  const habitRef = useRef<HTMLInputElement>(null);
+  const { register, handleSubmit } = useForm<FormData>({
+    resolver: zodResolver(schema),
+  });
   const [currentIcon, setCurrentIcon] = useState(0);
-  const [selectedHabit, setSelectedHabit] = useState<string | null>();
+  const [selectedHabit, setSelectedHabit] = useState<string>();
   const voteIcons = [vateOne, vateTwo, vateThree, vateFour, vateFive, vateSix];
 
-  const habits = [
-    { id: 1, name: "habit1" },
-    { id: 2, name: "habit2" },
-    { id: 3, name: "habit3" },
-    { id: 4, name: "Sport" },
-    { id: 5, name: "Maditation" },
-    { id: 6, name: "Reading" },
-  ];
   function nextHabit() {
     const iconExpressoin = currentIcon < 5 ? currentIcon + 1 : 0;
-    setCurrentIcon(iconExpressoin), setSelectedHabit("");
+    setCurrentIcon(iconExpressoin);
+    setSelectedHabit("");
   }
+
+  const onSubmit = (data: FieldValues) => console.log(data);
 
   return (
     <HStack marginTop={2} marginBottom={2}>
-      <form
-        onSubmit={(event) => {
-          event.preventDefault();
-          if (habitRef.current !== null) console.log(habitRef.current.value);
-        }}
-      >
-        <Flex gap={2} flexDirection={"column"}>
+      <form name="voteCast" onSubmit={handleSubmit(onSubmit)}>
+        <Flex gap={2} flexDirection={"column"} w={"17.5rem"}>
           <HStack alignItems={"center"}>
             <Image boxSize="50px" src={voteIcons[currentIcon]} />
-            <Menu>
-              <MenuButton
-                w={60}
-                border={"none"}
-                as={Button}
-                rightIcon={<BsChevronDown />}
-              >
-                {selectedHabit || "Choose Habit"}
-              </MenuButton>
-              <MenuList>
-                {habits.map((habit) => (
-                  <MenuItem
-                    key={habit.id}
-                    onClick={() => setSelectedHabit(habit.name)}
-                  >
-                    {habit.name}
-                  </MenuItem>
-                ))}
-              </MenuList>
-            </Menu>
+            <select
+              {...register("category")}
+              id="category"
+              className="form-select form-select-lg w-100"
+              aria-label=".form-select-lg example"
+              placeholder="Chose habit"
+            >
+              <option value={""}>Chose habit</option>
+              {habitCategories.map((habit) => (
+                <option key={habit} value={habit}>
+                  {habit}
+                </option>
+              ))}
+            </select>
           </HStack>
           <Input
+            {...register("habitImprovement")}
+            id="habitImprovement"
             border={"none"}
             variant="filled"
             type="text"
             placeholder="improvement"
           />
           <Input
+            {...register("habitImprovementDetails")}
+            id="habitImprovementDetails"
             border={"none"}
             variant="filled"
             type="text"

@@ -21,8 +21,8 @@ interface Props {
 const ProgressSlider = ({ sliderName }: Props) => {
   const [sliderValue, setSliderValue] = useState(70);
   return (
-    <Flex flexDirection={"column"} marginBottom={2}>
-      <Text fontSize={18} marginBottom={1}>
+    <Flex flexDirection={"column"} marginBottom={0}>
+      <Text fontSize={18} marginBottom={0}>
         {sliderName}
       </Text>
       <HStack>
