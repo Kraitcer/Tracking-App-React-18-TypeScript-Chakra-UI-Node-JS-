@@ -13,30 +13,78 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { habitCategories } from "./habitCategories";
 
 const schema = z.object({
-  habitImprovement: z.string().min(3).max(12),
-  habitImprovementDetails: z.string().min(3).max(12),
+  habitImprovement: z
+    .string()
+    .min(3, {
+      message: "improvement required and must be at least 3 characters",
+    })
+    .max(12),
+  habitImprovementDetails: z
+    .string()
+    .min(3, {
+      message: "improvement details required and must be at least 3 characters",
+    })
+    .max(12),
   category: z.enum(habitCategories, {
-    errorMap: () => ({ message: "Category is required" }),
+    errorMap: () => ({ message: "choose habit is required" }),
   }),
 });
 
 type FormData = z.infer<typeof schema>;
 
 const VotesCastHabits = () => {
-  const { register, handleSubmit } = useForm<FormData>({
+  const toast = useToast();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<FormData>({
     resolver: zodResolver(schema),
   });
   const [currentIcon, setCurrentIcon] = useState(0);
-  const [selectedHabit, setSelectedHabit] = useState<string>();
   const voteIcons = [vateOne, vateTwo, vateThree, vateFour, vateFive, vateSix];
 
   function nextHabit() {
-    const iconExpressoin = currentIcon < 5 ? currentIcon + 1 : 0;
-    setCurrentIcon(iconExpressoin);
-    setSelectedHabit("");
+    if (errors.category)
+      toast({
+        title: "Vote Cast: Chose habis",
+        description: `${errors.category.message}`,
+        status: "warning",
+        duration: 9000,
+        isClosable: true,
+      });
+    if (errors.habitImprovement)
+      toast({
+        title: "Vote Cast: improvement",
+        description: `${errors.habitImprovement.message}`,
+        status: "warning",
+        duration: 9000,
+        isClosable: true,
+      });
+    if (errors.habitImprovementDetails)
+      toast({
+        title: "Vote Cast: improvement details",
+        description: `${errors.habitImprovementDetails.message}`,
+        status: "warning",
+        duration: 9000,
+        isClosable: true,
+      });
   }
 
-  const onSubmit = (data: FieldValues) => console.log(data);
+  const onSubmit = (data: FieldValues) => {
+    console.log(data);
+    reset();
+    const iconExpressoin = currentIcon < 5 ? currentIcon + 1 : 0;
+    setCurrentIcon(iconExpressoin);
+    toast({
+      title: `Well done with ${data.category}`,
+      description: "Try Next one",
+      status: "success",
+      duration: 9000,
+      isClosable: true,
+    });
+  };
 
   return (
     <HStack marginTop={2} marginBottom={2}>
@@ -51,7 +99,7 @@ const VotesCastHabits = () => {
               aria-label=".form-select-lg example"
               placeholder="Chose habit"
             >
-              <option value={""}>Chose habit</option>
+              <option value={""}>Chose a habit...</option>
               {habitCategories.map((habit) => (
                 <option key={habit} value={habit}>
                   {habit}

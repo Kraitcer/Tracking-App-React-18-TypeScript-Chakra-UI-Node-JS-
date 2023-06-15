@@ -42,8 +42,8 @@ const EveningMain = () => {
       />
       <AllModal
         title="Note Bad Time & Submit"
-        onOpen={isOpen3}
-        onClose={closeModal3}
+        onOpen={isOpen2}
+        onClose={closeModal2}
         children={<NoteBadTimeAndSubmitAll />}
       />
       <Flex justifyContent={"center"} gap={3}>
@@ -78,7 +78,7 @@ const EveningMain = () => {
           <SectionHeader HeadingName={HeadingNames.gratefulness} />
           <GrateFulnessSection />
         </Box>
-        <Box w="280px" flexDirection={"column"} padding={0}>
+        <Box w="280px" flexDirection={"column"}>
           <SectionHeader HeadingName={HeadingNames.votesCast} />
           <VotesCastHabits />
           <Box marginBottom={2}>
@@ -94,7 +94,7 @@ const EveningMain = () => {
             resize={"none"}
             marginBottom={1}
           />
-          <SectionButton buttonName="Note Bad Time" onClick={openModal3} />
+          <SectionButton buttonName="Note Bad Time" onClick={openModal2} />
         </Box>
       </Flex>
     </>

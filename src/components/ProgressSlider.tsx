@@ -45,7 +45,6 @@ const ProgressSlider = ({ sliderName }: Props) => {
           alignItems={"left"}
           display={"Flex"}
           flexDirection={"row-reverse"}
-          paddingBottom={0}
         >
           {sliderValue}
         </Box>
