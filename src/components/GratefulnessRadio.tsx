@@ -51,7 +51,7 @@ function GratefulnessRadio() {
 
   return (
     <>
-      <HStack {...group} gap={1}>
+      <HStack {...group} gap={1} mt={1}>
         {options.map((value) => {
           const radio = getRadioProps({ value });
           return (

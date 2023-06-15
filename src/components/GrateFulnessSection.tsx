@@ -1,31 +1,18 @@
-import {
-  Text,
-  RadioGroup,
-  Stack,
-  Radio,
-  Textarea,
-  Flex,
-} from "@chakra-ui/react";
+import { Text, Textarea, Flex } from "@chakra-ui/react";
 import GratefulnessRadio from "./GratefulnessRadio";
 
 const GrateFulnessSection = () => {
   return (
-    <Flex
-      gap={1}
-      flexDirection={"column"}
-      // alignItems={"center"}
-      // justifyItems={"center"}
-    >
+    <Flex gap={1} flexDirection={"column"}>
       <Text marginBottom={0} fontSize={"xl"}>
-        Today, i'm grateful for
+        Today, i'm grateful for:
       </Text>
 
       <Textarea
         variant="brandPrimary"
         bg={"blue.100"}
         color={"white"}
-        // border={"1px solid blue.400"}
-        placeholder="Write down thing you have been grateful for today. Choose it type & submit"
+        placeholder="Write down thing you have been grateful for today. Choose it type and submit"
         h="6.2rem"
         resize={"none"}
       />

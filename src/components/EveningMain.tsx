@@ -50,9 +50,9 @@ const EveningMain = () => {
         <Box w="280px" h={727} bg="white" flexDirection={"column"} gap={0}>
           <Stack marginBottom={2}>
             <SectionHeader HeadingName={HeadingNames.goals} />
-            <ProgressSlider sliderName={"Goals One: complited "} />
-            <ProgressSlider sliderName={"Goals Two: complited "} />
-            <ProgressSlider sliderName={"Goals Three: complited "} />
+            <ProgressSlider sliderName={"Goal One: complited "} />
+            <ProgressSlider sliderName={"Goal Two: complited "} />
+            <ProgressSlider sliderName={"Goal Three: complited "} />
             <SectionButton
               buttonName="Choose Goals For Tommorow"
               onClick={openModal1}
@@ -88,11 +88,11 @@ const EveningMain = () => {
           <SectionHeader HeadingName={HeadingNames.doodles} />
           <Textarea
             variant="brandPrimary"
-            bg={"blue.200"}
+            bg={"blue.100"}
             color={"white"}
             placeholder="Write down some doodles"
             resize={"none"}
-            marginBottom={1}
+            marginBottom={2}
           />
           <SectionButton buttonName="Note Bad Time" onClick={openModal2} />
         </Box>
