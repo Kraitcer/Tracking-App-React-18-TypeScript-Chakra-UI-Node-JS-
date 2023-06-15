@@ -5,6 +5,8 @@ import {
   useRadio,
   useRadioGroup,
 } from "@chakra-ui/react";
+import SectionButton from "./SectionButton";
+import { useState } from "react";
 
 function RadioCard(props: any) {
   const { getInputProps, getRadioProps } = useRadio(props);
@@ -25,13 +27,9 @@ function RadioCard(props: any) {
           bg: "orange.400",
           color: "white",
         }}
-        _focus={{
-          boxShadow: "outline",
-        }}
-        // px={2}
         padding={2}
         w="100%"
-        py={1}
+        py={2}
       >
         {props.children}
       </Box>
@@ -41,26 +39,34 @@ function RadioCard(props: any) {
 
 function GratefulnessRadio() {
   const options = ["Person", "Event", "Simplicity"];
+  const [gratefulnes, setGratefulnes] = useState("1");
 
-  const { getRootProps, getRadioProps } = useRadioGroup({
-    name: "framework",
-    defaultValue: "react",
-    onChange: console.log,
+  const { getRootProps, getRadioProps, value } = useRadioGroup({
+    name: "gratefulness",
+    // defaultValue: "Event",
+    // onChange: console.log,
   });
 
   const group = getRootProps();
 
   return (
-    <HStack {...group}>
-      {options.map((value) => {
-        const radio = getRadioProps({ value });
-        return (
-          <RadioCard key={value} {...radio}>
-            {value}
-          </RadioCard>
-        );
-      })}
-    </HStack>
+    <>
+      <HStack {...group} gap={1}>
+        {options.map((value) => {
+          const radio = getRadioProps({ value });
+          return (
+            <RadioCard key={value} {...radio}>
+              {value}
+            </RadioCard>
+          );
+        })}
+        <SectionButton
+          buttonName={gratefulnes}
+          // onClick={() => console.log(value)}
+          onClick={() => setGratefulnes("2")}
+        />
+      </HStack>
+    </>
   );
 }
 export default GratefulnessRadio;

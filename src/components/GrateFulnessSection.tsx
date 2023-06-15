@@ -10,20 +10,26 @@ import GratefulnessRadio from "./GratefulnessRadio";
 
 const GrateFulnessSection = () => {
   return (
-    <Flex gap={2} flexDirection={"column"}>
+    <Flex
+      gap={1}
+      flexDirection={"column"}
+      // alignItems={"center"}
+      // justifyItems={"center"}
+    >
       <Text marginBottom={0} fontSize={"xl"}>
         Today, i'm grateful for
       </Text>
-      <GratefulnessRadio />
+
       <Textarea
         variant="brandPrimary"
         bg={"blue.100"}
         color={"white"}
         // border={"1px solid blue.400"}
-        placeholder="Write down thing you have been grateful for today"
-        h="23%"
+        placeholder="Write down thing you have been grateful for today. Choose it type & submit"
+        h="6.2rem"
         resize={"none"}
       />
+      <GratefulnessRadio />
     </Flex>
   );
 };
