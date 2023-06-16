@@ -62,8 +62,8 @@ function GratefulnessRadio() {
         })}
         <SectionButton
           buttonName={gratefulnes}
-          // onClick={() => console.log(value)}
-          onClick={() => setGratefulnes("2")}
+          onClick={() => console.log(value)}
+          // onClick={() => setGratefulnes("2")}
         />
       </HStack>
     </>
