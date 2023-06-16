@@ -1,6 +1,8 @@
 import { HStack, Input, Image, Flex, useToast } from "@chakra-ui/react";
 import { useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 import SectionButton from "./SectionButton";
 import vateOne from "../assets/Image/EveningPage_VoteCastSection_Icons/vote-cast-icon-1.svg";
 import vateTwo from "../assets/Image/EveningPage_VoteCastSection_Icons/vote-cast-icon-2-2.svg";
@@ -8,8 +10,6 @@ import vateThree from "../assets/Image/EveningPage_VoteCastSection_Icons/vote-ca
 import vateFour from "../assets/Image/EveningPage_VoteCastSection_Icons/vote-cast-icon-4.svg";
 import vateFive from "../assets/Image/EveningPage_VoteCastSection_Icons/vote-cast-icon-5.svg";
 import vateSix from "../assets/Image/EveningPage_VoteCastSection_Icons/vote-cast-icon-6.svg";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { habitCategories } from "./habitCategories";
 
 const schema = z.object({

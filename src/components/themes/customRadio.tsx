@@ -1,12 +1,4 @@
-import {
-  Text,
-  Textarea,
-  Flex,
-  Box,
-  useRadio,
-  useRadioGroup,
-  HStack,
-} from "@chakra-ui/react";
+import { Box, useRadio } from "@chakra-ui/react";
 
 function RadioCard(props: any) {
   const { getInputProps, getRadioProps } = useRadio(props);
