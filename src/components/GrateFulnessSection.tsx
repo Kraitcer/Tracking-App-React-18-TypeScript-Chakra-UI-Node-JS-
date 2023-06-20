@@ -6,13 +6,15 @@ import {
   HStack,
   FormControl,
   FormLabel,
+  Select,
+  useToast,
 } from "@chakra-ui/react";
-import { FieldValues, useForm } from "react-hook-form";
+import { FieldValues, useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import SectionButton from "./SectionButton";
-import RadioCard from "./themes/customRadio";
 import { grateCategories } from "./grateCategories";
+import { useState } from "react";
 
 const schema = z.object({
   gratefulForDoday: z
@@ -21,9 +23,9 @@ const schema = z.object({
       message: "improvement required and must be at least 3 characters",
     })
     .max(120),
-  // category: z.enum(grateCategories, {
-  //   errorMap: () => ({ message: "Type of Gratefulness is required" }),
-  // }),
+  grateCategories: z.enum(grateCategories, {
+    errorMap: () => ({ message: "Type of Gratefulness is required" }),
+  }),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -37,28 +39,45 @@ const GrateFulnessSection = () => {
   } = useForm<FormData>({
     resolver: zodResolver(schema),
   });
-  const { getRootProps, getRadioProps, value } = useRadioGroup({
-    name: "gratefulness",
-    // defaultValue: "Event",
-    // onChange: console.log,
-  });
 
-  const group = getRootProps();
+  const toast = useToast();
+
+  const [count, setCount] = useState(0);
 
   const onSubmit = (data: FieldValues) => {
+    setCount(count === 0 ? 1 : 2);
     console.log(data);
     reset();
   };
+  function nexGratefulness() {
+    if (errors.gratefulForDoday)
+      toast({
+        title: "Vote Cast: Chose habis",
+        description: `${errors.gratefulForDoday.message}`,
+        status: "warning",
+        duration: 9000,
+        isClosable: true,
+      });
+    if (errors.grateCategories)
+      toast({
+        title: "Vote Cast: Chose habis",
+        description: `${errors.grateCategories.message}`,
+        status: "warning",
+        duration: 9000,
+        isClosable: true,
+      });
+  }
+  const toDay = ["Firstly", "Secondary", "Thirdly"];
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Flex gap={1} flexDirection={"column"}>
         <FormControl id="gratefulness">
           <FormLabel marginBottom={1} fontSize={"xl"}>
-            Today, i'm grateful for:
+            {toDay[count]}, i'm grateful for:
           </FormLabel>
           <Textarea
-            {...register("gratefulForDoday")}
+            {...register("gratefulForDoday", { required: true })}
             variant="brandPrimary"
             // onChange={}
             bg={"blue.100"}
@@ -69,20 +88,24 @@ const GrateFulnessSection = () => {
           />
         </FormControl>
         <FormControl id="grateCategories">
-          <HStack {...group} gap={1} mt={1}>
-            {grateCategories.map((value) => {
-              const radio = getRadioProps({ value });
-              return (
-                <RadioCard key={value} {...radio}>
-                  {value}
-                </RadioCard>
-              );
-            })}
+          <Flex gap={2} mt={1}>
+            <Select
+              {...register("grateCategories")}
+              placeholder="Choose type"
+              w={"200%"}
+            >
+              {grateCategories.map((grateType, index) => (
+                <option key={index} value={grateType}>
+                  {grateType}
+                </option>
+              ))}
+            </Select>
             <SectionButton
-              buttonName={"1"}
-              onClick={() => console.log(value)}
+              buttonName={"Submit"}
+              // onClick={() => console.log("fuck")}
+              onClick={() => nexGratefulness()}
             />
-          </HStack>
+          </Flex>
         </FormControl>
       </Flex>
     </form>
