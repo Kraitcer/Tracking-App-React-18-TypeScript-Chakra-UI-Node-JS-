@@ -14,15 +14,12 @@ import NoteBadTimeAndSubmitAll from "./NoteBadTimeAndSubmitAll";
 const EveningMain = () => {
   const [isOpen1, setIsOpen1] = useState(false);
   const [isOpen2, setIsOpen2] = useState(false);
-  const [isOpen3, setIsOpen3] = useState(false);
 
   const openModal1 = () => setIsOpen1(true);
   const openModal2 = () => setIsOpen2(true);
-  const openModal3 = () => setIsOpen3(true);
 
   const closeModal1 = () => setIsOpen1(false);
   const closeModal2 = () => setIsOpen2(false);
-  const closeModal3 = () => setIsOpen3(false);
 
   const HeadingNames = {
     goals: "goals",
