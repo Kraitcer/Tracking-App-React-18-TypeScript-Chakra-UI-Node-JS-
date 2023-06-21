@@ -1,4 +1,15 @@
-import { HStack, Input, Image, Flex, useToast } from "@chakra-ui/react";
+import {
+  HStack,
+  Input,
+  Image,
+  Flex,
+  useToast,
+  TableContainer,
+  Table,
+  Tbody,
+  Tr,
+  Td,
+} from "@chakra-ui/react";
 import { useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -43,6 +54,11 @@ const VotesCastHabits = () => {
     resolver: zodResolver(schema),
   });
   const [currentIcon, setCurrentIcon] = useState(0);
+
+  const [habitsDataArrey, setHabitsDataArrey] = useState<any[]>([]);
+
+  const [display, setDisplay] = useState("");
+
   const voteIcons = [vateOne, vateTwo, vateThree, vateFour, vateFive, vateSix];
 
   function nextHabit() {
@@ -70,10 +86,14 @@ const VotesCastHabits = () => {
         duration: 9000,
         isClosable: true,
       });
+    if (habitsDataArrey.length === 5) {
+      setDisplay("none");
+    }
   }
 
   const onSubmit = (data: FieldValues) => {
-    console.log(data);
+    setHabitsDataArrey([...habitsDataArrey, data]);
+    // console.log(habitsDataArrey);
     reset();
     const iconExpressoin = currentIcon < 5 ? currentIcon + 1 : 0;
     setCurrentIcon(iconExpressoin);
@@ -87,49 +107,70 @@ const VotesCastHabits = () => {
   };
 
   return (
-    <HStack marginTop={2} marginBottom={2}>
-      <form name="voteCast" onSubmit={handleSubmit(onSubmit)}>
-        <Flex gap={2} flexDirection={"column"} w={"17.5rem"}>
-          <HStack alignItems={"center"}>
-            <Image boxSize="50px" src={voteIcons[currentIcon]} />
-            <select
-              {...register("category")}
-              id="category"
-              className="form-select form-select-lg w-100"
-              aria-label=".form-select-lg example"
-              placeholder="Chose habit"
-            >
-              <option value={""}>Chose a habit...</option>
-              {habitCategories.map((habit) => (
-                <option key={habit} value={habit}>
-                  {habit}
-                </option>
+    <>
+      <HStack marginTop={2} marginBottom={2} display={display}>
+        <form name="voteCast" onSubmit={handleSubmit(onSubmit)}>
+          <Flex h={"194px"} gap={2} flexDirection={"column"} w={"17.5rem"}>
+            <HStack alignItems={"center"}>
+              <Image boxSize="50px" src={voteIcons[currentIcon]} />
+              <select
+                {...register("category")}
+                id="category"
+                className="form-select form-select-lg w-100"
+                aria-label=".form-select-lg example"
+                placeholder="Chose habit"
+              >
+                <option value={""}>Chose a habit...</option>
+                {habitCategories.map((habit) => (
+                  <option key={habit} value={habit}>
+                    {habit}
+                  </option>
+                ))}
+              </select>
+            </HStack>
+            <Input
+              {...register("habitImprovement")}
+              id="habitImprovement"
+              border={"none"}
+              variant="filled"
+              type="text"
+              placeholder="improvement"
+            />
+            <Input
+              {...register("habitImprovementDetails")}
+              id="habitImprovementDetails"
+              border={"none"}
+              variant="filled"
+              type="text"
+              placeholder="details"
+            />
+            <SectionButton
+              buttonName={"Next Habit"}
+              onClick={() => nextHabit()}
+            />
+          </Flex>
+        </form>
+      </HStack>
+      <Flex h={"204px"} display={display === "none" ? "" : "none"} bg={""}>
+        <TableContainer>
+          <Table variant="simple">
+            <Tbody>
+              {/* {habitsDataArrey.length === 5 && */}
+              {habitsDataArrey.map((habitsElement, index) => (
+                <Tr key={index} fontSize={16}>
+                  <Td ps={0} pb={1.5} pt={1.5} textAlign={"left"}>
+                    {habitsElement.category}
+                  </Td>
+                  <Td pb={1.5} pt={1.5} pe={0} textAlign={"right"}>
+                    {`${habitsElement.habitImprovement}(${habitsElement.habitImprovementDetails})`}
+                  </Td>
+                </Tr>
               ))}
-            </select>
-          </HStack>
-          <Input
-            {...register("habitImprovement")}
-            id="habitImprovement"
-            border={"none"}
-            variant="filled"
-            type="text"
-            placeholder="improvement"
-          />
-          <Input
-            {...register("habitImprovementDetails")}
-            id="habitImprovementDetails"
-            border={"none"}
-            variant="filled"
-            type="text"
-            placeholder="details"
-          />
-          <SectionButton
-            buttonName={"Next Habit"}
-            onClick={() => nextHabit()}
-          />
-        </Flex>
-      </form>
-    </HStack>
+            </Tbody>
+          </Table>
+        </TableContainer>
+      </Flex>
+    </>
   );
 };
 

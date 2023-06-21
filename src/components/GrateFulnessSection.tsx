@@ -79,8 +79,28 @@ const GrateFulnessSection = () => {
     setGrateDataArrey([...grateDataArrey, data]);
     setGratefulnessData({ ...data });
     setCount(count === 0 ? 1 : count === 1 ? 2 : count === 2 ? 3 : NaN);
-    if (count === 3) setDisplay("none");
+    if (count === 0 || count === 1)
+      toast({
+        title: "Gratefulness",
+        description: "Well done!!! Try next one",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+      });
+
+    if (count === 2)
+      toast({
+        title: "Well done with Gratefulness",
+        description: "Try to vote for your self",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+      });
     reset();
+
+    if (count === 3) {
+      setDisplay("none");
+    }
   };
 
   function nexGratefulness() {
@@ -101,7 +121,7 @@ const GrateFulnessSection = () => {
         duration: 9000,
         isClosable: true,
       });
-    console.log(grateDataArrey);
+    // console.log(grateDataArrey);
   }
   const toDay = ["Firstly", "Secondary", "Thirdly", "Taday"];
 
