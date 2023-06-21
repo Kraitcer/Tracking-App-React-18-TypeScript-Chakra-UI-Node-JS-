@@ -1,31 +1,22 @@
 import {
-  Text,
   Textarea,
   Flex,
-  useRadioGroup,
-  HStack,
   FormControl,
   FormLabel,
   Select,
   useToast,
   TableContainer,
   Table,
-  TableCaption,
-  Thead,
   Tr,
-  Th,
   Tbody,
   Td,
-  Tfoot,
 } from "@chakra-ui/react";
-import { FieldValues, useForm, Controller } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import SectionButton from "./SectionButton";
 import { grateCategories } from "./grateCategories";
 import { useEffect, useState } from "react";
-import { any, string } from "prop-types";
-import { T } from "@chakra-ui/toast/dist/toast.types-f226a101";
 
 const schema = z.object({
   gratefulForDoday: z
@@ -122,7 +113,6 @@ const GrateFulnessSection = () => {
             {toDay[count]}, i'm grateful for:
           </FormLabel>
           <Textarea
-            // display={"none"}
             display={display}
             {...register("gratefulForDoday", { required: true })}
             variant="brandPrimary"
@@ -133,11 +123,7 @@ const GrateFulnessSection = () => {
             resize={"none"}
           />
         </FormControl>
-        <FormControl
-          id="grateCategories"
-          // display={"none"}
-          display={display}
-        >
+        <FormControl id="grateCategories" display={display}>
           <Flex gap={2} mt={1}>
             <Select
               {...register("grateCategories")}
@@ -152,7 +138,6 @@ const GrateFulnessSection = () => {
             </Select>
             <SectionButton
               buttonName={"Submit"}
-              // onClick={() => console.log("fuck")}
               onClick={() => nexGratefulness()}
             />
           </Flex>
@@ -163,10 +148,10 @@ const GrateFulnessSection = () => {
               {grateDataArrey.length === 3 &&
                 grateDataArrey.map((grateElement, index) => (
                   <Tr key={index} fontSize={16}>
-                    <Td ps={0} pb={3.5} pt={3.5}>
+                    <Td ps={0} pb={3.5} pt={3.5} textAlign={"left"}>
                       {grateElement.gratefulForDoday}
                     </Td>
-                    <Td pb={3.5} pt={3.5}>
+                    <Td pb={3.5} pt={3.5} pe={0} textAlign={"right"}>
                       {grateElement.grateCategories}
                     </Td>
                   </Tr>
