@@ -1,12 +1,12 @@
 import { Box, Flex, Stack, Textarea, useDisclosure } from "@chakra-ui/react";
-import SectionHeader from "./SectionHeader";
-import ProgressSlider from "./ProgressSlider";
-import CheckBoxList from "./CheckBoxList";
-import SectionButton from "./SectionButton";
+import SectionHeader from "./UI Components/SectionHeader";
+import ProgressSlider from "./UI Components/ProgressSlider";
+import CheckBoxList from "./UI Components/CheckBoxList";
+import SectionButton from "./UI Components/SectionButton";
 import GrateFulnessSection from "./GrateFulnessSection";
 import VotesCastHabits from "./VotesCastHabits";
-import IconSlider from "./your_engine_section/IconSlider";
-import AllModal from "./AllModal";
+import IconSlider from "./UI Components/IconSlider";
+import AllModal from "./UI Components/AllModal";
 import ChooseGoals from "./ChooseGoals";
 import { useState } from "react";
 import NoteBadTimeAndSubmitAll from "./NoteBadTimeAndSubmitAll";

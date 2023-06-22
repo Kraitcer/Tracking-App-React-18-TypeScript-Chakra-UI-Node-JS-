@@ -14,7 +14,7 @@ import {
 import { FieldValues, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import SectionButton from "./SectionButton";
+import SectionButton from "./UI Components/SectionButton";
 import { grateCategories } from "./grateCategories";
 import { useEffect, useState } from "react";
 

@@ -20,8 +20,8 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { useRef, useState } from "react";
-import SectionButton from "./SectionButton";
-import CustomCheckbox from "./CustomCheckBox";
+import SectionButton from "./UI Components/SectionButton";
+import CustomCheckbox from "./UI Components/CustomCheckBox";
 
 interface CheckboxData {
   specific: boolean;
