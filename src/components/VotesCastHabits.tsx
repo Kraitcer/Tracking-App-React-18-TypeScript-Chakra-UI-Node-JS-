@@ -10,7 +10,7 @@ import {
   Tr,
   Td,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -58,6 +58,11 @@ const VotesCastHabits = () => {
   const [habitsDataArrey, setHabitsDataArrey] = useState<any[]>([]);
 
   const [display, setDisplay] = useState("");
+
+  useEffect(() => {
+    if (habitsDataArrey.length === 6)
+      localStorage.setItem("Habits array", JSON.stringify(habitsDataArrey));
+  }, [habitsDataArrey]);
 
   const voteIcons = [vateOne, vateTwo, vateThree, vateFour, vateFive, vateSix];
 

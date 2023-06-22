@@ -49,35 +49,18 @@ const GrateFulnessSection = () => {
 
   const [display, setDisplay] = useState("");
 
-  const countOfGratefulness = ["zero", "one", "two", "three"];
-
-  const [gratefulnessData, setGratefulnessData] = useState<FieldValues>();
-
   const [grateDataArrey, setGrateDataArrey] = useState<any[]>([]);
 
   useEffect(() => {
-    if (gratefulnessData)
+    if (grateDataArrey.length === 3)
       localStorage.setItem(
-        `gratefulness ${countOfGratefulness[count]}`,
-        JSON.stringify(gratefulnessData)
+        "gratefulness array",
+        JSON.stringify(grateDataArrey)
       );
-    // try {
-    //   const storedValue =
-    //     localStorage.getItem(`gratefulness ${countOfGratefulness[count]}`) ||
-    //     "";
-    //   if (storedValue) {
-    //     let value = JSON.parse(storedValue);
-    //     // grateTable.push(JSON.parse(storedValue));
-    //     console.log(value);
-    //   }
-    // } catch (error) {
-    //   console.log("Stupid Error", error);
-    // }
-  }, [gratefulnessData]);
+  }, [grateDataArrey]);
 
   const onSubmit = (data: FieldValues) => {
     setGrateDataArrey([...grateDataArrey, data]);
-    setGratefulnessData({ ...data });
     setCount(count === 0 ? 1 : count === 1 ? 2 : count === 2 ? 3 : NaN);
     if (count === 0 || count === 1)
       toast({

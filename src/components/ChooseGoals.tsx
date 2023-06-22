@@ -48,7 +48,7 @@ const ChooseGoals = ({ onClose }: Props) => {
     goalName: "",
   };
   const toast = useToast();
-  const statuses = ["success", "error", "warning", "info"];
+  // const statuses = ["success", "error", "warning", "info"];
   const [checkboxData, setCheckboxData] =
     useState<CheckboxData>(checkboxDataObject);
   const [refreshKey, setRefreshKey] = useState(0);
@@ -141,7 +141,7 @@ const ChooseGoals = ({ onClose }: Props) => {
         : activeStep === 3
         ? stepFour()
         : null;
-      console.log("Submitting data:", checkboxData);
+      // console.log("Submitting data:", checkboxData);
     } else {
       toast({
         title: "SMART Checkboxes are requared",
@@ -150,7 +150,7 @@ const ChooseGoals = ({ onClose }: Props) => {
         duration: 9000,
         isClosable: true,
       });
-      console.log("Please check all checkboxes");
+      // console.log("Please check all checkboxes");
     }
   };
   return (
