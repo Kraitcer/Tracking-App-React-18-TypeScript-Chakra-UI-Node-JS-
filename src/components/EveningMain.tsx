@@ -21,6 +21,10 @@ const EveningMain = () => {
   const closeModal1 = () => setIsOpen1(false);
   const closeModal2 = () => setIsOpen2(false);
 
+  const [chooseGolsTitle, setChooseGolsTitle] = useState(
+    "chose project for tommorow"
+  );
+
   const HeadingNames = {
     goals: "goals",
     doneList: "done list",
@@ -32,10 +36,15 @@ const EveningMain = () => {
   return (
     <>
       <AllModal
-        title="chose goals for tommorow"
+        title={chooseGolsTitle}
         onOpen={isOpen1}
         onClose={closeModal1}
-        children={<ChooseGoals onClose={closeModal1} />}
+        children={
+          <ChooseGoals
+            onClose={closeModal1}
+            changeTitle={() => setChooseGolsTitle("chose goals for tommorow")}
+          />
+        }
       />
       <AllModal
         title="Note Bad Time & Submit"

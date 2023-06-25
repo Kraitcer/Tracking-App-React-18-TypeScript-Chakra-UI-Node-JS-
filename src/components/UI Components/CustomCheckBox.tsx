@@ -7,7 +7,7 @@ interface Props {
   checked: boolean;
 }
 
-const CustomCheckbox = ({ onChange, checked }: Props) => {
+const CustomCheckbox = ({ checked, onChange }: Props) => {
   const [isChecked, setIsChecked] = useState(false);
 
   const handleCheckboxChange = () => {
@@ -17,13 +17,13 @@ const CustomCheckbox = ({ onChange, checked }: Props) => {
 
   return (
     <Checkbox
-      isChecked={isChecked}
+      isChecked={checked}
       onChange={handleCheckboxChange}
       checked={checked}
       size={"50px"}
       icon={
         isChecked ? (
-          <FaExclamation size={40} color="blue.400" />
+          <FaExclamation size={40} color="white" />
         ) : (
           <FaQuestion size={40} color="orange" />
         )

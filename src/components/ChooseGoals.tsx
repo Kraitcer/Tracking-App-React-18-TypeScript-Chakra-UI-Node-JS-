@@ -1,12 +1,6 @@
 import {
   Flex,
-  Input,
-  Table,
-  TableContainer,
-  Tbody,
-  Td,
   Text,
-  Tr,
   Step,
   StepIcon,
   StepIndicator,
@@ -18,329 +12,148 @@ import {
   useSteps,
   Box,
   useToast,
+  Select,
+  FormControl,
+  FormLabel,
+  Input,
 } from "@chakra-ui/react";
-import { useRef, useState } from "react";
-import SectionButton from "./UI Components/SectionButton";
-import CustomCheckbox from "./UI Components/CustomCheckBox";
 
-interface CheckboxData {
-  specific: boolean;
-  measureble: boolean;
-  actionable: boolean;
-  reasonable: boolean;
-  timeBound: boolean;
-  goalTime: string;
-  goalName: string;
-}
+import { useRef, useState, useEffect } from "react";
+import { FieldValues, useForm, Controller } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import SectionButton from "./UI Components/SectionButton";
+import Att_time_IWill_Smart from "./UI Components/Att_time_IWill_Smart";
+import SmartServey from "./UI Components/SmartServey";
+import { projectsArray } from "./Projects";
+
+// interface CheckboxData {
+//   specific: boolean;
+//   measureble: boolean;
+//   actionable: boolean;
+//   reasonable: boolean;
+//   timeBound: boolean;
+//   goalTime: string;
+//   goalName: string;
+// }
 
 interface Props {
   onClose: () => void;
+  changeTitle: () => void;
+}
+export interface FormData {
+  projects: string;
+  att_time_: string;
+  IWill_Smart: string;
+  // smartServey: boolean;
 }
 
-const ChooseGoals = ({ onClose }: Props) => {
-  const checkboxDataObject = {
-    specific: false,
-    measureble: false,
-    actionable: false,
-    reasonable: false,
-    timeBound: false,
-    goalTime: "",
-    goalName: "",
-  };
-  const toast = useToast();
-  // const statuses = ["success", "error", "warning", "info"];
-  const [checkboxData, setCheckboxData] =
-    useState<CheckboxData>(checkboxDataObject);
-  const [refreshKey, setRefreshKey] = useState(0);
-  const [goalsName, setGoalsName] = useState("");
-  const handleCheckboxChange = (checkboxName: keyof CheckboxData) => {
-    setCheckboxData((prevData) => ({
-      ...prevData,
-      [checkboxName]: !prevData[checkboxName] as boolean | number | string,
-    }));
-  };
+const schema = z.object({
+  projects: z.enum(projectsArray, {
+    errorMap: () => ({ message: "Choose Project" }),
+  }),
+  att_time_: z.string().optional(),
+  IWill_Smart: z.string().optional(),
+  //   .min(3, {
+  //     message:
+  //       "Today's gratefulness is required and must be at least 3 characters",
+  //   })
+  //   .max(120),
+  // smartServey: z.boolean(),
+});
 
-  const goalRef = useRef<HTMLInputElement | null>(null);
-  const timeRef = useRef<HTMLInputElement | null>(null);
+const ChooseGoals = ({ onClose, changeTitle }: Props) => {
+  const {
+    control,
+    handleSubmit,
+    register,
+    reset,
+    formState: { errors },
+  } = useForm<FormData>({
+    resolver: zodResolver(schema),
+  });
+
+  const [display, setDisplay] = useState("");
+
+  const [goalsDataArrey, setGoalsDataArrey] = useState<any[]>([]);
+
+  const toast = useToast();
+
   const steps = [
-    { title: "First Goal", description: "Contact Info" },
-    { title: "Second Goal", description: "Date & Time" },
-    { title: "Third Goal", description: "Select Rooms" },
+    { title: "Project", description: "Contact Info" },
+    { title: "Goal 1", description: "Contact Info" },
+    { title: "Goal 2", description: "Date & Time" },
+    { title: "Goal 3", description: "Select Rooms" },
   ];
+
   const { activeStep, setActiveStep } = useSteps({
     index: 1,
     count: steps.length,
   });
-  function stepFour() {
-    onClose(),
-      toast({
-        title: "Well Done with Goals",
-        description: "good luck doing it",
-        status: "success",
-        duration: 9000,
-        isClosable: true,
-      });
-  }
-  function stepThree() {
-    setCheckboxData(checkboxDataObject);
-    if (goalRef.current && timeRef.current) {
-      goalRef.current.value = "";
-      timeRef.current.value = "";
-    }
-    setActiveStep(3);
-    setGoalsName("");
-    toast({
-      title: "Second Goal is chosen",
-      description: "Choose Third One",
-      status: "success",
-      duration: 9000,
-      isClosable: true,
-    });
-  }
-  function stepTwo() {
-    setCheckboxData(checkboxDataObject);
+  const onSubmit = (data: FieldValues) => {
+    console.log(data);
     setActiveStep(2);
-    if (goalRef.current && timeRef.current) {
-      goalRef.current.value = "";
-      timeRef.current.value = "";
-    }
-    setGoalsName("");
-    toast({
-      title: "First Goal is chosen",
-      description: "Choose Second One",
-      status: "success",
-      duration: 9000,
-      isClosable: true,
-    });
-  }
-  const handleSubmit = () => {
-    const {
-      specific,
-      measureble,
-      actionable,
-      reasonable,
-      timeBound,
-      goalName,
-      goalTime,
-    } = checkboxData;
-    if (
-      specific &&
-      measureble &&
-      actionable &&
-      reasonable &&
-      timeBound &&
-      goalTime &&
-      goalName
-    ) {
-      // All checkboxes are checked, perform your desired action here
-      setRefreshKey((prevKey) => prevKey + 1);
-      activeStep == 1
-        ? stepTwo()
-        : activeStep == 2
-        ? stepThree()
-        : activeStep === 3
-        ? stepFour()
-        : null;
-      // console.log("Submitting data:", checkboxData);
-    } else {
-      toast({
-        title: "SMART Checkboxes are requared",
-        description: "Please check all checkboxes",
-        status: "warning",
-        duration: 9000,
-        isClosable: true,
-      });
-      // console.log("Please check all checkboxes");
-    }
+    setDisplay("none");
+    changeTitle();
   };
+
   return (
     <>
       <Flex flexDirection={"column"} alignItems={"center"}>
-        <form
-          onSubmit={(event) => {
-            event.preventDefault();
-            if (goalRef.current && timeRef.current) {
-              setGoalsName(goalRef.current.value);
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <FormControl display={display}>
+            <Select
+              {...register("projects")}
+              placeholder="Select project"
+              w={466}
+              mb={2}
+            >
+              {projectsArray.map((project, index) => (
+                <option key={index} value={project}>
+                  {project}
+                </option>
+              ))}
+            </Select>
+          </FormControl>
+          <Box display={display === "none" ? "" : "none"}>
+            {/* <Flex gap={4} justifyContent={"center"} alignItems={"center"}>
+              <Text fontSize={30} marginTop={3}>
+                AT
+              </Text>
+              <Input
+                {...register("att_time_")}
+                type="time"
+                w={"150px"}
+                padding={1}
+                fontSize={20}
+              />
+              <Input {...register("IWill_Smart")} placeholder="I WILL" />
+            </Flex> */}
+            <Att_time_IWill_Smart register={register} />
+            <Flex>
+              <Text textTransform={"uppercase"}>
+                DOES YOUR GOAL "{}" MATCH THE "SMART" PARAMETRS ?
+              </Text>
+            </Flex>
+            {/* <Controller
+              name="smartServey"
+              control={control}
+              render={({ field }) => <SmartServey field={field} />}
+            /> */}
+          </Box>
+          <SectionButton
+            buttonName={
+              activeStep == 4
+                ? "Done"
+                : activeStep == 1
+                ? "Continue With Goals"
+                : "Next Goal"
             }
-            handleCheckboxChange("goalName");
-            handleCheckboxChange("goalTime");
-          }}
-        >
-          <Flex gap={4} justifyContent={"center"} alignItems={"center"}>
-            <Text fontSize={30} marginTop={3}>
-              AT
-            </Text>
-            <Input
-              ref={timeRef}
-              type="time"
-              w={"150px"}
-              padding={1}
-              fontSize={20}
-            />
-            <Input ref={goalRef} placeholder="I WILL" />
-          </Flex>
-          <Flex>
-            <Text textTransform={"uppercase"}>
-              DOES YOUR GOAL "{goalsName}" MATCH THE "SMART" PARAMETRS ?
-            </Text>
-          </Flex>
+            onClick={() => onSubmit}
+          />
         </form>
-        <TableContainer marginBottom={3}>
-          <Table>
-            <Tbody fontSize={26} textTransform={"uppercase"}>
-              <Tr>
-                <Td
-                  bg={"white"}
-                  color={"blue.400"}
-                  border={"1px solid"}
-                  borderColor={"blue.400"}
-                  textAlign={"center"}
-                >
-                  s
-                </Td>
-                <Td
-                  bg={"blue.400"}
-                  color={"white"}
-                  borderTop={"1px solid"}
-                  borderTopColor={"blue.400"}
-                >
-                  specific
-                </Td>
-                <Td
-                  border={"1px solid"}
-                  borderColor={"blue.400"}
-                  paddingTop={2}
-                  paddingBottom={2}
-                >
-                  <CustomCheckbox
-                    key={refreshKey}
-                    checked={checkboxData.specific}
-                    onChange={() => handleCheckboxChange("specific")}
-                  />
-                </Td>
-              </Tr>
-              <Tr>
-                <Td
-                  width={"1px"}
-                  bg={"white"}
-                  color={"blue.400"}
-                  border={"1px solid"}
-                  borderColor={"blue.400"}
-                  textAlign={"center"}
-                >
-                  m
-                </Td>
-                <Td bg={"blue.400"} color={"white"}>
-                  measureble
-                </Td>
-                <Td
-                  paddingTop={2}
-                  paddingBottom={2}
-                  border={"1px solid"}
-                  borderColor={"blue.400"}
-                >
-                  <CustomCheckbox
-                    key={refreshKey}
-                    checked={checkboxData.measureble}
-                    onChange={() => handleCheckboxChange("measureble")}
-                  />
-                </Td>
-              </Tr>
-              <Tr>
-                <Td
-                  width={"1px"}
-                  bg={"white"}
-                  color={"blue.400"}
-                  border={"1px solid"}
-                  borderColor={"blue.400"}
-                  textAlign={"center"}
-                >
-                  a
-                </Td>
-                <Td bg={"blue.400"} color={"white"}>
-                  actionable
-                </Td>
-                <Td
-                  paddingTop={2}
-                  paddingBottom={2}
-                  border={"1px solid"}
-                  borderColor={"blue.400"}
-                >
-                  <CustomCheckbox
-                    key={refreshKey}
-                    checked={checkboxData.actionable}
-                    onChange={() => handleCheckboxChange("actionable")}
-                  />
-                </Td>
-              </Tr>
-              <Tr>
-                <Td
-                  width={"1px"}
-                  bg={"white"}
-                  color={"blue.400"}
-                  border={"1px solid"}
-                  borderColor={"blue.400"}
-                  textAlign={"center"}
-                >
-                  r
-                </Td>
-                <Td bg={"blue.400"} color={"white"}>
-                  reasonable
-                </Td>
-                <Td
-                  paddingTop={2}
-                  paddingBottom={2}
-                  border={"1px solid"}
-                  borderColor={"blue.400"}
-                >
-                  <CustomCheckbox
-                    key={refreshKey}
-                    checked={checkboxData.reasonable}
-                    onChange={() => handleCheckboxChange("reasonable")}
-                  />
-                </Td>
-              </Tr>
-              <Tr>
-                <Td
-                  width={"1px"}
-                  bg={"white"}
-                  color={"blue.400"}
-                  border={"1px solid"}
-                  borderColor={"blue.400"}
-                  textAlign={"center"}
-                >
-                  t
-                </Td>
-                <Td
-                  bg={"blue.400"}
-                  color={"white"}
-                  borderBottom={"1px solid"}
-                  borderBottomColor={"blue.400"}
-                >
-                  time-bound
-                </Td>
-                <Td
-                  paddingTop={2}
-                  paddingBottom={2}
-                  border={"1px solid"}
-                  borderColor={"blue.400"}
-                >
-                  <CustomCheckbox
-                    key={refreshKey}
-                    checked={checkboxData.timeBound}
-                    onChange={() => handleCheckboxChange("timeBound")}
-                  />
-                </Td>
-              </Tr>
-            </Tbody>
-          </Table>
-        </TableContainer>
       </Flex>
 
-      <SectionButton
-        buttonName={activeStep == 3 ? "Done With Goals" : "Next Goal"}
-        onClick={handleSubmit}
-      />
       <Box marginTop={2} marginBottom={2}>
         <Stepper index={activeStep}>
           {steps.map((step, index) => (
