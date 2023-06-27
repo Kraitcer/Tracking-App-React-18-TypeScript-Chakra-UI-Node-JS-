@@ -1,36 +1,53 @@
 import { useState } from "react";
 import { Checkbox } from "@chakra-ui/react";
 import { FaQuestion, FaExclamation } from "react-icons/fa";
+import { QuestionOutlineIcon, WarningIcon } from "@chakra-ui/icons";
+
+import { AiOutlineExclamation, AiOutlineQuestion } from "react-icons/ai";
+import { UseFormRegister } from "react-hook-form";
+import { FormData } from "../ChooseGoals";
 
 interface Props {
   onChange: () => void;
-  checked: boolean;
+  checked: any;
 }
 
-const CustomCheckbox = ({ checked, onChange }: Props) => {
-  const [isChecked, setIsChecked] = useState(false);
+const CustomCheckbox = ({ onChange, checked }: Props) => {
+  const [checkBoxData, setCheckBoxData] = useState(false);
 
   const handleCheckboxChange = () => {
     onChange();
-    setIsChecked(!isChecked);
+    setCheckBoxData(!checkBoxData);
   };
+  const checkBoxIcon = checkBoxData ? (
+    <FaExclamation color="white" />
+  ) : (
+    <FaQuestion color="orange" />
+  );
 
   return (
     <Checkbox
-      isChecked={checked}
+      {...checked}
+      // checked={checked}
       onChange={handleCheckboxChange}
-      checked={checked}
-      size={"50px"}
-      icon={
-        isChecked ? (
-          <FaExclamation size={40} color="white" />
-        ) : (
-          <FaQuestion size={40} color="orange" />
-        )
-      }
-      colorScheme={isChecked ? "blue" : "orange"}
+      size={"lg"}
+      // iconSize={"50px"}
+      // colorScheme={checkBoxData ? "blue" : "orange"}
+      // boxSize={"50px"}
+      // icon={}
+      // spacing={"200px"}
+      bg={checkBoxData ? "blue" : "orange"}
     />
   );
+  //   <Checkbox
+  //     {...checked}
+  //     onChange={handleCheckboxChange}
+  //     // bg={"blue"}
+  //     size={"50px"}
+  //     icon={checkBoxIcon}
+  //     colorScheme={checkBoxData ? "blue" : "orange"}
+  //   />
+  // );
 };
 
 export default CustomCheckbox;

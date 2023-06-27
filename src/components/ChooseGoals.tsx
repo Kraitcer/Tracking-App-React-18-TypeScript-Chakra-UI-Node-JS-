@@ -37,34 +37,51 @@ import { projectsArray } from "./Projects";
 //   goalName: string;
 // }
 
+interface GoalProps {
+  goal: () => string;
+}
+
 interface Props {
   onClose: () => void;
   changeTitle: () => void;
 }
+type FormInputs = {
+  smartData: string;
+};
 export interface FormData {
   projects: string;
-  att_time_: string;
-  IWill_Smart: string;
-  // smartServey: boolean;
+  goalOne_att_time_: string;
+  goalTwo_att_time_: string;
+  goalThree_att_time_: string;
+  goalOne_IWill_Smart: string;
+  goalTwo_IWill_Smart: string;
+  goalThree_IWill_Smart: string;
+  smart: boolean;
 }
 
 const schema = z.object({
   projects: z.enum(projectsArray, {
     errorMap: () => ({ message: "Choose Project" }),
   }),
-  att_time_: z.string().optional(),
-  IWill_Smart: z.string().optional(),
-  //   .min(3, {
-  //     message:
-  //       "Today's gratefulness is required and must be at least 3 characters",
-  //   })
-  //   .max(120),
-  // smartServey: z.boolean(),
+  goalOne_att_time_: z.string().optional(),
+  goalTwo_att_time_: z.string().optional(),
+  goalThree_att_time_: z.string().optional(),
+  goalOne_IWill_Smart: z.string().optional(),
+  goalTwo_IWill_Smart: z.string().optional(),
+  goalThree_IWill_Smart: z.string().optional(),
+  // smart: z.boolean().optional(),
 });
 
 const ChooseGoals = ({ onClose, changeTitle }: Props) => {
+  const [refreshKey, setRefreshKey] = useState(0);
+
+  const [checkBoxData, setCheckBoxData] = useState(false);
+
+  const [goalsDatas, setGoalsDatas] = useState<
+    FormData | string[] | number | any
+  >(["goalOne_att_time_", "goalOne_IWill_Smart"]);
+
   const {
-    control,
     handleSubmit,
     register,
     reset,
@@ -73,9 +90,10 @@ const ChooseGoals = ({ onClose, changeTitle }: Props) => {
     resolver: zodResolver(schema),
   });
 
-  const [display, setDisplay] = useState("");
+  const { onChange, ref } = register("smart");
+  // include type check against field path with the name you have supplied.
 
-  const [goalsDataArrey, setGoalsDataArrey] = useState<any[]>([]);
+  const [display, setDisplay] = useState("");
 
   const toast = useToast();
 
@@ -90,10 +108,38 @@ const ChooseGoals = ({ onClose, changeTitle }: Props) => {
     index: 1,
     count: steps.length,
   });
-  const onSubmit = (data: FieldValues) => {
-    console.log(data);
-    setActiveStep(2);
+
+  function stepFour() {
+    onClose();
+  }
+  function stepThree() {
+    setGoalsDatas(["goalThree_att_time_", "goalThree_IWill_Smart"]);
+    setActiveStep(4);
+  }
+  function stepTwo() {
+    setGoalsDatas(["goalTwo_att_time_", "goalTwo_IWill_Smart"]);
+    setActiveStep(3);
+    // reset();
+  }
+  function stepOne() {
     setDisplay("none");
+    setActiveStep(2);
+  }
+
+  const onSubmit = (data: FieldValues) => {
+    activeStep === 1
+      ? stepOne()
+      : activeStep === 2
+      ? stepTwo()
+      : activeStep === 3
+      ? stepThree()
+      : stepFour();
+
+    if (checkBoxData) {
+      setRefreshKey((prevKey) => prevKey + 1), setCheckBoxData(false), reset();
+    }
+
+    console.log(data);
     changeTitle();
   };
 
@@ -104,42 +150,36 @@ const ChooseGoals = ({ onClose, changeTitle }: Props) => {
           <FormControl display={display}>
             <Select
               {...register("projects")}
+              name="projects"
               placeholder="Select project"
               w={466}
               mb={2}
             >
               {projectsArray.map((project, index) => (
-                <option key={index} value={project}>
+                <option key={index + 1} value={project}>
                   {project}
                 </option>
               ))}
             </Select>
           </FormControl>
           <Box display={display === "none" ? "" : "none"}>
-            {/* <Flex gap={4} justifyContent={"center"} alignItems={"center"}>
-              <Text fontSize={30} marginTop={3}>
-                AT
-              </Text>
-              <Input
-                {...register("att_time_")}
-                type="time"
-                w={"150px"}
-                padding={1}
-                fontSize={20}
-              />
-              <Input {...register("IWill_Smart")} placeholder="I WILL" />
-            </Flex> */}
-            <Att_time_IWill_Smart register={register} />
+            <Att_time_IWill_Smart
+              register={register}
+              goalsData={goalsDatas}
+              // goal={goalsData}
+            />
             <Flex>
               <Text textTransform={"uppercase"}>
                 DOES YOUR GOAL "{}" MATCH THE "SMART" PARAMETRS ?
               </Text>
             </Flex>
-            {/* <Controller
-              name="smartServey"
-              control={control}
-              render={({ field }) => <SmartServey field={field} />}
-            /> */}
+            <SmartServey
+              key={refreshKey}
+              onChange={() => {
+                setCheckBoxData(true);
+                console.log("Is Smart!!!");
+              }}
+            />
           </Box>
           <SectionButton
             buttonName={
