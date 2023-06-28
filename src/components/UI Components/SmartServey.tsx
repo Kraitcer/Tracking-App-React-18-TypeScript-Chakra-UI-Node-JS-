@@ -28,18 +28,6 @@ interface Props {
 const SmartServey = ({ onChange }: Props, { key }: refrashProps) => {
   const [smartCheckboxData, setSmartCheckboxData] = useState(smartArray);
 
-  if (
-    smartCheckboxData[0].checkbox &&
-    smartCheckboxData[1].checkbox &&
-    smartCheckboxData[2].checkbox &&
-    smartCheckboxData[3].checkbox &&
-    smartCheckboxData[4].checkbox
-  ) {
-    console.log(smartCheckboxData);
-    onChange();
-  } else {
-    // console.log("smartCheckboxData");
-  }
   const handleSmartChange = (checkboxName: string) => {
     setSmartCheckboxData(
       smartCheckboxData.map((smart) =>
@@ -49,6 +37,20 @@ const SmartServey = ({ onChange }: Props, { key }: refrashProps) => {
       )
     );
   };
+
+  if (
+    smartCheckboxData[0].checkbox &&
+    smartCheckboxData[1].checkbox &&
+    smartCheckboxData[2].checkbox &&
+    smartCheckboxData[3].checkbox &&
+    smartCheckboxData[4].checkbox
+  ) {
+    console.log("smart cheker - OK");
+    console.log(smartCheckboxData);
+    onChange();
+  } else {
+    // console.log("smartCheckboxData");
+  }
 
   return (
     <TableContainer marginBottom={3}>

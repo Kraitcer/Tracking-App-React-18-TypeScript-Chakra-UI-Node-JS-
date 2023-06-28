@@ -14,28 +14,16 @@ import {
   useToast,
   Select,
   FormControl,
-  FormLabel,
-  Input,
 } from "@chakra-ui/react";
 
-import { useRef, useState, useEffect } from "react";
-import { FieldValues, useForm, Controller } from "react-hook-form";
+import { useEffect, useState } from "react";
+import { FieldValues, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import SectionButton from "./UI Components/SectionButton";
 import Att_time_IWill_Smart from "./UI Components/Att_time_IWill_Smart";
 import SmartServey from "./UI Components/SmartServey";
 import { projectsArray } from "./Projects";
-
-// interface CheckboxData {
-//   specific: boolean;
-//   measureble: boolean;
-//   actionable: boolean;
-//   reasonable: boolean;
-//   timeBound: boolean;
-//   goalTime: string;
-//   goalName: string;
-// }
 
 interface GoalProps {
   goal: () => string;
@@ -56,7 +44,7 @@ export interface FormData {
   goalOne_IWill_Smart: string;
   goalTwo_IWill_Smart: string;
   goalThree_IWill_Smart: string;
-  smart: boolean;
+  value: string;
 }
 
 const schema = z.object({
@@ -69,13 +57,12 @@ const schema = z.object({
   goalOne_IWill_Smart: z.string().optional(),
   goalTwo_IWill_Smart: z.string().optional(),
   goalThree_IWill_Smart: z.string().optional(),
-  // smart: z.boolean().optional(),
 });
 
 const ChooseGoals = ({ onClose, changeTitle }: Props) => {
-  const [refreshKey, setRefreshKey] = useState(0);
-
   const [checkBoxData, setCheckBoxData] = useState(false);
+
+  const [refreshKey, setRefreshKey] = useState(0);
 
   const [goalsDatas, setGoalsDatas] = useState<
     FormData | string[] | number | any
@@ -88,10 +75,15 @@ const ChooseGoals = ({ onClose, changeTitle }: Props) => {
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(schema),
+    defaultValues: {
+      goalOne_att_time_: "",
+      goalTwo_att_time_: "",
+      goalThree_att_time_: "",
+      goalOne_IWill_Smart: "",
+      goalTwo_IWill_Smart: "",
+      goalThree_IWill_Smart: "",
+    },
   });
-
-  const { onChange, ref } = register("smart");
-  // include type check against field path with the name you have supplied.
 
   const [display, setDisplay] = useState("");
 
@@ -111,33 +103,56 @@ const ChooseGoals = ({ onClose, changeTitle }: Props) => {
 
   function stepFour() {
     onClose();
+    reset(
+      {
+        goalThree_att_time_: "",
+        goalThree_IWill_Smart: "",
+      },
+      { keepValues: true }
+    );
   }
   function stepThree() {
+    console.log("Step Three");
+    // console.log(checkBoxData);
     setGoalsDatas(["goalThree_att_time_", "goalThree_IWill_Smart"]);
     setActiveStep(4);
+    reset(
+      {
+        goalTwo_att_time_: "",
+        goalTwo_IWill_Smart: "",
+      },
+      { keepValues: true }
+    );
   }
   function stepTwo() {
+    console.log("Step Two");
     setGoalsDatas(["goalTwo_att_time_", "goalTwo_IWill_Smart"]);
     setActiveStep(3);
-    // reset();
+    reset(
+      {
+        goalOne_att_time_: "",
+        goalOne_IWill_Smart: "",
+      },
+      { keepValues: true }
+    );
   }
   function stepOne() {
     setDisplay("none");
     setActiveStep(2);
+    console.log("Step One");
+    console.log(checkBoxData);
+    console.log(refreshKey);
+    // setCheckBoxData(false);
   }
 
   const onSubmit = (data: FieldValues) => {
-    activeStep === 1
+    activeStep == 1
       ? stepOne()
-      : activeStep === 2
+      : activeStep == 2
       ? stepTwo()
-      : activeStep === 3
+      : activeStep == 3
       ? stepThree()
       : stepFour();
-
-    if (checkBoxData) {
-      setRefreshKey((prevKey) => prevKey + 1), setCheckBoxData(false), reset();
-    }
 
     console.log(data);
     changeTitle();
@@ -163,11 +178,7 @@ const ChooseGoals = ({ onClose, changeTitle }: Props) => {
             </Select>
           </FormControl>
           <Box display={display === "none" ? "" : "none"}>
-            <Att_time_IWill_Smart
-              register={register}
-              goalsData={goalsDatas}
-              // goal={goalsData}
-            />
+            <Att_time_IWill_Smart register={register} goalsData={goalsDatas} />
             <Flex>
               <Text textTransform={"uppercase"}>
                 DOES YOUR GOAL "{}" MATCH THE "SMART" PARAMETRS ?
@@ -176,8 +187,11 @@ const ChooseGoals = ({ onClose, changeTitle }: Props) => {
             <SmartServey
               key={refreshKey}
               onChange={() => {
+                console.log("Smart start");
+                console.log(checkBoxData);
                 setCheckBoxData(true);
                 console.log("Is Smart!!!");
+                console.log(refreshKey);
               }}
             />
           </Box>
