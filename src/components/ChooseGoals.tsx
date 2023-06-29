@@ -45,6 +45,7 @@ export interface FormData {
   goalTwo_IWill_Smart: string;
   goalThree_IWill_Smart: string;
   value: string;
+  smart: boolean;
 }
 
 const schema = z.object({
@@ -57,6 +58,7 @@ const schema = z.object({
   goalOne_IWill_Smart: z.string().optional(),
   goalTwo_IWill_Smart: z.string().optional(),
   goalThree_IWill_Smart: z.string().optional(),
+  smart: z.boolean().optional(),
 });
 
 const ChooseGoals = ({ onClose, changeTitle }: Props) => {
@@ -69,6 +71,7 @@ const ChooseGoals = ({ onClose, changeTitle }: Props) => {
   >(["goalOne_att_time_", "goalOne_IWill_Smart"]);
 
   const {
+    setValue,
     handleSubmit,
     register,
     reset,
@@ -82,6 +85,7 @@ const ChooseGoals = ({ onClose, changeTitle }: Props) => {
       goalOne_IWill_Smart: "",
       goalTwo_IWill_Smart: "",
       goalThree_IWill_Smart: "",
+      smart: false,
     },
   });
 
@@ -107,6 +111,7 @@ const ChooseGoals = ({ onClose, changeTitle }: Props) => {
       {
         goalThree_att_time_: "",
         goalThree_IWill_Smart: "",
+        smart: false,
       },
       { keepValues: true }
     );
@@ -120,6 +125,7 @@ const ChooseGoals = ({ onClose, changeTitle }: Props) => {
       {
         goalTwo_att_time_: "",
         goalTwo_IWill_Smart: "",
+        smart: false,
       },
       { keepValues: true }
     );
@@ -132,6 +138,7 @@ const ChooseGoals = ({ onClose, changeTitle }: Props) => {
       {
         goalOne_att_time_: "",
         goalOne_IWill_Smart: "",
+        smart: false,
       },
       { keepValues: true }
     );
@@ -139,10 +146,6 @@ const ChooseGoals = ({ onClose, changeTitle }: Props) => {
   function stepOne() {
     setDisplay("none");
     setActiveStep(2);
-    console.log("Step One");
-    console.log(checkBoxData);
-    console.log(refreshKey);
-    // setCheckBoxData(false);
   }
 
   const onSubmit = (data: FieldValues) => {
@@ -153,7 +156,7 @@ const ChooseGoals = ({ onClose, changeTitle }: Props) => {
       : activeStep == 3
       ? stepThree()
       : stepFour();
-
+    setRefreshKey((prevKey) => prevKey + 1);
     console.log(data);
     changeTitle();
   };
@@ -185,13 +188,12 @@ const ChooseGoals = ({ onClose, changeTitle }: Props) => {
               </Text>
             </Flex>
             <SmartServey
+              // register={register}
               key={refreshKey}
               onChange={() => {
-                console.log("Smart start");
-                console.log(checkBoxData);
-                setCheckBoxData(true);
-                console.log("Is Smart!!!");
-                console.log(refreshKey);
+                // setCheckBoxData(true),
+                console.log("SmartServey ONLINE");
+                setValue("smart", true);
               }}
             />
           </Box>

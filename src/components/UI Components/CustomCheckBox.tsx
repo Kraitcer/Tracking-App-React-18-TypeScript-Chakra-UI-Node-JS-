@@ -12,7 +12,7 @@ interface Props {
   checked: any;
 }
 
-const CustomCheckbox = ({ onChange, checked }: Props) => {
+const CustomCheckbox = ({ checked, onChange }: Props) => {
   const [checkBoxData, setCheckBoxData] = useState(false);
 
   const handleCheckboxChange = () => {
@@ -27,18 +27,14 @@ const CustomCheckbox = ({ onChange, checked }: Props) => {
 
   return (
     <Checkbox
-      {...checked}
-      // checked={checked}
+      // {...checked}
+      checked={checked}
       onChange={handleCheckboxChange}
       size={"lg"}
-      // iconSize={"50px"}
-      // colorScheme={checkBoxData ? "blue" : "orange"}
-      // boxSize={"50px"}
-      // icon={}
-      // spacing={"200px"}
       bg={checkBoxData ? "blue" : "orange"}
     />
   );
+  // ==========================================CUSTOM CHECKBOX========================
   //   <Checkbox
   //     {...checked}
   //     onChange={handleCheckboxChange}

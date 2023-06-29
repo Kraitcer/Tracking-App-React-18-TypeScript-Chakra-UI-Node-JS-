@@ -3,6 +3,7 @@ import CustomCheckbox from "./CustomCheckBox";
 import { Table, TableContainer, Tbody, Td, Tr } from "@chakra-ui/table";
 // import { RadioGroup } from "@chakra-ui/radio";
 import { CheckboxGroup } from "@chakra-ui/checkbox";
+import { UseFormRegister } from "react-hook-form";
 
 interface smartArray {
   acronym: string;
@@ -23,9 +24,16 @@ interface refrashProps {
 }
 interface Props {
   onChange: () => void;
+  //   register: UseFormRegister<FormData>;
 }
 
-const SmartServey = ({ onChange }: Props, { key }: refrashProps) => {
+const SmartServey = (
+  {
+    onChange,
+  }: //   register,
+  Props,
+  { key }: refrashProps
+) => {
   const [smartCheckboxData, setSmartCheckboxData] = useState(smartArray);
 
   const handleSmartChange = (checkboxName: string) => {
@@ -36,6 +44,7 @@ const SmartServey = ({ onChange }: Props, { key }: refrashProps) => {
           : smart
       )
     );
+    // onChange();
   };
 
   if (
@@ -45,8 +54,8 @@ const SmartServey = ({ onChange }: Props, { key }: refrashProps) => {
     smartCheckboxData[3].checkbox &&
     smartCheckboxData[4].checkbox
   ) {
-    console.log("smart cheker - OK");
-    console.log(smartCheckboxData);
+    // console.log("smart cheker - OK");
+    // console.log(smartCheckboxData);
     onChange();
   } else {
     // console.log("smartCheckboxData");
@@ -86,6 +95,7 @@ const SmartServey = ({ onChange }: Props, { key }: refrashProps) => {
                     key={key}
                     // checked={true}
 
+                    //   checked={register}
                     checked={smartCheckboxData[parametr.id].checkbox}
                     onChange={() => {
                       handleSmartChange(parametr.meaning);
