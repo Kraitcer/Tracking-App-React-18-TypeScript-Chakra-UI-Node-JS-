@@ -62,8 +62,6 @@ const schema = z.object({
 });
 
 const ChooseGoals = ({ onClose, changeTitle }: Props) => {
-  const [checkBoxData, setCheckBoxData] = useState(false);
-
   const [refreshKey, setRefreshKey] = useState(0);
 
   const [goalsDatas, setGoalsDatas] = useState<
@@ -105,43 +103,30 @@ const ChooseGoals = ({ onClose, changeTitle }: Props) => {
     count: steps.length,
   });
 
-  function stepFour() {
+  function stepFour(data: any) {
+    if (
+      !data["smart"] ||
+      !data["goalOne_att_time_"] ||
+      !data["goalOne_IWill_Smart"]
+    )
+      return;
     onClose();
     reset(
       {
         goalThree_att_time_: "",
         goalThree_IWill_Smart: "",
-        smart: false,
+        // smart: false,
       },
       { keepValues: true }
     );
   }
-  function stepThree() {
-    console.log("Step Three");
-    // console.log(checkBoxData);
-    setGoalsDatas(["goalThree_att_time_", "goalThree_IWill_Smart"]);
-    setActiveStep(4);
-    reset(
-      {
-        goalTwo_att_time_: "",
-        goalTwo_IWill_Smart: "",
-        smart: false,
-      },
-      { keepValues: true }
-    );
-  }
-  function stepTwo() {
-    console.log("Step Two");
-    setGoalsDatas(["goalTwo_att_time_", "goalTwo_IWill_Smart"]);
-    setActiveStep(3);
-    reset(
-      {
-        goalOne_att_time_: "",
-        goalOne_IWill_Smart: "",
-        smart: false,
-      },
-      { keepValues: true }
-    );
+
+  function stepTwoThree({ data, goalArray, step, resetObj }: any) {
+    if (!data["smart"] && !data[goalArray[0]] && !data[goalArray[1]]) return;
+    console.log("TwoThree");
+    setGoalsDatas(goalArray);
+    setActiveStep(step);
+    reset(resetObj, { keepValues: true });
   }
   function stepOne() {
     setDisplay("none");
@@ -152,11 +137,28 @@ const ChooseGoals = ({ onClose, changeTitle }: Props) => {
     activeStep == 1
       ? stepOne()
       : activeStep == 2
-      ? stepTwo()
+      ? stepTwoThree({
+          data: data,
+          goalArray: ["goalTwo_att_time_", "goalTwo_IWill_Smart"],
+          step: 3,
+          resetObj: {
+            goalOne_att_time_: "",
+            goalOne_IWill_Smart: "",
+          },
+        })
       : activeStep == 3
-      ? stepThree()
-      : stepFour();
+      ? stepTwoThree({
+          data: data,
+          goalArray: ["goalThree_att_time_", "goalThree_IWill_Smart"],
+          step: 4,
+          resetObj: {
+            goalTwo_att_time_: "",
+            goalTwo_IWill_Smart: "",
+          },
+        })
+      : stepFour(data);
     setRefreshKey((prevKey) => prevKey + 1);
+    setValue("smart", false);
     console.log(data);
     changeTitle();
   };
@@ -191,7 +193,6 @@ const ChooseGoals = ({ onClose, changeTitle }: Props) => {
               // register={register}
               key={refreshKey}
               onChange={() => {
-                // setCheckBoxData(true),
                 console.log("SmartServey ONLINE");
                 setValue("smart", true);
               }}
