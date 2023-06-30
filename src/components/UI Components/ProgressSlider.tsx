@@ -3,12 +3,8 @@ import {
   SliderTrack,
   SliderFilledTrack,
   SliderThumb,
-  SliderMark,
   Text,
   HStack,
-  Badge,
-  Button,
-  VStack,
   Flex,
   Box,
 } from "@chakra-ui/react";
