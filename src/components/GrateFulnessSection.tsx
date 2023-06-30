@@ -124,7 +124,7 @@ const GrateFulnessSection = () => {
             bg={"blue.100"}
             color={"white"}
             placeholder="Write down thing you have been grateful for today. Choose it type and submit"
-            h="6.2rem"
+            h="5.9rem"
             resize={"none"}
             _hover={{
               bg: "blue.400",
@@ -156,11 +156,11 @@ const GrateFulnessSection = () => {
             <Tbody>
               {grateDataArrey.length === 3 &&
                 grateDataArrey.map((grateElement, index) => (
-                  <Tr key={index} fontSize={16}>
-                    <Td ps={0} pb={3.5} pt={3.5} textAlign={"left"}>
+                  <Tr key={index} fontSize={17}>
+                    <Td ps={0} pb={4} pt={4} textAlign={"left"}>
                       {grateElement.gratefulForDoday}
                     </Td>
-                    <Td pb={3.5} pt={3.5} pe={0} textAlign={"right"}>
+                    <Td pb={4} pt={4} pe={0} textAlign={"right"}>
                       {grateElement.grateCategories}
                     </Td>
                   </Tr>

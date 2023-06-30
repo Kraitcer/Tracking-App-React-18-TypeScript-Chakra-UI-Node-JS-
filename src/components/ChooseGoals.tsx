@@ -44,7 +44,7 @@ const schema = z.object({
   smart: z.boolean().optional(),
 });
 
-type FormData = z.infer<typeof schema>;
+export type FormData = z.infer<typeof schema>;
 
 const ChooseGoals = ({ onClose, changeTitle }: Props) => {
   const [refreshKey, setRefreshKey] = useState(0);
@@ -207,10 +207,7 @@ const ChooseGoals = ({ onClose, changeTitle }: Props) => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <FormControl display={display}>
             <Select
-              {...register(
-                "projects"
-                // , { required: true }
-              )}
+              {...register("projects")}
               name="projects"
               placeholder="Select project"
               defaultValue={"Select project"}
@@ -223,20 +220,12 @@ const ChooseGoals = ({ onClose, changeTitle }: Props) => {
                 </option>
               ))}
             </Select>
-            {/* {errors.projects &&
-              toast({
-                title: `${"errors.projects.message"}`,
-                description: "Please choose the project",
-                status: "warning",
-                duration: 9000,
-                isClosable: true,
-              })} */}
           </FormControl>
           <Box display={display === "none" ? "" : "none"}>
             <Att_time_IWill_Smart register={register} goalsData={goalsDatas} />
             <Flex>
               <Text textTransform={"uppercase"}>
-                DOES YOUR GOAL "{}" MATCH THE "SMART" PARAMETRS ?
+                DOES YOUR GOAL MATCH THE "SMART" PARAMETRS ?
               </Text>
             </Flex>
             <SmartServey

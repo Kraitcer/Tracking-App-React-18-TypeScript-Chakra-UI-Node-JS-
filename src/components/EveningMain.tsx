@@ -10,6 +10,10 @@ import AllModal from "./UI Components/AllModal";
 import ChooseGoals from "./ChooseGoals";
 import { useState } from "react";
 import NoteBadTimeAndSubmitAll from "./NoteBadTimeAndSubmitAll";
+import GoalsSection from "./GoalsSection";
+import { FieldValues, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 
 const EveningMain = () => {
   const [isOpen1, setIsOpen1] = useState(false);
@@ -33,6 +37,26 @@ const EveningMain = () => {
     yourEngine: "your engine",
     doodles: "doodles",
   };
+
+  const schema = z.object({
+    goalOneProgress: z.number().optional(),
+    goalTwoProgress: z.number().optional(),
+    goalThreeProgress: z.number().optional(),
+    health: z.number().optional(),
+    emotions: z.number().optional(),
+    intellect: z.number().optional(),
+  });
+
+  type FormData = z.infer<typeof schema>;
+
+  const { register, handleSubmit, setValue } = useForm<FormData>({
+    resolver: zodResolver(schema),
+  });
+
+  const onSubmit = (data: FieldValues) => {
+    console.log(data);
+  };
+
   return (
     <>
       <AllModal
@@ -54,20 +78,36 @@ const EveningMain = () => {
       />
       <Flex justifyContent={"center"} gap={3}>
         <Box w="280px" h={727} bg="white" flexDirection={"column"} gap={0}>
-          <Stack marginBottom={2}>
-            <SectionHeader HeadingName={HeadingNames.goals} />
-            <ProgressSlider sliderName={"Goal One: complited "} />
-            <ProgressSlider sliderName={"Goal Two: complited "} />
-            <ProgressSlider sliderName={"Goal Three: complited "} />
-            <SectionButton
-              buttonName="Choose Goals For Tommorow"
-              onClick={openModal1}
+          <SectionHeader HeadingName={HeadingNames.goals} />
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <GoalsSection
+              sliderOneName={"GoalOne"}
+              sliderTwoName={"GoalTwo"}
+              sliderThreeName={"GoalThree"}
+              sliderOneValue={(data: number) => {
+                setValue("goalOneProgress", data);
+              }}
+              sliderTwoValue={(date: number) => {
+                setValue("goalTwoProgress", date);
+              }}
+              sliderThreeValue={(date: number) => {
+                setValue("goalThreeProgress", date);
+              }}
+              children={
+                <SectionButton
+                  buttonName="Choose Goals For Tommorow"
+                  onClick={() => {
+                    openModal1();
+                  }}
+                />
+              }
             />
-          </Stack>
+          </form>
+
           <SectionHeader HeadingName={HeadingNames.doneList} />
           <Box
             w={"100%"}
-            h={"17%"}
+            h={"19%"}
             border={"2px solid"}
             borderColor={"blue.100"}
             overflowY={"scroll"}
@@ -87,24 +127,35 @@ const EveningMain = () => {
         <Box w="280px" flexDirection={"column"}>
           <SectionHeader HeadingName={HeadingNames.votesCast} />
           <VotesCastHabits />
-          <Box marginBottom={2}>
-            <SectionHeader HeadingName={HeadingNames.yourEngine} />
-            <IconSlider />
-          </Box>
-          <SectionHeader HeadingName={HeadingNames.doodles} />
-          <Textarea
-            variant="brandPrimary"
-            bg={"blue.100"}
-            color={"white"}
-            placeholder="Write down some doodles"
-            resize={"none"}
-            marginBottom={2}
-            _hover={{
-              bg: "blue.400",
-              // placeholder: "",
-            }}
-          />
-          <SectionButton buttonName="Note Bad Time" onClick={openModal2} />
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <Box marginBottom={2}>
+              <SectionHeader HeadingName={HeadingNames.yourEngine} />
+              <IconSlider
+                healthValue={(data) => setValue("health", data)}
+                emotionsValue={(data) => setValue("emotions", data)}
+                intellectValue={(data) => setValue("intellect", data)}
+              />
+            </Box>
+            <SectionHeader HeadingName={HeadingNames.doodles} />
+            <Textarea
+              variant="brandPrimary"
+              bg={"blue.100"}
+              color={"white"}
+              placeholder="Write down some doodles"
+              resize={"none"}
+              marginBottom={2}
+              _hover={{
+                bg: "blue.400",
+                // placeholder: "",
+              }}
+            />
+            <SectionButton
+              buttonName="Note Bad Time"
+              onClick={() => {
+                console.log("submiting"), openModal2(), onSubmit;
+              }}
+            />
+          </form>
         </Box>
       </Flex>
     </>

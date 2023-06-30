@@ -20,32 +20,20 @@ interface Icons {
 interface Props {
   icons: Icons[];
   radioSetName: string;
+  setValue: (data: number) => void;
 }
-const { definePartsStyle, defineMultiStyleConfig } =
-  createMultiStyleConfigHelpers(radioAnatomy.keys);
 
-const outline = definePartsStyle({
-  control: {
-    border: "4px solid",
-    borderColor: "gray.300",
-
-    // Let's also provide dark mode alternatives
-    _dark: {
-      borderColor: "gray.600",
-    },
-  },
-});
-
-const radioTheme = defineMultiStyleConfig({
-  variants: { outline },
-});
-
-const SliderItself = ({ icons, radioSetName }: Props) => {
+const SliderItself = ({ icons, radioSetName, setValue }: Props) => {
   const [radioValue, setRadioValue] = useState<string>("0");
 
   return (
     <Flex alignItems={"center"} gap={2}>
-      <RadioGroup defaultValue="0" onChange={(value) => setRadioValue(value)}>
+      <RadioGroup
+        defaultValue="0"
+        onChange={(value) => {
+          setValue(parseInt(value)), setRadioValue(value);
+        }}
+      >
         <Flex
           flexDirection={"column"}
           padding={3}

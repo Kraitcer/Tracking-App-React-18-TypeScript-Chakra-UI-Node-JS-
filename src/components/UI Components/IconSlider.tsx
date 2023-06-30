@@ -20,7 +20,13 @@ import intellectIcon5 from "D:/Gleb Kraitser/Front End Home Work/Практик�
 
 import SliderItself from "./SliderItself";
 
-const IconSlider = () => {
+interface Props {
+  healthValue: (data: number) => void;
+  emotionsValue: (data: number) => void;
+  intellectValue: (data: number) => void;
+}
+
+const IconSlider = ({ healthValue, emotionsValue, intellectValue }: Props) => {
   const healthIcons = [
     { id: 1, image: healthIcon1 },
     { id: 2, image: healthIcon2 },
@@ -44,9 +50,21 @@ const IconSlider = () => {
   ];
   return (
     <Flex alignItems={"center"} gap={2} flexDirection={"column"}>
-      <SliderItself radioSetName={"Helth"} icons={healthIcons} />
-      <SliderItself radioSetName={"Emotions"} icons={emotionIcons} />
-      <SliderItself radioSetName={"Intellect"} icons={intellectIcons} />
+      <SliderItself
+        setValue={(data) => healthValue(data)}
+        radioSetName={"Helth"}
+        icons={healthIcons}
+      />
+      <SliderItself
+        setValue={(data) => emotionsValue(data)}
+        radioSetName={"Emotions"}
+        icons={emotionIcons}
+      />
+      <SliderItself
+        setValue={(data) => intellectValue(data)}
+        radioSetName={"Intellect"}
+        icons={intellectIcons}
+      />
     </Flex>
   );
 };
