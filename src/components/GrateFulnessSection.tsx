@@ -57,6 +57,8 @@ const GrateFulnessSection = () => {
         "gratefulness array",
         JSON.stringify(grateDataArrey)
       );
+    JSON.stringify(grateDataArrey);
+    console.log(grateDataArrey);
   }, [grateDataArrey]);
 
   const onSubmit = (data: FieldValues) => {
@@ -124,6 +126,10 @@ const GrateFulnessSection = () => {
             placeholder="Write down thing you have been grateful for today. Choose it type and submit"
             h="6.2rem"
             resize={"none"}
+            _hover={{
+              bg: "blue.400",
+              // placeholder: "",
+            }}
           />
         </FormControl>
         <FormControl id="grateCategories" display={display}>

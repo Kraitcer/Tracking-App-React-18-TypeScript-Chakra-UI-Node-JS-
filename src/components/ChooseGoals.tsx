@@ -24,28 +24,11 @@ import SectionButton from "./UI Components/SectionButton";
 import Att_time_IWill_Smart from "./UI Components/Att_time_IWill_Smart";
 import SmartServey from "./UI Components/SmartServey";
 import { projectsArray } from "./Projects";
-
-interface GoalProps {
-  goal: () => string;
-}
+import { keys } from "lodash";
 
 interface Props {
   onClose: () => void;
   changeTitle: () => void;
-}
-type FormInputs = {
-  smartData: string;
-};
-export interface FormData {
-  projects: string;
-  goalOne_att_time_: string;
-  goalTwo_att_time_: string;
-  goalThree_att_time_: string;
-  goalOne_IWill_Smart: string;
-  goalTwo_IWill_Smart: string;
-  goalThree_IWill_Smart: string;
-  value: string;
-  smart: boolean;
 }
 
 const schema = z.object({
@@ -60,6 +43,8 @@ const schema = z.object({
   goalThree_IWill_Smart: z.string().optional(),
   smart: z.boolean().optional(),
 });
+
+type FormData = z.infer<typeof schema>;
 
 const ChooseGoals = ({ onClose, changeTitle }: Props) => {
   const [refreshKey, setRefreshKey] = useState(0);
@@ -77,6 +62,7 @@ const ChooseGoals = ({ onClose, changeTitle }: Props) => {
   } = useForm<FormData>({
     resolver: zodResolver(schema),
     defaultValues: {
+      projects: undefined,
       goalOne_att_time_: "",
       goalTwo_att_time_: "",
       goalThree_att_time_: "",
@@ -85,6 +71,16 @@ const ChooseGoals = ({ onClose, changeTitle }: Props) => {
       goalThree_IWill_Smart: "",
       smart: false,
     },
+  });
+  const [goalsDataOgj, setGoalsDataOgj] = useState<FieldValues>({
+    projects: undefined,
+    goalOne_att_time_: "",
+    goalTwo_att_time_: "",
+    goalThree_att_time_: "",
+    goalOne_IWill_Smart: "",
+    goalTwo_IWill_Smart: "",
+    goalThree_IWill_Smart: "",
+    smart: false,
   });
 
   const [display, setDisplay] = useState("");
@@ -103,7 +99,7 @@ const ChooseGoals = ({ onClose, changeTitle }: Props) => {
     count: steps.length,
   });
 
-  function stepFour(data: any) {
+  function stepFour({ data, resetObj }: any) {
     if (
       !data["smart"] ||
       !data["goalOne_att_time_"] ||
@@ -111,28 +107,52 @@ const ChooseGoals = ({ onClose, changeTitle }: Props) => {
     )
       return;
     onClose();
-    reset(
-      {
-        goalThree_att_time_: "",
-        goalThree_IWill_Smart: "",
-        // smart: false,
-      },
-      { keepValues: true }
-    );
+    reset(resetObj, { keepValues: true });
   }
 
-  function stepTwoThree({ data, goalArray, step, resetObj }: any) {
-    if (!data["smart"] && !data[goalArray[0]] && !data[goalArray[1]]) return;
+  function stepTwoThree({
+    data,
+    goalArray,
+    step,
+    resetObj,
+    currentGoal,
+    nextGoal,
+  }: any) {
+    if (!data["smart"] && !data[goalArray[0]] && !data[goalArray[1]])
+      return toast({
+        title: "SMART Checkboxes are requared",
+        description: "Please check all checkboxes",
+        status: "warning",
+        duration: 9000,
+        isClosable: true,
+      });
+    // return;
     console.log("TwoThree");
     setGoalsDatas(goalArray);
     setActiveStep(step);
     reset(resetObj, { keepValues: true });
+    toast({
+      title: `${currentGoal} Goal is chosen`,
+      description: `Choose ${nextGoal} One`,
+      status: "success",
+      duration: 9000,
+      isClosable: true,
+    });
   }
   function stepOne() {
     setDisplay("none");
     setActiveStep(2);
   }
-
+  function addSubmit() {
+    if (errors.projects)
+      return toast({
+        title: `${errors.projects.message}`,
+        description: "Please choose the project",
+        status: "warning",
+        duration: 9000,
+        isClosable: true,
+      });
+  }
   const onSubmit = (data: FieldValues) => {
     activeStep == 1
       ? stepOne()
@@ -145,6 +165,8 @@ const ChooseGoals = ({ onClose, changeTitle }: Props) => {
             goalOne_att_time_: "",
             goalOne_IWill_Smart: "",
           },
+          nextGoal: "Second",
+          currentGoal: "First",
         })
       : activeStep == 3
       ? stepTwoThree({
@@ -155,13 +177,29 @@ const ChooseGoals = ({ onClose, changeTitle }: Props) => {
             goalTwo_att_time_: "",
             goalTwo_IWill_Smart: "",
           },
+          nextGoal: "Third",
+          currentGoal: "Second",
         })
-      : stepFour(data);
+      : stepFour({
+          data: data,
+          resetObj: {
+            goalThree_att_time_: "",
+            goalThree_IWill_Smart: "",
+          },
+        });
     setRefreshKey((prevKey) => prevKey + 1);
+    setGoalsDataOgj(data);
     setValue("smart", false);
     console.log(data);
     changeTitle();
   };
+  useEffect(() => {
+    if (goalsDataOgj)
+      localStorage.setItem(
+        "Tommorow Project & Goals",
+        JSON.stringify(goalsDataOgj)
+      );
+  }, [goalsDataOgj]);
 
   return (
     <>
@@ -169,18 +207,30 @@ const ChooseGoals = ({ onClose, changeTitle }: Props) => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <FormControl display={display}>
             <Select
-              {...register("projects")}
+              {...register(
+                "projects"
+                // , { required: true }
+              )}
               name="projects"
               placeholder="Select project"
+              defaultValue={"Select project"}
               w={466}
               mb={2}
             >
-              {projectsArray.map((project, index) => (
-                <option key={index + 1} value={project}>
+              {projectsArray.map((project) => (
+                <option key={project} value={project}>
                   {project}
                 </option>
               ))}
             </Select>
+            {/* {errors.projects &&
+              toast({
+                title: `${"errors.projects.message"}`,
+                description: "Please choose the project",
+                status: "warning",
+                duration: 9000,
+                isClosable: true,
+              })} */}
           </FormControl>
           <Box display={display === "none" ? "" : "none"}>
             <Att_time_IWill_Smart register={register} goalsData={goalsDatas} />
@@ -190,7 +240,6 @@ const ChooseGoals = ({ onClose, changeTitle }: Props) => {
               </Text>
             </Flex>
             <SmartServey
-              // register={register}
               key={refreshKey}
               onChange={() => {
                 console.log("SmartServey ONLINE");
@@ -206,7 +255,9 @@ const ChooseGoals = ({ onClose, changeTitle }: Props) => {
                 ? "Continue With Goals"
                 : "Next Goal"
             }
-            onClick={() => onSubmit}
+            onClick={() => {
+              addSubmit(), onSubmit;
+            }}
           />
         </form>
       </Flex>

@@ -99,6 +99,10 @@ const EveningMain = () => {
             placeholder="Write down some doodles"
             resize={"none"}
             marginBottom={2}
+            _hover={{
+              bg: "blue.400",
+              // placeholder: "",
+            }}
           />
           <SectionButton buttonName="Note Bad Time" onClick={openModal2} />
         </Box>

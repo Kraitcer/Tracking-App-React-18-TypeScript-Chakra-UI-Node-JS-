@@ -29,13 +29,13 @@ const schema = z.object({
     .min(3, {
       message: "improvement required and must be at least 3 characters",
     })
-    .max(12),
+    .max(18),
   habitImprovementDetails: z
     .string()
     .min(3, {
       message: "improvement details required and must be at least 3 characters",
     })
-    .max(12),
+    .max(120),
   category: z.enum(habitCategories, {
     errorMap: () => ({ message: "choose habit is required" }),
   }),
