@@ -1,1 +1,5 @@
-export const ToDayGoals = ["Goal One", "Goal Two", "Goal Three"] as const;
+export const ToDayGoals = [
+  "today Goal One",
+  "today Goal Two",
+  "today Goal Three",
+] as const;

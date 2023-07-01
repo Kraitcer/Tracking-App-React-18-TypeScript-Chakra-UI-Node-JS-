@@ -6,7 +6,6 @@ interface GoalsProps {
   sliderOneValue: (data: number) => void;
   sliderTwoValue: (data: number) => void;
   sliderThreeValue: (data: number) => void;
-  // title: string;
   children: React.ReactNode;
   sliderOneName: string;
   sliderTwoName: string;

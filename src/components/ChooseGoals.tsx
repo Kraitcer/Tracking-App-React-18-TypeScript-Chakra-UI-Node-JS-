@@ -127,7 +127,7 @@ const ChooseGoals = ({ onClose, changeTitle }: Props) => {
         isClosable: true,
       });
     // return;
-    console.log("TwoThree");
+    // console.log("TwoThree");
     setGoalsDatas(goalArray);
     setActiveStep(step);
     reset(resetObj, { keepValues: true });
@@ -190,7 +190,7 @@ const ChooseGoals = ({ onClose, changeTitle }: Props) => {
     setRefreshKey((prevKey) => prevKey + 1);
     setGoalsDataOgj(data);
     setValue("smart", false);
-    console.log(data);
+    // console.log(data);
     changeTitle();
   };
   useEffect(() => {
@@ -231,7 +231,7 @@ const ChooseGoals = ({ onClose, changeTitle }: Props) => {
             <SmartServey
               key={refreshKey}
               onChange={() => {
-                console.log("SmartServey ONLINE");
+                // console.log("SmartServey ONLINE");
                 setValue("smart", true);
               }}
             />

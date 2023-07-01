@@ -1,6 +1,5 @@
-import { Box, Flex, Stack, Textarea, useDisclosure } from "@chakra-ui/react";
+import { Box, Flex, Textarea } from "@chakra-ui/react";
 import SectionHeader from "./UI Components/SectionHeader";
-import ProgressSlider from "./UI Components/ProgressSlider";
 import CheckBoxList from "./UI Components/CheckBoxList";
 import SectionButton from "./UI Components/SectionButton";
 import GrateFulnessSection from "./GrateFulnessSection";
@@ -8,12 +7,13 @@ import VotesCastHabits from "./VotesCastHabits";
 import IconSlider from "./UI Components/IconSlider";
 import AllModal from "./UI Components/AllModal";
 import ChooseGoals from "./ChooseGoals";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import NoteBadTimeAndSubmitAll from "./NoteBadTimeAndSubmitAll";
 import GoalsSection from "./GoalsSection";
 import { FieldValues, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { ToDayGoals } from "./ToDayGoals";
 
 const EveningMain = () => {
   const [isOpen1, setIsOpen1] = useState(false);
@@ -49,13 +49,31 @@ const EveningMain = () => {
 
   type FormData = z.infer<typeof schema>;
 
-  const { register, handleSubmit, setValue } = useForm<FormData>({
+  const { handleSubmit, setValue } = useForm<FormData>({
     resolver: zodResolver(schema),
+  });
+  const [goalsAndEngineDataObj, setGoalsAndEngineDataObj] = useState<FormData>({
+    emotions: 0,
+    goalOneProgress: 70,
+    goalThreeProgress: 70,
+    goalTwoProgress: 70,
+    health: 0,
+    intellect: 0,
   });
 
   const onSubmit = (data: FieldValues) => {
-    console.log(data);
+    // console.log(data);
+    setGoalsAndEngineDataObj(data);
+    // console.log(goalsAndEngineDataObj);
   };
+
+  useEffect(() => {
+    if (goalsAndEngineDataObj)
+      localStorage.setItem(
+        "goalsAndEngineDataObj",
+        JSON.stringify(goalsAndEngineDataObj)
+      );
+  }, [goalsAndEngineDataObj]);
 
   return (
     <>
@@ -81,9 +99,9 @@ const EveningMain = () => {
           <SectionHeader HeadingName={HeadingNames.goals} />
           <form onSubmit={handleSubmit(onSubmit)}>
             <GoalsSection
-              sliderOneName={"GoalOne"}
-              sliderTwoName={"GoalTwo"}
-              sliderThreeName={"GoalThree"}
+              sliderOneName={ToDayGoals[0]}
+              sliderTwoName={ToDayGoals[1]}
+              sliderThreeName={ToDayGoals[2]}
               sliderOneValue={(data: number) => {
                 setValue("goalOneProgress", data);
               }}
@@ -152,7 +170,7 @@ const EveningMain = () => {
             <SectionButton
               buttonName="Note Bad Time"
               onClick={() => {
-                console.log("submiting"), openModal2(), onSubmit;
+                openModal2(), onSubmit;
               }}
             />
           </form>
