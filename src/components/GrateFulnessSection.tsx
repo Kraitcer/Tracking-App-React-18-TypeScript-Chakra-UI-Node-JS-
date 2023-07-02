@@ -18,6 +18,11 @@ import SectionButton from "./UI Components/SectionButton";
 import { grateCategories } from "./grateCategories";
 import { useEffect, useState } from "react";
 
+interface Props {
+  setData: (data: any[]) => void;
+  getData: any[];
+}
+
 const schema = z.object({
   gratefulForDoday: z
     .string()
@@ -33,7 +38,7 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>;
 
-const GrateFulnessSection = () => {
+const GrateFulnessSection = ({ getData, setData }: Props) => {
   const {
     register,
     handleSubmit,
@@ -49,20 +54,17 @@ const GrateFulnessSection = () => {
 
   const [display, setDisplay] = useState("");
 
-  const [grateDataArrey, setGrateDataArrey] = useState<any[]>([]);
+  // const [grateDataArrey, setGrateDataArrey] = useState<any[]>([]);
 
   useEffect(() => {
-    if (grateDataArrey.length === 3)
-      localStorage.setItem(
-        "gratefulness array",
-        JSON.stringify(grateDataArrey)
-      );
-    JSON.stringify(grateDataArrey);
-    console.log(grateDataArrey);
-  }, [grateDataArrey]);
+    if (getData.length === 3)
+      localStorage.setItem("gratefulness array", JSON.stringify(getData));
+    JSON.stringify(getData);
+    // console.log(getData);
+  }, [getData]);
 
   const onSubmit = (data: FieldValues) => {
-    setGrateDataArrey([...grateDataArrey, data]);
+    setData([...getData, data]);
     setCount(count === 0 ? 1 : count === 1 ? 2 : count === 2 ? 3 : NaN);
     if (count === 0 || count === 1)
       toast({
@@ -154,8 +156,8 @@ const GrateFulnessSection = () => {
         <TableContainer display={display === "none" ? "" : "none"}>
           <Table variant="simple" h={"100%"}>
             <Tbody>
-              {grateDataArrey.length === 3 &&
-                grateDataArrey.map((grateElement, index) => (
+              {getData.length === 3 &&
+                getData.map((grateElement, index) => (
                   <Tr key={index} fontSize={17}>
                     <Td ps={0} pb={4} pt={4} textAlign={"left"}>
                       {grateElement.gratefulForDoday}

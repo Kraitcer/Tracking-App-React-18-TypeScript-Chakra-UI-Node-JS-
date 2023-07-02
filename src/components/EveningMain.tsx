@@ -52,6 +52,22 @@ const EveningMain = () => {
   const { handleSubmit, setValue } = useForm<FormData>({
     resolver: zodResolver(schema),
   });
+
+  const [goalsDataOgj, setGoalsDataOgj] = useState<FieldValues>({
+    projects: undefined,
+    goalOne_att_time_: "",
+    goalTwo_att_time_: "",
+    goalThree_att_time_: "",
+    goalOne_IWill_Smart: "",
+    goalTwo_IWill_Smart: "",
+    goalThree_IWill_Smart: "",
+    smart: false,
+  });
+
+  const [grateDataArrey, setGrateDataArrey] = useState<any[]>([]);
+
+  const [habitsDataArrey, setHabitsDataArrey] = useState<any[]>([]);
+
   const [goalsAndEngineDataObj, setGoalsAndEngineDataObj] = useState<FormData>({
     emotions: 0,
     goalOneProgress: 70,
@@ -83,6 +99,8 @@ const EveningMain = () => {
         onClose={closeModal1}
         children={
           <ChooseGoals
+            getData={goalsDataOgj}
+            setData={setGoalsDataOgj}
             onClose={closeModal1}
             changeTitle={() => setChooseGolsTitle("chose goals for tommorow")}
           />
@@ -92,7 +110,14 @@ const EveningMain = () => {
         title="Note Bad Time & Submit"
         onOpen={isOpen2}
         onClose={closeModal2}
-        children={<NoteBadTimeAndSubmitAll />}
+        children={
+          <NoteBadTimeAndSubmitAll
+            getTommorowData={goalsDataOgj}
+            getGrateData={grateDataArrey}
+            getTodayData={goalsAndEngineDataObj}
+            getHabitsData={habitsDataArrey}
+          />
+        }
       />
       <Flex justifyContent={"center"} gap={3}>
         <Box w="280px" h={727} bg="white" flexDirection={"column"} gap={0}>
@@ -140,11 +165,19 @@ const EveningMain = () => {
             <CheckBoxList checkboxName={"fuck"} />
           </Box>
           <SectionHeader HeadingName={HeadingNames.gratefulness} />
-          <GrateFulnessSection />
+          <GrateFulnessSection
+            getData={grateDataArrey}
+            setData={setGrateDataArrey}
+          />
         </Box>
         <Box w="280px" flexDirection={"column"}>
           <SectionHeader HeadingName={HeadingNames.votesCast} />
-          <VotesCastHabits />
+          <VotesCastHabits
+            setData={(data) => {
+              setHabitsDataArrey(data);
+            }}
+            getData={habitsDataArrey}
+          />
           <form onSubmit={handleSubmit(onSubmit)}>
             <Box marginBottom={2}>
               <SectionHeader HeadingName={HeadingNames.yourEngine} />

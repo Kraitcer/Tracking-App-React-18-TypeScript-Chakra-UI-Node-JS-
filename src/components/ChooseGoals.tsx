@@ -29,6 +29,8 @@ import { keys } from "lodash";
 interface Props {
   onClose: () => void;
   changeTitle: () => void;
+  setData: (data: any[] | FieldValues) => void;
+  getData: any[] | FieldValues;
 }
 
 const schema = z.object({
@@ -46,7 +48,7 @@ const schema = z.object({
 
 export type FormData = z.infer<typeof schema>;
 
-const ChooseGoals = ({ onClose, changeTitle }: Props) => {
+const ChooseGoals = ({ onClose, changeTitle, getData, setData }: Props) => {
   const [refreshKey, setRefreshKey] = useState(0);
 
   const [goalsDatas, setGoalsDatas] = useState<
@@ -71,16 +73,6 @@ const ChooseGoals = ({ onClose, changeTitle }: Props) => {
       goalThree_IWill_Smart: "",
       smart: false,
     },
-  });
-  const [goalsDataOgj, setGoalsDataOgj] = useState<FieldValues>({
-    projects: undefined,
-    goalOne_att_time_: "",
-    goalTwo_att_time_: "",
-    goalThree_att_time_: "",
-    goalOne_IWill_Smart: "",
-    goalTwo_IWill_Smart: "",
-    goalThree_IWill_Smart: "",
-    smart: false,
   });
 
   const [display, setDisplay] = useState("");
@@ -188,18 +180,15 @@ const ChooseGoals = ({ onClose, changeTitle }: Props) => {
           },
         });
     setRefreshKey((prevKey) => prevKey + 1);
-    setGoalsDataOgj(data);
+    setData(data);
     setValue("smart", false);
     // console.log(data);
     changeTitle();
   };
   useEffect(() => {
-    if (goalsDataOgj)
-      localStorage.setItem(
-        "Tommorow Project & Goals",
-        JSON.stringify(goalsDataOgj)
-      );
-  }, [goalsDataOgj]);
+    if (getData)
+      localStorage.setItem("Tommorow Project & Goals", JSON.stringify(getData));
+  }, [getData]);
 
   return (
     <>

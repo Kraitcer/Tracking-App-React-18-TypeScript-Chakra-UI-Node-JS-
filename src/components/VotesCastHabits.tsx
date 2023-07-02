@@ -43,7 +43,12 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>;
 
-const VotesCastHabits = () => {
+interface Props {
+  setData: (data: any) => void;
+  getData: any[];
+}
+
+const VotesCastHabits = ({ setData, getData }: Props) => {
   const toast = useToast();
   const {
     register,
@@ -60,9 +65,13 @@ const VotesCastHabits = () => {
   const [display, setDisplay] = useState("");
 
   useEffect(() => {
-    if (habitsDataArrey.length === 6)
-      localStorage.setItem("Habits array", JSON.stringify(habitsDataArrey));
-  }, [habitsDataArrey]);
+    if (getData.length === 6)
+      localStorage.setItem("Habits array", JSON.stringify(getData));
+  }, [getData]);
+  // useEffect(() => {
+  //   if (habitsDataArrey.length === 6)
+  //     localStorage.setItem("Habits array", JSON.stringify(habitsDataArrey));
+  // }, [habitsDataArrey]);
 
   const voteIcons = [vateOne, vateTwo, vateThree, vateFour, vateFive, vateSix];
 
@@ -91,14 +100,15 @@ const VotesCastHabits = () => {
         duration: 9000,
         isClosable: true,
       });
-    if (habitsDataArrey.length === 5) {
+    if (getData.length === 5) {
       setDisplay("none");
     }
   }
 
   const onSubmit = (data: FieldValues) => {
-    setHabitsDataArrey([...habitsDataArrey, data]);
-    // console.log(habitsDataArrey);
+    setData([...getData, data]);
+    // setHabitsDataArrey([...getData, data]);
+    // console.log("suck", getData);
     reset();
     const iconExpressoin = currentIcon < 5 ? currentIcon + 1 : 0;
     setCurrentIcon(iconExpressoin);
@@ -161,7 +171,7 @@ const VotesCastHabits = () => {
           <Table variant="simple">
             <Tbody>
               {/* {habitsDataArrey.length === 5 && */}
-              {habitsDataArrey.map((habitsElement, index) => (
+              {getData.map((habitsElement, index) => (
                 <Tr key={index} fontSize={16}>
                   <Td ps={0} pb={1.5} pt={1.5} textAlign={"left"}>
                     {habitsElement.category}
