@@ -142,7 +142,7 @@ const NoteBadTimeAndSubmitAll = () => {
       </Tabs>
       <Flex mb={3} gap={3}>
         <Text
-          w={250}
+          w={650}
           fontSize={24}
           align={"center"}
           textTransform={"uppercase"}
@@ -150,12 +150,12 @@ const NoteBadTimeAndSubmitAll = () => {
           // alignItems={"center"}
           flex={"nowrap"}
         >
-          BAD TIME
+          NOTE BAD TIME
         </Text>
-        <Input type={"time"} w={60}></Input>
+        <Input type={"time"} w={80}></Input>
         <SectionButton
           onClick={() => console.log("totalSubmit")}
-          buttonName="Note Bad Time and Submit"
+          buttonName="& SUBMIT"
         />
       </Flex>
     </>
