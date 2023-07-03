@@ -107,8 +107,6 @@ const VotesCastHabits = ({ setData, getData }: Props) => {
 
   const onSubmit = (data: FieldValues) => {
     setData([...getData, data]);
-    // setHabitsDataArrey([...getData, data]);
-    // console.log("suck", getData);
     reset();
     const iconExpressoin = currentIcon < 5 ? currentIcon + 1 : 0;
     setCurrentIcon(iconExpressoin);

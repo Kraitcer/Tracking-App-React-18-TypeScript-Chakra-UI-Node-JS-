@@ -5,7 +5,6 @@ import { ToDayGoals } from "./ToDayGoals";
 import SectionButton from "./UI Components/SectionButton";
 import { Input } from "@chakra-ui/input";
 import { Flex, Text } from "@chakra-ui/react";
-import { FieldValues } from "react-hook-form";
 
 interface Props {
   getGrateData: any[];
@@ -20,11 +19,6 @@ const NoteBadTimeAndSubmitAll = ({
   getTodayData,
   getHabitsData,
 }: Props) => {
-  // const [projectsGoals, setProjectsGoals] = useState<any>();
-  // const [habits, setHabits] = useState<any[]>();
-  // const [gratefulnessArray, setGratefulnessArray] = useState<any[]>([]);
-  // const [goalsAndEngineDataObj, setGoalsAndEngineDataObj] = useState<any[]>([]);
-
   const tommorowGoals = [
     { name: "goalOne", at: "goalOne_att_time_", iWill: "goalOne_IWill_Smart" },
     { name: "goalTwo", at: "goalTwo_att_time_", iWill: "goalTwo_IWill_Smart" },
@@ -35,9 +29,6 @@ const NoteBadTimeAndSubmitAll = ({
     },
   ];
 
-  const [tommorowGoalsArray, setTommorowGoalsArray] = useState<any[] | string>(
-    tommorowGoals
-  );
   const todayGoalsArray = [
     { name: "goalOneProgress" },
     { name: "goalThreeProgress" },
@@ -48,22 +39,7 @@ const NoteBadTimeAndSubmitAll = ({
   ];
   const [todayGoals, setTodayGoals] = useState<any[]>(todayGoalsArray);
 
-  useEffect(() => {
-    // const goalsAndEngineDataObj = localStorage.getItem("goalsAndEngineDataObj");
-    // if (goalsAndEngineDataObj)
-    //   return setGoalsAndEngineDataObj(JSON.parse(goalsAndEngineDataObj));
-    // const projectsGoals = localStorage.getItem("Tommorow Project & Goals");
-    // if (projectsGoals) return setProjectsGoals(JSON.parse(projectsGoals));
-    // const habitsArray = localStorage.getItem("Habits array");
-    // if (habitsArray) return setHabits(JSON.parse(habitsArray));
-    // const gratefulnessArray = localStorage.getItem("gratefulness array");
-    // if (gratefulnessArray)
-    //   return setGratefulnessArray(JSON.parse(gratefulnessArray));
-  }, []);
-  // console.log(goalsAndEngineDataObj);
-  // console.log(gratefulnessArray);
-  // console.log(projectsGoals);
-  // console.log(habits);
+  useEffect(() => {}, []);
 
   return (
     <>
@@ -136,11 +112,8 @@ const NoteBadTimeAndSubmitAll = ({
                 <Tbody>
                   {tommorowGoals.map((goal, index) => (
                     <Tr key={index} fontSize={17}>
-                      <Td ps={0} pb={2} pt={2} textAlign={"left"}>
-                        AT {getTommorowData[goal.at]}
-                      </Td>
-                      <Td pb={2} pt={2} pe={0} textAlign={"right"}>
-                        I WILL
+                      <Td ps={0} pb={2} pt={2} w={10} textAlign={"left"}>
+                        AT {getTommorowData[goal.at]} I WILL
                       </Td>
                       <Td pb={2} pt={2} pe={0} textAlign={"left"}>
                         {getTommorowData[goal.iWill]}
