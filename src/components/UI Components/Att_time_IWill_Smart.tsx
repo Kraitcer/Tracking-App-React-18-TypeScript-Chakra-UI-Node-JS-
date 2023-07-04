@@ -13,9 +13,10 @@ const Att_time_IWill_Smart = ({ register, goalsData }: ChildComponentProps) => {
     <>
       <Flex gap={4} justifyContent={"center"} alignItems={"center"}>
         <Text fontSize={30} marginTop={3}>
-          AT{" "}
+          AT
         </Text>
         <Input
+          // {...register("")}
           {...register(goalsData[0])}
           type="time"
           w={"150px"}

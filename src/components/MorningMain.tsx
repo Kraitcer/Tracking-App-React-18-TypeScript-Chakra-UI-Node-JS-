@@ -1,55 +1,62 @@
-import React from "react";
 import SectionHeader from "./UI Components/SectionHeader";
 import SleeepSection from "./SleeepSection";
 import { Box, Flex } from "@chakra-ui/layout";
 import SectionButton from "./UI Components/SectionButton";
-import { FieldValues, useForm } from "react-hook-form";
+import { FieldValues, useForm, useController } from "react-hook-form";
+import { ChangeEvent } from "react";
+
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+
 const schema = z.object({
-  wakeUpTime: z.number().optional(),
+  wakeUpTime: z.string(),
   wokeUpEnergized: z.boolean().optional(),
   hungryForActions: z.boolean().optional(),
-  sleeprRating: z.number().optional(),
+  sleeprRating: z.number(),
 });
 
-type FormData = z.infer<typeof schema>;
-
-const onSubmit = (data: FieldValues) => {
-  // console.log(data);
-  //   setGoalsAndEngineDataObj(data);
-  // console.log(goalsAndEngineDataObj);
-};
+export type FormData = z.infer<typeof schema>;
 
 const MorningMain = () => {
-  const { handleSubmit, setValue } = useForm<FormData>({
+  const { handleSubmit, setValue, register, control } = useForm<FormData>({
     resolver: zodResolver(schema),
   });
-
+  const { field } = useController({ name: "wokeUpEnergized", control });
+  const onSubmit = (data: FieldValues) => {
+    console.log(data);
+    // reset();
+    //   setGoalsAndEngineDataObj(data);
+    // console.log(goalsAndEngineDataObj);
+  };
   return (
-    <Flex flexDirection={"column"} alignItems={"center"} gap={3}>
-      <Box w="560px" flexDirection={"column"}>
-        <SectionHeader HeadingName="sleep" />
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <SleeepSection />
-        </form>
-      </Box>
-      <Box w="560px" flexDirection={"column"}>
-        <SectionHeader HeadingName="today's goals" />
-      </Box>
-      <Box w="560px" flexDirection={"column"}>
-        <SectionHeader HeadingName="todo list" />
-      </Box>
-      <Box w="560px" flexDirection={"column"}>
-        <SectionButton
-          buttonName="submit all and start the day"
-          onClick={() => {
-            onSubmit;
-            console.log("Morning Submit");
-          }}
-        />
-      </Box>
-    </Flex>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <Flex flexDirection={"column"} alignItems={"center"} gap={3}>
+        <Box w="560px" flexDirection={"column"}>
+          <SectionHeader HeadingName="sleep" />
+          <SleeepSection
+            sleeprRating={(data) => setValue("sleeprRating", data + 1)}
+            register={register}
+            control={control}
+            // wokeUpEnergized={(data) => {
+            //   console.log(data);
+            //   //   setValue("wokeUpEnergized", data);
+            // }}
+          />
+        </Box>
+        <Box w="560px" flexDirection={"column"}>
+          <SectionHeader HeadingName="today's goals" />
+        </Box>
+        <Box w="560px" flexDirection={"column"}>
+          <SectionHeader HeadingName="todo list" />
+        </Box>
+        <Box w="560px" flexDirection={"column"}>
+          <SectionButton
+            buttonName="submit all and start the day"
+            onClick={() => onSubmit}
+          />
+        </Box>
+      </Flex>
+    </form>
   );
 };
 

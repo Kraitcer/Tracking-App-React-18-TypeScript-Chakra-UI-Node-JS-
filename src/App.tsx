@@ -25,7 +25,7 @@ function App() {
       color="blackAlpha.700"
       fontWeight="bold"
     >
-      <GridItem pl="2" bg="pink.300" area="nav">
+      <GridItem pl="2" bg="blue.300" area="nav">
         <Flex gap={2} mt={1.5} mr={2}>
           <SectionButton
             buttonName="survey"
