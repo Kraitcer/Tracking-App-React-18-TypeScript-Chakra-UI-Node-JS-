@@ -1,8 +1,8 @@
 import SliderItself from "./UI Components/SliderItself";
-import sleep1 from "../assets/Image/MorningPage_SleepSection_icons/SVG/SVG/sleep 1.svg";
-import sleep2 from "../assets/Image/MorningPage_SleepSection_icons/SVG/SVG/sleep 2.svg";
-import sleep3 from "../assets/Image/MorningPage_SleepSection_icons/SVG/SVG/sleep 3.svg";
-import sleep4 from "../assets/Image/MorningPage_SleepSection_icons/SVG/SVG/sleep 4.svg";
+import sleep1 from "../assets/Image/MorningPage_SleepSection_icons/SVG/SVG/sleep 1.1.svg";
+import sleep2 from "../assets/Image/MorningPage_SleepSection_icons/SVG/SVG/Sleep 2.5.svg";
+import sleep3 from "../assets/Image/MorningPage_SleepSection_icons/SVG/SVG/sleep 3.2.svg";
+import sleep4 from "../assets/Image/MorningPage_SleepSection_icons/SVG/SVG/sleep 4.2.svg";
 import sleep5 from "../assets/Image/MorningPage_SleepSection_icons/SVG/SVG/sleep 5.svg";
 import { Flex, VStack } from "@chakra-ui/layout";
 import { Input } from "@chakra-ui/input";
