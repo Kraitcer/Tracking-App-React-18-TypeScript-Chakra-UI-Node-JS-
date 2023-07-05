@@ -24,7 +24,6 @@ import SectionButton from "./UI Components/SectionButton";
 import Att_time_IWill_Smart from "./UI Components/Att_time_IWill_Smart";
 import SmartServey from "./UI Components/SmartServey";
 import { projectsArray } from "./Projects";
-import { keys } from "lodash";
 
 interface Props {
   onClose: () => void;

@@ -7,6 +7,7 @@ import { ChangeEvent } from "react";
 
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import TodayGoalsSection from "./TodayGoalsSection";
 
 const schema = z.object({
   wakeUpTime: z.string(),
@@ -21,12 +22,8 @@ const MorningMain = () => {
   const { handleSubmit, setValue, register, control } = useForm<FormData>({
     resolver: zodResolver(schema),
   });
-  const { field } = useController({ name: "wokeUpEnergized", control });
   const onSubmit = (data: FieldValues) => {
     console.log(data);
-    // reset();
-    //   setGoalsAndEngineDataObj(data);
-    // console.log(goalsAndEngineDataObj);
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -37,14 +34,11 @@ const MorningMain = () => {
             sleeprRating={(data) => setValue("sleeprRating", data + 1)}
             register={register}
             control={control}
-            // wokeUpEnergized={(data) => {
-            //   console.log(data);
-            //   //   setValue("wokeUpEnergized", data);
-            // }}
           />
         </Box>
         <Box w="560px" flexDirection={"column"}>
           <SectionHeader HeadingName="today's goals" />
+          <TodayGoalsSection />
         </Box>
         <Box w="560px" flexDirection={"column"}>
           <SectionHeader HeadingName="todo list" />
