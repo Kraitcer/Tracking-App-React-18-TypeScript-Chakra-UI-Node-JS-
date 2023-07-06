@@ -2,12 +2,18 @@ import { FormControl } from "@chakra-ui/form-control";
 import { Select } from "@chakra-ui/select";
 import React from "react";
 import { projectsArray } from "./Projects";
+import { UseFormRegister } from "react-hook-form";
+import { FormData } from "./TodayGoalsSection";
 
-const SelectProjects = () => {
+interface Prop {
+  register: UseFormRegister<FormData>;
+}
+
+const SelectProjects = ({ register }: Prop) => {
   return (
     <FormControl>
       <Select
-        // {...register("projects")}
+        {...register("projects")}
         name="projects"
         placeholder="Select project"
         defaultValue={"Select project"}

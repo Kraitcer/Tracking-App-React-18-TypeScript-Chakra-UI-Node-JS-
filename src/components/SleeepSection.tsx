@@ -30,7 +30,7 @@ interface Props {
   sleeprRating: (data: number) => void;
 }
 
-const SleeepSection = ({ register, sleeprRating, control }: Props) => {
+export const SleeepSection = ({ register, sleeprRating, control }: Props) => {
   const wokeUpEnergizedField = useController({
     name: "wokeUpEnergized",
     control,
