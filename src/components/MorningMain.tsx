@@ -26,31 +26,33 @@ const MorningMain = () => {
     console.log(data);
   };
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <Flex flexDirection={"column"} alignItems={"center"} gap={3}>
-        <Box w="560px" flexDirection={"column"}>
-          <SectionHeader HeadingName="sleep" />
+    <Flex flexDirection={"column"} alignItems={"center"} gap={3}>
+      <Box w="560px" flexDirection={"column"}>
+        <SectionHeader HeadingName="sleep" />
+        <form onSubmit={handleSubmit(onSubmit)}>
           <SleeepSection
             sleeprRating={(data) => setValue("sleeprRating", data + 1)}
             register={register}
             control={control}
           />
-        </Box>
-        <Box w="560px" flexDirection={"column"}>
-          <SectionHeader HeadingName="today's goals" />
-          <TodayGoalsSection />
-        </Box>
-        <Box w="560px" flexDirection={"column"}>
-          <SectionHeader HeadingName="todo list" />
-        </Box>
-        <Box w="560px" flexDirection={"column"}>
+        </form>
+      </Box>
+      <Box w="560px" flexDirection={"column"}>
+        <SectionHeader HeadingName="today's goals" />
+        <TodayGoalsSection />
+      </Box>
+      <Box w="560px" flexDirection={"column"}>
+        <SectionHeader HeadingName="todo list" />
+      </Box>
+      <Box w="560px" flexDirection={"column"}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <SectionButton
             buttonName="submit all and start the day"
             onClick={() => onSubmit}
           />
-        </Box>
-      </Flex>
-    </form>
+        </form>
+      </Box>
+    </Flex>
   );
 };
 

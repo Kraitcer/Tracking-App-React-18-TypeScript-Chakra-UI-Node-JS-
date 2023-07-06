@@ -12,7 +12,7 @@ const Att_time_IWill_Smart = ({ register, goalsData }: ChildComponentProps) => {
   return (
     <>
       <Flex gap={4} justifyContent={"center"} alignItems={"center"}>
-        <Text fontSize={30} marginTop={3}>
+        <Text fontSize={30} m={0}>
           AT
         </Text>
         <Input
