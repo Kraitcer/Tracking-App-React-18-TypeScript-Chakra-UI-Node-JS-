@@ -10,6 +10,7 @@ import TodayGoalPad from "./UI Components/TodayGoalPad";
 
 interface Props {
   onClick: (data: string) => void;
+  smartData: boolean;
   //   goalOneClick: () => void;
 }
 
@@ -30,6 +31,7 @@ export type FormData = z.infer<typeof schema>;
 
 export const TodayGoalsSection = ({
   onClick,
+  smartData,
 }: // goalOneClick
 Props) => {
   const {
@@ -110,28 +112,40 @@ Props) => {
               goalsData={["goalOne_att_time_", "goalOne_IWill_Smart"]}
               children={goalOneValue}
               display={dispalyOne}
+              onDelete={() => {
+                setDispalyOne("flex"),
+                  reset({
+                    goalOne_att_time_: "",
+                    goalOne_IWill_Smart: "",
+                  });
+              }}
             />
             <TodayGoalPad
               register={register}
               goalsData={["goalTwo_att_time_", "goalTwo_IWill_Smart"]}
               children={goalTwoValue}
               display={dispalyTwo}
+              onDelete={() => {
+                setDispalyTwo("flex"),
+                  reset({
+                    goalTwo_att_time_: "",
+                    goalTwo_IWill_Smart: "",
+                  });
+              }}
             />
             <TodayGoalPad
               register={register}
               goalsData={["goalThree_att_time_", "goalThree_IWill_Smart"]}
               children={goalThreeValue}
               display={dispalyThree}
+              onDelete={() => {
+                setDispalyThree("flex"),
+                  reset({
+                    goalThree_att_time_: "",
+                    goalThree_IWill_Smart: "",
+                  });
+              }}
             />
-            {/* <HStack>
-              <Att_time_IWill_Smart
-                register={register}
-                goalsData={["goalThree_att_time_", "goalThree_IWill_Smart"]}
-              />
-              <Flex>
-                <SectionButton buttonName="S.M.A.R.T. ?" onClick={() => {}} />
-              </Flex>
-            </HStack> */}
           </VStack>
         </form>
       </Flex>

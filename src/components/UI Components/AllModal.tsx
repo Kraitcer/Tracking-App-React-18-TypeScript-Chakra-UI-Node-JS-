@@ -24,7 +24,7 @@ export default function AllModal({
       <Modal size={"lg"} isOpen={onOpen} onClose={onClose} isCentered>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader textTransform={"uppercase"} fontSize={22}>
+          <ModalHeader textTransform={"uppercase"} fontSize={22} pr={"55px"}>
             {title}
           </ModalHeader>
           <ModalCloseButton />

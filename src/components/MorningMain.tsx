@@ -27,6 +27,8 @@ const MorningMain = () => {
 
   const [isOpen1, setIsOpen1] = useState(false);
 
+  const [smartData, setSmartData] = useState(false);
+
   const openModal1 = () => setIsOpen1(true);
 
   const closeModal1 = () => setIsOpen1(false);
@@ -42,7 +44,13 @@ const MorningMain = () => {
         title={`DOES YOUR GOAL ${goals} MATCH THE "SMART" PARAMETRS ?`}
         onOpen={isOpen1}
         onClose={closeModal1}
-        children={<SmartServey onChange={() => console.log("Smart")} />}
+        children={
+          <SmartServey
+            onChange={() => {
+              setSmartData(true), closeModal1();
+            }}
+          />
+        }
       />
       <Flex flexDirection={"column"} alignItems={"center"} gap={3}>
         <Box w="560px" flexDirection={"column"}>
@@ -58,6 +66,7 @@ const MorningMain = () => {
         <Box w="560px" flexDirection={"column"}>
           <SectionHeader HeadingName="today's goals" />
           <TodayGoalsSection
+            smartData={smartData}
             onClick={(data) => {
               openModal1(), setGoals(data);
             }}

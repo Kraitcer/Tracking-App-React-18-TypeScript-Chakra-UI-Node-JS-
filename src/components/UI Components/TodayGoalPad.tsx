@@ -4,34 +4,31 @@ import { UseFormRegister } from "react-hook-form";
 import Att_time_IWill_Smart from "./Att_time_IWill_Smart";
 import SectionButton from "./SectionButton";
 import { FormData } from "../TodayGoalsSection";
+import InnerButton from "./InnerButton";
 
 interface ChildComponentProps {
   register: UseFormRegister<FormData>; // Assuming FormData is the same type used in the parent component
   goalsData: FormData | string[] | number | any;
   children: React.ReactNode;
   display: string;
+  onDelete: () => void;
 }
 
-const TodayGoalPad = ({
+export const TodayGoalPad = ({
   register,
   goalsData,
   children,
   display,
+  onDelete,
 }: ChildComponentProps) => {
-  const [dispaly, setDispaly] = useState("flex");
+  //   const [dispaly, setDispaly] = useState("flex");
 
   return (
     <>
       <HStack display={display}>
         <Att_time_IWill_Smart register={register} goalsData={goalsData} />
         <Flex>
-          <SectionButton
-            buttonName="S.M.A.R.T. ?"
-            onClick={() => {
-              // console.log();
-              //   setDispaly("none");
-            }}
-          />
+          <SectionButton buttonName="S.M.A.R.T. ?" onClick={() => {}} />
         </Flex>
       </HStack>
       <HStack
@@ -54,7 +51,7 @@ const TodayGoalPad = ({
           </Text>
         </Box>
         <Flex>
-          <SectionButton buttonName="delete" onClick={() => {}} />
+          <InnerButton buttonName="delete" onClick={onDelete} />
         </Flex>
       </HStack>
     </>
