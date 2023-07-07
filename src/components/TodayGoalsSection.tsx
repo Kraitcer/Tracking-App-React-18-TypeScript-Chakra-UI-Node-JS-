@@ -9,6 +9,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { FieldValues, useForm } from "react-hook-form";
 import SectionButton from "./UI Components/SectionButton";
 
+interface Props {
+  onClick: (data: string) => void;
+  //   goalOneClick: () => void;
+}
+
 const schema = z.object({
   projects: z.enum(projectsArray, {
     errorMap: () => ({ message: "Choose Project" }),
@@ -24,11 +29,10 @@ const schema = z.object({
 
 export type FormData = z.infer<typeof schema>;
 
-const TodayGoalsSection = () => {
-  const [goalsDatas, setGoalsDatas] = useState<
-    FormData | string[] | number | any
-  >(["goalOne_att_time_", "goalOne_IWill_Smart"]);
-
+const TodayGoalsSection = ({
+  onClick,
+}: // goalOneClick
+Props) => {
   const {
     setValue,
     handleSubmit,
@@ -50,7 +54,28 @@ const TodayGoalsSection = () => {
   });
 
   const onSubmit = (data: FieldValues) => {
-    console.log(data);
+    if (data.goalOne_IWill_Smart) {
+      onClick(`${data.goalOne_IWill_Smart}`);
+    }
+    if (data.goalTwo_IWill_Smart) {
+      onClick(`${data.goalTwo_IWill_Smart}`);
+    }
+    if (data.goalThree_IWill_Smart) {
+      onClick(`${data.goalThree_IWill_Smart}`);
+    }
+    // if (
+    //   !data.goalOne_IWill_Smart &&
+    //   !data.goalOne_att_time_ &&
+    //   !data.goalThree_IWill_Smart &&
+    //   !data.goalThree_att_time_ &&
+    //   !data.goalTwo_IWill_Smart &&
+    //   !data.goalTwo_att_time_
+    // ) {
+    //   console.log("Fucking ASS", data);
+    // } else {
+    //   onClick();
+    //   console.log("ASS No Fuck", data);
+    // }
   };
 
   return (
@@ -67,10 +92,7 @@ const TodayGoalsSection = () => {
                 goalsData={["goalOne_att_time_", "goalOne_IWill_Smart"]}
               />
               <Flex>
-                <SectionButton
-                  buttonName="S.M.A.R.T. ?"
-                  onClick={() => console.log("fuck")}
-                />
+                <SectionButton buttonName="S.M.A.R.T. ?" onClick={() => {}} />
               </Flex>
             </HStack>
             <HStack>
@@ -79,10 +101,7 @@ const TodayGoalsSection = () => {
                 goalsData={["goalTwo_att_time_", "goalTwo_IWill_Smart"]}
               />
               <Flex>
-                <SectionButton
-                  buttonName="S.M.A.R.T. ?"
-                  onClick={() => console.log("fuck")}
-                />
+                <SectionButton buttonName="S.M.A.R.T. ?" onClick={() => {}} />
               </Flex>
             </HStack>
             <HStack>
@@ -91,10 +110,7 @@ const TodayGoalsSection = () => {
                 goalsData={["goalThree_att_time_", "goalThree_IWill_Smart"]}
               />
               <Flex>
-                <SectionButton
-                  buttonName="S.M.A.R.T. ?"
-                  onClick={() => console.log("fuck")}
-                />
+                <SectionButton buttonName="S.M.A.R.T. ?" onClick={() => {}} />
               </Flex>
             </HStack>
           </VStack>

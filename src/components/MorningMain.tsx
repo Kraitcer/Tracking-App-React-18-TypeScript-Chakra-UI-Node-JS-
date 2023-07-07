@@ -31,13 +31,15 @@ const MorningMain = () => {
 
   const closeModal1 = () => setIsOpen1(false);
 
+  const [goals, setGoals] = useState("");
+
   const onSubmit = (data: FieldValues) => {
     console.log(data);
   };
   return (
     <>
       <AllModal
-        title={"chooseGolsTitle"}
+        title={`DOES YOUR GOAL ${goals} MATCH THE "SMART" PARAMETRS ?`}
         onOpen={isOpen1}
         onClose={closeModal1}
         children={<SmartServey onChange={() => console.log("Smart")} />}
@@ -55,7 +57,11 @@ const MorningMain = () => {
         </Box>
         <Box w="560px" flexDirection={"column"}>
           <SectionHeader HeadingName="today's goals" />
-          <TodayGoalsSection />
+          <TodayGoalsSection
+            onClick={(data) => {
+              openModal1(), setGoals(data);
+            }}
+          />
         </Box>
         <Box w="560px" flexDirection={"column"}>
           <SectionHeader HeadingName="todo list" />
