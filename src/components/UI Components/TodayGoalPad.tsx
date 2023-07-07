@@ -37,7 +37,7 @@ export const TodayGoalPad = ({
         display={display === "flex" ? "none" : "flex"}
       >
         <Box
-          bg={"blue.400"}
+          bg={"blue.200"}
           // w={"29rem"}
           w={"100%"}
           h={10}

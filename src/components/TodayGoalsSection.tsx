@@ -10,8 +10,6 @@ import TodayGoalPad from "./UI Components/TodayGoalPad";
 
 interface Props {
   onClick: (data: string) => void;
-  smartData: boolean;
-  //   goalOneClick: () => void;
 }
 
 const schema = z.object({
@@ -31,7 +29,6 @@ export type FormData = z.infer<typeof schema>;
 
 export const TodayGoalsSection = ({
   onClick,
-  smartData,
 }: // goalOneClick
 Props) => {
   const {

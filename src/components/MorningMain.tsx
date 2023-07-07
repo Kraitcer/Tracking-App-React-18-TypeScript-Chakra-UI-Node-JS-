@@ -66,7 +66,6 @@ const MorningMain = () => {
         <Box w="560px" flexDirection={"column"}>
           <SectionHeader HeadingName="today's goals" />
           <TodayGoalsSection
-            smartData={smartData}
             onClick={(data) => {
               openModal1(), setGoals(data);
             }}
