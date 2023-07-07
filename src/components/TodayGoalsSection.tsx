@@ -1,13 +1,12 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import SelectProjects from "./SelectProjects";
-import { Flex, HStack, VStack } from "@chakra-ui/layout";
-import Att_time_IWill_Smart from "./UI Components/Att_time_IWill_Smart";
+import { Flex, VStack } from "@chakra-ui/layout";
 import { projectsArray } from "./Projects";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { FieldValues, useForm } from "react-hook-form";
-import SectionButton from "./UI Components/SectionButton";
+import TodayGoalPad from "./UI Components/TodayGoalPad";
 
 interface Props {
   onClick: (data: string) => void;
@@ -29,7 +28,7 @@ const schema = z.object({
 
 export type FormData = z.infer<typeof schema>;
 
-const TodayGoalsSection = ({
+export const TodayGoalsSection = ({
   onClick,
 }: // goalOneClick
 Props) => {
@@ -53,15 +52,35 @@ Props) => {
     },
   });
 
+  const [dispalyOne, setDispalyOne] = useState("flex");
+  const [dispalyTwo, setDispalyTwo] = useState("flex");
+  const [dispalyThree, setDispalyThree] = useState("flex");
+
+  const [goalOneValue, setGoalOneValue] = useState("");
+  const [goalTwoValue, setGoalTwoValue] = useState("");
+  const [goalThreeValue, setGoalThreeValue] = useState("");
+
   const onSubmit = (data: FieldValues) => {
     if (data.goalOne_IWill_Smart) {
       onClick(`${data.goalOne_IWill_Smart}`);
+      setGoalOneValue(
+        `at ${data.goalOne_att_time_} i will ${data.goalOne_IWill_Smart}`
+      );
+      setDispalyOne("none");
     }
     if (data.goalTwo_IWill_Smart) {
       onClick(`${data.goalTwo_IWill_Smart}`);
+      setGoalTwoValue(
+        `at ${data.goalTwo_att_time_} i will ${data.goalTwo_IWill_Smart}`
+      );
+      setDispalyTwo("none");
     }
     if (data.goalThree_IWill_Smart) {
       onClick(`${data.goalThree_IWill_Smart}`);
+      setGoalThreeValue(
+        `at ${data.goalThree_att_time_} i will ${data.goalThree_IWill_Smart}`
+      );
+      setDispalyThree("none");
     }
     // if (
     //   !data.goalOne_IWill_Smart &&
@@ -86,25 +105,25 @@ Props) => {
             <Flex>
               <SelectProjects register={register} />
             </Flex>
-            <HStack>
-              <Att_time_IWill_Smart
-                register={register}
-                goalsData={["goalOne_att_time_", "goalOne_IWill_Smart"]}
-              />
-              <Flex>
-                <SectionButton buttonName="S.M.A.R.T. ?" onClick={() => {}} />
-              </Flex>
-            </HStack>
-            <HStack>
-              <Att_time_IWill_Smart
-                register={register}
-                goalsData={["goalTwo_att_time_", "goalTwo_IWill_Smart"]}
-              />
-              <Flex>
-                <SectionButton buttonName="S.M.A.R.T. ?" onClick={() => {}} />
-              </Flex>
-            </HStack>
-            <HStack>
+            <TodayGoalPad
+              register={register}
+              goalsData={["goalOne_att_time_", "goalOne_IWill_Smart"]}
+              children={goalOneValue}
+              display={dispalyOne}
+            />
+            <TodayGoalPad
+              register={register}
+              goalsData={["goalTwo_att_time_", "goalTwo_IWill_Smart"]}
+              children={goalTwoValue}
+              display={dispalyTwo}
+            />
+            <TodayGoalPad
+              register={register}
+              goalsData={["goalThree_att_time_", "goalThree_IWill_Smart"]}
+              children={goalThreeValue}
+              display={dispalyThree}
+            />
+            {/* <HStack>
               <Att_time_IWill_Smart
                 register={register}
                 goalsData={["goalThree_att_time_", "goalThree_IWill_Smart"]}
@@ -112,7 +131,7 @@ Props) => {
               <Flex>
                 <SectionButton buttonName="S.M.A.R.T. ?" onClick={() => {}} />
               </Flex>
-            </HStack>
+            </HStack> */}
           </VStack>
         </form>
       </Flex>
