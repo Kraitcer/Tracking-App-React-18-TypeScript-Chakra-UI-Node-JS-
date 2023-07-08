@@ -217,6 +217,7 @@ const ChooseGoals = ({ onClose, changeTitle, getData, setData }: Props) => {
               </Text>
             </Flex>
             <SmartServey
+              innerBtnDisplay="none"
               key={refreshKey}
               onChange={() => {
                 // console.log("SmartServey ONLINE");

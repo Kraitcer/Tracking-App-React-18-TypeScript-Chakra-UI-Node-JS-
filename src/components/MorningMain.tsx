@@ -8,8 +8,6 @@ import { useState } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import TodayGoalsSection from "./TodayGoalsSection";
-import AllModal from "./UI Components/AllModal";
-import SmartServey from "./UI Components/SmartServey";
 
 const schema = z.object({
   wakeUpTime: z.string(),
@@ -25,33 +23,34 @@ const MorningMain = () => {
     resolver: zodResolver(schema),
   });
 
-  const [isOpen1, setIsOpen1] = useState(false);
+  //   const [isOpen1, setIsOpen1] = useState(false);
 
   const [smartData, setSmartData] = useState(false);
 
-  const openModal1 = () => setIsOpen1(true);
+  //   const openModal1 = () => setIsOpen1(true);
 
-  const closeModal1 = () => setIsOpen1(false);
+  //   const closeModal1 = () => setIsOpen1(false);
 
-  const [goals, setGoals] = useState("");
+  //   const [goals, setGoals] = useState("");
 
   const onSubmit = (data: FieldValues) => {
     console.log(data);
   };
   return (
     <>
-      <AllModal
+      {/* <AllModal
         title={`DOES YOUR GOAL ${goals} MATCH THE "SMART" PARAMETRS ?`}
         onOpen={isOpen1}
         onClose={closeModal1}
-        children={
-          <SmartServey
-            onChange={() => {
-              setSmartData(true), closeModal1();
-            }}
-          />
-        }
-      />
+        // children={
+        //   //   <SmartServey
+        //   //     onChange={() => {
+        //   //       //   setSmartData(true),
+        //   //       closeModal1();
+        //   //     }}
+        //   //   />
+        // }
+      /> */}
       <Flex flexDirection={"column"} alignItems={"center"} gap={3}>
         <Box w="560px" flexDirection={"column"}>
           <SectionHeader HeadingName="sleep" />
@@ -67,7 +66,8 @@ const MorningMain = () => {
           <SectionHeader HeadingName="today's goals" />
           <TodayGoalsSection
             onClick={(data) => {
-              openModal1(), setGoals(data);
+              //   openModal1(),
+              //   setGoals(data);
             }}
           />
         </Box>

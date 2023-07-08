@@ -3,11 +3,13 @@ import { Button } from "@chakra-ui/react";
 interface Props {
   buttonName: string;
   onClick: () => void;
+  disabled: boolean;
 }
 
-const SectionButton = ({ buttonName, onClick }: Props) => {
+const SectionButton = ({ buttonName, onClick, disabled }: Props) => {
   return (
     <Button
+      isDisabled={disabled}
       colorScheme="orange"
       bg={"orange"}
       w="100%"

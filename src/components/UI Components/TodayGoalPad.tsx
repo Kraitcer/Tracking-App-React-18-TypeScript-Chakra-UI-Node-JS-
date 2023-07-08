@@ -12,6 +12,8 @@ interface ChildComponentProps {
   children: React.ReactNode;
   display: string;
   onDelete: () => void;
+  onClick: () => void;
+  //   disabled: () => void;
 }
 
 export const TodayGoalPad = ({
@@ -20,7 +22,9 @@ export const TodayGoalPad = ({
   children,
   display,
   onDelete,
-}: ChildComponentProps) => {
+  onClick,
+}: //   disabled,
+ChildComponentProps) => {
   //   const [dispaly, setDispaly] = useState("flex");
 
   return (
@@ -32,6 +36,7 @@ export const TodayGoalPad = ({
         </Flex>
       </HStack>
       <HStack
+        mt={1}
         gap={0}
         w={"556px"}
         display={display === "flex" ? "none" : "flex"}
@@ -51,7 +56,11 @@ export const TodayGoalPad = ({
           </Text>
         </Box>
         <Flex>
-          <InnerButton buttonName="delete" onClick={onDelete} />
+          <InnerButton
+            disabled={false}
+            buttonName="delete"
+            onClick={onDelete}
+          />
         </Flex>
       </HStack>
     </>

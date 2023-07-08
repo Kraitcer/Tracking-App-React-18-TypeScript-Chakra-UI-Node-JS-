@@ -7,6 +7,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { FieldValues, useForm } from "react-hook-form";
 import TodayGoalPad from "./UI Components/TodayGoalPad";
+import InnerButton from "./UI Components/InnerButton";
+import AllModal from "./UI Components/AllModal";
+import SmartServey from "./UI Components/SmartServey";
 
 interface Props {
   onClick: (data: string) => void;
@@ -51,6 +54,10 @@ Props) => {
     },
   });
 
+  const [refreshKey, setRefreshKey] = useState(0);
+
+  const [disabled, setDisabled] = useState(false);
+
   const [dispalyOne, setDispalyOne] = useState("flex");
   const [dispalyTwo, setDispalyTwo] = useState("flex");
   const [dispalyThree, setDispalyThree] = useState("flex");
@@ -59,28 +66,44 @@ Props) => {
   const [goalTwoValue, setGoalTwoValue] = useState("");
   const [goalThreeValue, setGoalThreeValue] = useState("");
 
+  //   const [innerButton, setInnerButton] = useState(true);
+
+  const [isOpen1, setIsOpen1] = useState(false);
+  const closeModal1 = () => setIsOpen1(false);
+  const openModal1 = () => setIsOpen1(true);
+
+  const [goals, setGoals] = useState("");
+
   const onSubmit = (data: FieldValues) => {
+    setDisabled(true);
     if (data.goalOne_IWill_Smart) {
       onClick(`${data.goalOne_IWill_Smart}`);
       setGoalOneValue(
         `at ${data.goalOne_att_time_} i will ${data.goalOne_IWill_Smart}`
       );
+      openModal1();
       setDispalyOne("none");
+      setGoals(data.goalOne_IWill_Smart);
     }
     if (data.goalTwo_IWill_Smart) {
       onClick(`${data.goalTwo_IWill_Smart}`);
       setGoalTwoValue(
         `at ${data.goalTwo_att_time_} i will ${data.goalTwo_IWill_Smart}`
       );
+      openModal1();
       setDispalyTwo("none");
+      setGoals(data.goalTwo_IWill_Smart);
     }
     if (data.goalThree_IWill_Smart) {
       onClick(`${data.goalThree_IWill_Smart}`);
       setGoalThreeValue(
         `at ${data.goalThree_att_time_} i will ${data.goalThree_IWill_Smart}`
       );
+      openModal1();
       setDispalyThree("none");
+      setGoals(data.goalThree_IWill_Smart);
     }
+    console.log(data);
     // if (
     //   !data.goalOne_IWill_Smart &&
     //   !data.goalOne_att_time_ &&
@@ -98,23 +121,54 @@ Props) => {
 
   return (
     <>
+      <AllModal
+        title={`DOES YOUR GOAL ${goals} MATCH THE "SMART" PARAMETRS ?`}
+        onOpen={isOpen1}
+        onClose={closeModal1}
+        children={
+          <>
+            <SmartServey
+              innerBtnDisplay={"flex"}
+              onClick={closeModal1}
+              onChange={() => {
+                setValue("smart", true);
+                // setInnerButton(false);
+              }}
+            />
+            {/* <InnerButton
+              disabled={innerButton}
+              buttonName="Next Goal"
+              onClick={closeModal1}
+            /> */}
+          </>
+        }
+      />
       <Flex justifyContent={"center"}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <VStack gap={2} alignItems={"center"}>
-            <Flex>
-              <SelectProjects register={register} />
+            <Flex gap={2}>
+              <SelectProjects register={register} disabled={disabled} />
+              <InnerButton
+                disabled={false}
+                buttonName="reset"
+                onClick={() => {
+                  setDisabled(false), setDisabled(true);
+                }}
+              />
             </Flex>
             <TodayGoalPad
               register={register}
               goalsData={["goalOne_att_time_", "goalOne_IWill_Smart"]}
               children={goalOneValue}
               display={dispalyOne}
+              //   disabled={() => setDisabled(true)}
+              onClick={() => {}}
               onDelete={() => {
-                setDispalyOne("flex"),
-                  reset({
-                    goalOne_att_time_: "",
-                    goalOne_IWill_Smart: "",
-                  });
+                setDispalyOne("flex"), setDisabled(false);
+                reset({
+                  goalOne_att_time_: "",
+                  goalOne_IWill_Smart: "",
+                });
               }}
             />
             <TodayGoalPad
@@ -122,8 +176,11 @@ Props) => {
               goalsData={["goalTwo_att_time_", "goalTwo_IWill_Smart"]}
               children={goalTwoValue}
               display={dispalyTwo}
+              onClick={() => {}}
+              //   disabled={() => setDisabled(true)}
               onDelete={() => {
                 setDispalyTwo("flex"),
+                  setDisabled(false),
                   reset({
                     goalTwo_att_time_: "",
                     goalTwo_IWill_Smart: "",
@@ -135,8 +192,11 @@ Props) => {
               goalsData={["goalThree_att_time_", "goalThree_IWill_Smart"]}
               children={goalThreeValue}
               display={dispalyThree}
+              onClick={() => {}}
+              //   disabled={() => setDisabled(true)}
               onDelete={() => {
                 setDispalyThree("flex"),
+                  setDisabled(false),
                   reset({
                     goalThree_att_time_: "",
                     goalThree_IWill_Smart: "",

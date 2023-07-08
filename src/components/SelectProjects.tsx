@@ -7,14 +7,16 @@ import { FormData } from "./TodayGoalsSection";
 
 interface Prop {
   register: UseFormRegister<FormData>;
+  disabled: boolean;
 }
 
-const SelectProjects = ({ register }: Prop) => {
+const SelectProjects = ({ register, disabled }: Prop) => {
   return (
     <FormControl>
       <Select
         {...register("projects")}
         name="projects"
+        disabled={disabled}
         placeholder="Select project"
         defaultValue={"Select project"}
         w={266}
