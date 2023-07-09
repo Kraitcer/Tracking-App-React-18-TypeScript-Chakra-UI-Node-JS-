@@ -1,6 +1,5 @@
 import { Box, Flex, HStack } from "@chakra-ui/layout";
 import { Text } from "@chakra-ui/react";
-import React from "react";
 import InnerButton from "./InnerButton";
 
 interface Props {

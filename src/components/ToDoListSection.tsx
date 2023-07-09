@@ -11,14 +11,14 @@ const ToDoListSection = () => {
   };
   return (
     <>
-      <VStack justifyContent={"center"}>
+      <VStack>
         <AddTask addTodo={addTodo} />
         <Flex w={"560px"} h={"168px"} flexDirection={"row"} mb={0}>
           <Flex
             overflowY={"auto"}
             bg={"blue.100"}
             w={"100%"}
-            borderTopLeftRadius={20}
+            borderTopRadius={20}
             gap={2}
             pl={3}
             pt={3}
