@@ -76,6 +76,7 @@ Props) => {
 
   const onSubmit = (data: FieldValues) => {
     setDisabled(true);
+
     if (data.goalOne_IWill_Smart) {
       onClick(`${data.goalOne_IWill_Smart}`);
       setGoalOneValue(

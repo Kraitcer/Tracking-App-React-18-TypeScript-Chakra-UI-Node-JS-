@@ -23,10 +23,7 @@ export const TodayGoalPad = ({
   display,
   onDelete,
   onClick,
-}: //   disabled,
-ChildComponentProps) => {
-  //   const [dispaly, setDispaly] = useState("flex");
-
+}: ChildComponentProps) => {
   return (
     <>
       <HStack display={display}>
@@ -44,14 +41,22 @@ ChildComponentProps) => {
         <Box
           bg={"blue.200"}
           // w={"29rem"}
-          w={"100%"}
+          w={"86%"}
           h={10}
           p={1}
           pl={4}
           pr={2}
           borderLeftRadius={10}
         >
-          <Text color={"white"} fontSize={20} textTransform={"uppercase"} m={0}>
+          <Text
+            color={"white"}
+            fontSize={20}
+            textTransform={"uppercase"}
+            m={0}
+            textOverflow={"ellipsis"}
+            whiteSpace={"nowrap"}
+            overflow={"hidden"}
+          >
             {children}
           </Text>
         </Box>

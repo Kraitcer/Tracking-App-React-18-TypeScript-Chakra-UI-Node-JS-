@@ -8,6 +8,7 @@ import { useState } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import TodayGoalsSection from "./TodayGoalsSection";
+import ToDoListSection from "./ToDoListSection";
 
 const schema = z.object({
   wakeUpTime: z.string(),
@@ -23,35 +24,12 @@ const MorningMain = () => {
     resolver: zodResolver(schema),
   });
 
-  //   const [isOpen1, setIsOpen1] = useState(false);
-
-  const [smartData, setSmartData] = useState(false);
-
-  //   const openModal1 = () => setIsOpen1(true);
-
-  //   const closeModal1 = () => setIsOpen1(false);
-
-  //   const [goals, setGoals] = useState("");
-
   const onSubmit = (data: FieldValues) => {
     console.log(data);
   };
   return (
     <>
-      {/* <AllModal
-        title={`DOES YOUR GOAL ${goals} MATCH THE "SMART" PARAMETRS ?`}
-        onOpen={isOpen1}
-        onClose={closeModal1}
-        // children={
-        //   //   <SmartServey
-        //   //     onChange={() => {
-        //   //       //   setSmartData(true),
-        //   //       closeModal1();
-        //   //     }}
-        //   //   />
-        // }
-      /> */}
-      <Flex flexDirection={"column"} alignItems={"center"} gap={3}>
+      <Flex flexDirection={"column"} alignItems={"center"} gap={2}>
         <Box w="560px" flexDirection={"column"}>
           <SectionHeader HeadingName="sleep" />
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -73,6 +51,7 @@ const MorningMain = () => {
         </Box>
         <Box w="560px" flexDirection={"column"}>
           <SectionHeader HeadingName="todo list" />
+          <ToDoListSection />
         </Box>
         <Box w="560px" flexDirection={"column"}>
           <form onSubmit={handleSubmit(onSubmit)}>
