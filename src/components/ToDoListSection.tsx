@@ -6,8 +6,17 @@ import TaskPad from "./UI Components/TaskPad";
 const ToDoListSection = () => {
   const [todos, setTodos] = useState<any[]>([]);
 
+  //   console.log(todos);
+
+  const deleteTask = (id: number) => {
+    const newTodos = todos.filter((todo) => todo.id !== id);
+    setTodos(newTodos);
+  };
   const addTodo = (todo: any) => {
-    setTodos([...todos, { task: todo, completed: false, isEditing: false }]);
+    setTodos([
+      ...todos,
+      { id: todos.length, task: todo, completed: false, isEditing: false },
+    ]);
   };
   return (
     <>
@@ -26,7 +35,7 @@ const ToDoListSection = () => {
             wrap={"wrap"}
           >
             {todos.map((todo, index) => (
-              <TaskPad key={index} task={todo} />
+              <TaskPad onDelete={deleteTask} key={index} task={todo} />
             ))}
           </Flex>
         </Flex>

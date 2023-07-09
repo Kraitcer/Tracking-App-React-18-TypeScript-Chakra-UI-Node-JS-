@@ -4,9 +4,10 @@ import InnerButton from "./InnerButton";
 
 interface Props {
   task: any;
+  onDelete: (id: number) => void;
 }
 
-export const TaskPad = ({ task }: Props) => {
+export const TaskPad = ({ task, onDelete }: Props) => {
   return (
     <HStack gap={0} mr={0} mb={1}>
       <Box
@@ -31,7 +32,11 @@ export const TaskPad = ({ task }: Props) => {
         </Text>
       </Box>
       <Flex>
-        <InnerButton disabled={false} buttonName="DELETE" onClick={() => {}} />
+        <InnerButton
+          disabled={false}
+          buttonName="DELETE"
+          onClick={() => onDelete(task.id)}
+        />
       </Flex>
     </HStack>
   );

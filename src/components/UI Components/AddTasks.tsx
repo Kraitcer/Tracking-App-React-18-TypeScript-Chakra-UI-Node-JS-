@@ -14,7 +14,7 @@ const AddTask = ({ addTodo }: Prop) => {
     // prevent default action
     e.preventDefault();
     if (value) {
-      console.log("value");
+      // console.log("value");
       // add todo
       addTodo(value);
       // clear form after submission
