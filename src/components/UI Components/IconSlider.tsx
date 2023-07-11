@@ -52,7 +52,7 @@ const IconSlider = ({ healthValue, emotionsValue, intellectValue }: Props) => {
     <Flex alignItems={"center"} gap={2} flexDirection={"column"}>
       <SliderItself
         setValue={(data) => healthValue(data)}
-        radioSetName={"Helth"}
+        radioSetName={"Health"}
         icons={healthIcons}
       />
       <SliderItself

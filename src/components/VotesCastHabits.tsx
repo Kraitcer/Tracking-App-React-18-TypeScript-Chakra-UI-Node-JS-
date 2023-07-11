@@ -131,9 +131,9 @@ const VotesCastHabits = ({ setData, getData }: Props) => {
                 id="category"
                 className="form-select form-select-lg w-100"
                 aria-label=".form-select-lg example"
-                placeholder="Chose habit"
+                placeholder="Choose habit"
               >
-                <option value={""}>Chose a habit...</option>
+                <option value={""}>Choose a habit...</option>
                 {habitCategories.map((habit) => (
                   <option key={habit} value={habit}>
                     {habit}
@@ -168,7 +168,6 @@ const VotesCastHabits = ({ setData, getData }: Props) => {
         <TableContainer>
           <Table variant="simple">
             <Tbody>
-              {/* {habitsDataArrey.length === 5 && */}
               {getData.map((habitsElement, index) => (
                 <Tr key={index} fontSize={16}>
                   <Td ps={0} pb={1.5} pt={1.5} textAlign={"left"}>

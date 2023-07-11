@@ -105,19 +105,6 @@ Props) => {
       setGoals(data.goalThree_IWill_Smart);
     }
     console.log(data);
-    // if (
-    //   !data.goalOne_IWill_Smart &&
-    //   !data.goalOne_att_time_ &&
-    //   !data.goalThree_IWill_Smart &&
-    //   !data.goalThree_att_time_ &&
-    //   !data.goalTwo_IWill_Smart &&
-    //   !data.goalTwo_att_time_
-    // ) {
-    //   console.log("Fucking ASS", data);
-    // } else {
-    //   onClick();
-    //   console.log("ASS No Fuck", data);
-    // }
   };
 
   return (
@@ -136,11 +123,6 @@ Props) => {
                 // setInnerButton(false);
               }}
             />
-            {/* <InnerButton
-              disabled={innerButton}
-              buttonName="Next Goal"
-              onClick={closeModal1}
-            /> */}
           </>
         }
       />
