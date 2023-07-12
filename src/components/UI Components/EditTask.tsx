@@ -1,43 +1,59 @@
 import { Input } from "@chakra-ui/input";
-import { Flex, HStack } from "@chakra-ui/layout";
-import React, { useState } from "react";
-import { BiEdit } from "react-icons/bi";
-import { FiFolderPlus } from "react-icons/fi";
+import { Flex } from "@chakra-ui/layout";
+import { useState } from "react";
 import AddSubTask from "./AddSubTask";
 import TaskPad from "./TaskPad";
 import EditSubTask from "./EditSubTask";
+import SectionButton from "./SectionButton";
 
 interface Props {
   task: any;
   editTask: (id: number) => void;
   currentTaskId: number | undefined;
+  onClose: () => void;
+  subTasksValue: (v: any[]) => void;
 }
 
-const EditTask = ({ task, editTask, currentTaskId }: Props) => {
+const EditTask = ({
+  task,
+  editTask,
+  currentTaskId,
+  onClose,
+  subTasksValue,
+}: Props) => {
+  // const [editedTask, setEditedTask] = useState<any[]>([]);
+
   const [taskValue, setTaskValue] = useState("");
-  //   const [subTasksValue, setSubTasksValue] = useState("");
+
   const [subTasks, setSubTasks] = useState<any[]>([]);
 
   const currentTask = task.filter((t: any) => t.id == currentTaskId);
-  //   setValue(currentTask[0].task);
-  //   console.log(value);
+
+  // const otherTasks = task.filter((t: any) => t.id !== currentTaskId);
+
+  // const editedTaskArray = currentTask.map((task: any) =>
+  //   !taskValue ? task : (task.task = taskValue)
+  // );
 
   const addSubTask = (subTask: any) => {
     setSubTasks([
       ...subTasks,
-      { id: subTasks.length, task: subTask, isEditing: false },
+      {
+        id: subTasks.length,
+        perentTask: currentTask[0].task,
+        task: subTask,
+        isEditing: false,
+      },
     ]);
   };
 
   const handleSubmit = (e: any) => {
     // prevent default action
     e.preventDefault();
-    // if (subTasks) {
-    // console.log("value");
+    subTasksValue(subTasks);
+    console.log("editTasks", subTasks);
     // add todo
-    //   addSubTask(value);
-    // clear form after submission
-    //   setSubTasksValue("");
+    onClose();
   };
 
   const deleteSubTask = (id: number) => {
@@ -70,7 +86,7 @@ const EditTask = ({ task, editTask, currentTaskId }: Props) => {
         <form onSubmit={handleSubmit}>
           <Input
             value={taskValue}
-            placeholder={currentTask[0].task}
+            placeholder={!taskValue ? currentTask[0].task : taskValue}
             onChange={(e) => setTaskValue(e.target.value)}
             borderRadius={10}
             mb={1}
@@ -86,6 +102,7 @@ const EditTask = ({ task, editTask, currentTaskId }: Props) => {
             />
           ) : (
             <TaskPad
+              children={0}
               width={"100%"}
               onDelete={deleteSubTask}
               key={index}
@@ -94,6 +111,15 @@ const EditTask = ({ task, editTask, currentTaskId }: Props) => {
             />
           )
         )}
+        <form onSubmit={handleSubmit}>
+          <Flex mb={1}>
+            <SectionButton
+              //   disabled={false}
+              buttonName="fuck"
+              onClick={() => {}}
+            />
+          </Flex>
+        </form>
       </Flex>
     </>
   );

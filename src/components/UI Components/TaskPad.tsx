@@ -1,5 +1,5 @@
 import { Box, Flex, HStack } from "@chakra-ui/layout";
-import { Text } from "@chakra-ui/react";
+import { Badge, Text } from "@chakra-ui/react";
 import { IoTrashBinSharp } from "react-icons/io5/";
 import { BiEdit } from "react-icons/bi";
 
@@ -8,9 +8,16 @@ interface Props {
   task: any;
   onDelete: (id: number) => void;
   editTask: (id: number) => void;
+  children: number;
 }
 
-export const TaskPad = ({ task, onDelete, editTask, width }: Props) => {
+export const TaskPad = ({
+  task,
+  onDelete,
+  editTask,
+  width,
+  children,
+}: Props) => {
   return (
     <HStack gap={0} mr={0} mb={1}>
       <Box
@@ -19,36 +26,56 @@ export const TaskPad = ({ task, onDelete, editTask, width }: Props) => {
         w={width}
         h={10}
         p={1.5}
-        pl={4}
+        pl={3}
         pr={2}
         borderLeftRadius={10}
         justifyContent={"center"}
         alignItems={"center"}
+        // flexDirection={"raw"}
       >
-        <Text
-          m={0}
-          textOverflow={"ellipsis"}
-          whiteSpace={"nowrap"}
-          overflow={"hidden"}
-        >
-          {task.task}
-        </Text>
+        <Flex>
+          <Badge
+            display={children > 0 ? "" : "none"}
+            mt={"2px"}
+            w={6}
+            mr={2}
+            p={0}
+            // color={"orange.400"}
+            textAlign={"center"}
+            borderRadius={50}
+            fontSize={"1rem"}
+            // position={"absolute"}
+            colorScheme="purple"
+          >
+            {children > 0 ? children : null}
+          </Badge>
+          <Text
+            m={0}
+            textOverflow={"ellipsis"}
+            whiteSpace={"nowrap"}
+            overflow={"hidden"}
+          >
+            {task.task}
+          </Text>
+        </Flex>
       </Box>
       <Flex>
-        <Flex
-          bg={"orange.300"}
-          h={10}
-          w={16}
-          pt={3}
-          pl={3}
-          pr={3}
-          gap={2}
-          color={"white"}
-          _hover={{ bg: "orange.400" }}
-          borderRightRadius={10}
-        >
-          <BiEdit onClick={() => editTask(task.id)} />
-          <IoTrashBinSharp onClick={() => onDelete(task.id)} />
+        <Flex>
+          <Flex
+            bg={"orange.300"}
+            h={10}
+            w={16}
+            pt={3}
+            pl={3}
+            pr={3}
+            gap={2}
+            color={"white"}
+            _hover={{ bg: "orange.400" }}
+            borderRightRadius={10}
+          >
+            <BiEdit onClick={() => editTask(task.id)} />
+            <IoTrashBinSharp onClick={() => onDelete(task.id)} />
+          </Flex>
         </Flex>
       </Flex>
     </HStack>

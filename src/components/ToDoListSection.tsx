@@ -16,6 +16,8 @@ const ToDoListSection = () => {
 
   const [currentTodo, setCurrentTodo] = useState<number>();
 
+  const [subTasks, setSubTasks] = useState<any[]>([]);
+
   const editTodo = (id: any) => {
     setTodos(
       todos.map((todo) =>
@@ -39,9 +41,13 @@ const ToDoListSection = () => {
         onClose={closeModal1}
         children={
           <EditTask
+            subTasksValue={(subTasksValues) => {
+              setSubTasks(subTasksValues);
+            }}
             editTask={editTodo}
             task={todos}
             currentTaskId={currentTodo}
+            onClose={() => setIsOpen1(false)}
           />
         }
       />
@@ -61,11 +67,14 @@ const ToDoListSection = () => {
           >
             {todos.map((todo, index) => (
               <TaskPad
+                children={subTasks.length}
                 width={"190px"}
                 onDelete={deleteTask}
                 key={index}
                 task={todo}
-                editTask={openModal1}
+                editTask={(id) => {
+                  openModal1(id), console.log(subTasks);
+                }}
               />
             ))}
           </Flex>

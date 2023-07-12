@@ -17,7 +17,7 @@ function App() {
                   "header header"
                   "main main"
                   "footer footer"`}
-      gridTemplateRows={"3.2rem 4rem 1fr 40px"}
+      gridTemplateRows={"3.2rem 4rem 1fr 30px"}
       gridTemplateColumns={"1fr 1fr"}
       h="100vh"
       w="100vw"

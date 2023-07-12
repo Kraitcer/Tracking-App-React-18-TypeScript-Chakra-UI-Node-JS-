@@ -29,7 +29,7 @@ const MorningMain = () => {
   };
   return (
     <>
-      <Flex flexDirection={"column"} alignItems={"center"} gap={2}>
+      <Flex flexDirection={"column"} alignItems={"center"} gap={4}>
         <Box w="560px" flexDirection={"column"}>
           <SectionHeader HeadingName="sleep" />
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -52,14 +52,14 @@ const MorningMain = () => {
         <Box w="560px" flexDirection={"column"}>
           <SectionHeader HeadingName="todo list" />
           <ToDoListSection />
-        </Box>
-        <Box w="560px" flexDirection={"column"}>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <SectionButton
-              buttonName="submit all and start the day"
-              onClick={() => onSubmit}
-            />
-          </form>
+          <Box w="560px" flexDirection={"column"} mt={2}>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <SectionButton
+                buttonName="submit all and start the day"
+                onClick={() => onSubmit}
+              />
+            </form>
+          </Box>
         </Box>
       </Flex>
     </>

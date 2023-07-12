@@ -92,22 +92,25 @@ const GrateFulnessSection = ({ getData, setData }: Props) => {
 
   function nexGratefulness() {
     if (count === 2) setDisplay("none");
-    if (errors.gratefulForDoday)
+    if (errors.gratefulForDoday || errors.grateCategories)
       toast({
-        title: "Gratefulness",
-        description: `${errors.gratefulForDoday.message}`,
+        title: `${errors.gratefulForDoday?.message}`,
+        description:
+          "be gratefull for your self and choose why. But that why shoold be at least 3 charakters",
         status: "warning",
+        position: "top",
         duration: 9000,
         isClosable: true,
       });
-    if (errors.grateCategories)
-      toast({
-        title: "Gratefulness: Chose type of Gratefulness",
-        description: `${errors.grateCategories.message}`,
-        status: "warning",
-        duration: 9000,
-        isClosable: true,
-      });
+    // if (errors.grateCategories)
+    //   toast({
+    //     title: "Gratefulness: Chose type of Gratefulness",
+    //     description: `${errors.grateCategories.message}`,
+    //     position: "top-right",
+    //     status: "warning",
+    //     duration: 9000,
+    //     isClosable: true,
+    //   });
     // console.log(grateDataArrey);
   }
   const toDay = ["Firstly", "Secondary", "Thirdly", "Taday"];
@@ -159,10 +162,10 @@ const GrateFulnessSection = ({ getData, setData }: Props) => {
               {getData.length === 3 &&
                 getData.map((grateElement, index) => (
                   <Tr key={index} fontSize={17}>
-                    <Td ps={0} pb={4} pt={4} textAlign={"left"}>
+                    <Td ps={0} pb={2} pt={4} textAlign={"left"}>
                       {grateElement.gratefulForDoday}
                     </Td>
-                    <Td pb={4} pt={4} pe={0} textAlign={"right"}>
+                    <Td pb={2} pt={2} pe={0} textAlign={"right"}>
                       {grateElement.grateCategories}
                     </Td>
                   </Tr>
