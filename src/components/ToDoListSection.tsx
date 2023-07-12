@@ -43,6 +43,10 @@ const ToDoListSection = () => {
           <EditTask
             subTasksValue={(subTasksValues) => {
               setSubTasks(subTasksValues);
+              localStorage.setItem(
+                `subTask_${subTasksValues[0].perentTask}`,
+                JSON.stringify(subTasksValues)
+              );
             }}
             editTask={editTodo}
             task={todos}
