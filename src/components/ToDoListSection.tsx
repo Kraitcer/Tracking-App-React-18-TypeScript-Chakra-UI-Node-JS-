@@ -9,16 +9,15 @@ import { v4 as uuidv4 } from "uuid";
 const ToDoListSection = () => {
   const [isOpen1, setIsOpen1] = useState(false);
   const closeModal1 = () => setIsOpen1(false);
-  const openModal1 = (id: number) => {
+  const openModal1 = (id: string) => {
     setIsOpen1(true), setCurrentTodo(id);
   };
 
   const [todos, setTodos] = useState<any[]>([]);
 
-  const [currentTodo, setCurrentTodo] = useState<number>();
+  const [currentTodo, setCurrentTodo] = useState<string>();
 
-  const editTodo = (id: number, currentTaskName: string) => {
-    console.log("id", id, "name", currentTaskName);
+  const editTodo = (id: string, currentTaskName: string) => {
     setTodos(
       todos.map((todo) =>
         todo.id === id ? { ...todo, task: currentTaskName } : todo
@@ -26,15 +25,14 @@ const ToDoListSection = () => {
     );
   };
 
-  const deleteTask = (id: number) => {
+  const deleteTask = (id: string) => {
     const newTodos = todos.filter((todo) => todo.id !== id);
     setTodos(newTodos);
   };
   const addTodo = (todo: any) => {
     setTodos([
       ...todos,
-      // { id: uuidv4(), task: todo, isEditing: false, subTasks: 0 },
-      { id: todos.length, task: todo, isEditing: false, subTasks: 0 },
+      { id: uuidv4(), task: todo, isEditing: false, subTasks: 0 },
     ]);
     console.log(todos);
   };
@@ -63,13 +61,10 @@ const ToDoListSection = () => {
                 JSON.stringify(subTasksValues)
               );
             }}
-            editTask={(id, name) => editTodo(id, name)}
+            editTask={(id: string, name) => editTodo(id, name)}
             task={todos}
             currentTask={currentTask}
             onClose={() => {
-              // console.log(currentTask);
-              // console.log("savedSubTasks", savedSubTasks);
-              // setSavedSubTasks(savedSubTasks.map((taska, index) => ) ),
               setIsOpen1(false);
             }}
           />
@@ -97,7 +92,7 @@ const ToDoListSection = () => {
                 key={index}
                 task={todo}
                 editTask={(id) => {
-                  openModal1(index), console.log("taskPad todos", todos);
+                  openModal1(id), console.log("taskPad todos", todos);
                 }}
               />
             ))}

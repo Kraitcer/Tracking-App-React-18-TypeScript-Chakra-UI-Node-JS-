@@ -5,10 +5,11 @@ import AddSubTask from "./AddSubTask";
 import TaskPad from "./TaskPad";
 import EditSubTask from "./EditSubTask";
 import SectionButton from "./SectionButton";
+import { v4 as uuidv4 } from "uuid";
 
 interface Props {
   task: any;
-  editTask: (id: number, currentTaskName: string) => void;
+  editTask: (id: string, currentTaskName: string) => void;
   currentTask: any[];
   onClose: () => void;
   subTasksValue: (v: any[]) => void;
@@ -36,11 +37,11 @@ const EditTask = ({
   // );
 
   const addSubTask = (subTask: any) => {
-    console.log("addSubTask in editTask", currentTask[0].id, taskValue);
+    // console.log("addSubTask in editTask", currentTask[0].id, taskValue);
     setSubTasks([
       ...subTasks,
       {
-        id: subTasks.length,
+        id: uuidv4(),
         perentTask: currentTask[0].task,
         task: subTask,
         isEditing: false,
@@ -59,11 +60,11 @@ const EditTask = ({
     onClose();
   };
 
-  const deleteSubTask = (id: number) => {
+  const deleteSubTask = (id: string) => {
     const newSubTasks = subTasks.filter((subTask) => subTask.id !== id);
     setSubTasks(newSubTasks);
   };
-  const editSubTasks = (subTaskValue: any, id: number) => {
+  const editSubTasks = (subTaskValue: any, id: string) => {
     const newSubTasks = subTasks.map((subTask) =>
       subTask.id === id
         ? { ...subTask, task: subTaskValue, isEditing: !subTask.isEditing }
@@ -73,7 +74,7 @@ const EditTask = ({
     // localStorage.setItem('todos', JSON.stringify(newTodos));
   };
 
-  const editCurrentSubTask = (id: number) => {
+  const editCurrentSubTask = (id: string) => {
     setSubTasks(
       subTasks.map((subTask) =>
         subTask.id === id

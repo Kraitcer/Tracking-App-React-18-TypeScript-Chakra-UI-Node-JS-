@@ -5,7 +5,7 @@ import { AiOutlinePlusCircle } from "react-icons/ai";
 
 interface Props {
   subTasks: any;
-  editSubTask: (subTaskValue: any, id: number) => void;
+  editSubTask: (subTaskValue: any, id: string) => void;
 }
 
 export const EditSubTask = ({ subTasks, editSubTask }: Props) => {

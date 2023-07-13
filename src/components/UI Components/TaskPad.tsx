@@ -6,8 +6,8 @@ import { BiEdit } from "react-icons/bi";
 interface Props {
   width: string;
   task: any;
-  onDelete: (id: number) => void;
-  editTask: (id: number) => void;
+  onDelete: (id: string) => void;
+  editTask: (id: string) => void;
   children: number;
 }
 
