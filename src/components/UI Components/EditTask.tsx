@@ -8,7 +8,7 @@ import SectionButton from "./SectionButton";
 
 interface Props {
   task: any;
-  editTask: (id: number) => void;
+  editTask: (id: number, currentTaskName: string) => void;
   currentTask: any[];
   onClose: () => void;
   subTasksValue: (v: any[]) => void;
@@ -36,6 +36,7 @@ const EditTask = ({
   // );
 
   const addSubTask = (subTask: any) => {
+    console.log("addSubTask in editTask", currentTask[0].id, taskValue);
     setSubTasks([
       ...subTasks,
       {
@@ -50,9 +51,11 @@ const EditTask = ({
   const handleSubmit = (e: any) => {
     // prevent default action
     e.preventDefault();
-    subTasksValue(subTasks);
-    console.log("editTasks", subTasks);
+    // if (taskValue) editTask(taskValue.);
+    // console.log("editTasks", subTasks);
     // add todo
+    if (taskValue) editTask(currentTask[0].id, taskValue);
+    if (subTasks) subTasksValue(subTasks);
     onClose();
   };
 
@@ -103,7 +106,7 @@ const EditTask = ({
           ) : (
             <TaskPad
               children={0}
-              width={"100%"}
+              width={"25rem"}
               onDelete={deleteSubTask}
               key={index}
               task={subTask}

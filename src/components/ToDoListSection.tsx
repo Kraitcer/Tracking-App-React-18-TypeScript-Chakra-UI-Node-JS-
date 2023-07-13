@@ -4,7 +4,7 @@ import { Box, Flex, VStack } from "@chakra-ui/layout";
 import TaskPad from "./UI Components/TaskPad";
 import AllModal from "./UI Components/AllModal";
 import EditTask from "./UI Components/EditTask";
-import { string } from "zod";
+import { v4 as uuidv4 } from "uuid";
 
 const ToDoListSection = () => {
   const [isOpen1, setIsOpen1] = useState(false);
@@ -17,16 +17,11 @@ const ToDoListSection = () => {
 
   const [currentTodo, setCurrentTodo] = useState<number>();
 
-  const [subTasks, setSubTasks] = useState<number>(0);
-
-  // const [convertedSubTasks, setConvertedSubTasks] = useState<any[]>([]);
-
-  const [savedSubTasks, setSavedSubTasks] = useState<any[]>([]);
-
-  const editTodo = (id: any) => {
+  const editTodo = (id: number, currentTaskName: string) => {
+    console.log("id", id, "name", currentTaskName);
     setTodos(
       todos.map((todo) =>
-        todo.id === id ? { ...todo, isEditing: !todo.isEditing } : todo
+        todo.id === id ? { ...todo, task: currentTaskName } : todo
       )
     );
   };
@@ -38,8 +33,10 @@ const ToDoListSection = () => {
   const addTodo = (todo: any) => {
     setTodos([
       ...todos,
+      // { id: uuidv4(), task: todo, isEditing: false, subTasks: 0 },
       { id: todos.length, task: todo, isEditing: false, subTasks: 0 },
     ]);
+    console.log(todos);
   };
 
   const currentTask = todos.filter((t: any) => t.id == currentTodo);
@@ -60,13 +57,13 @@ const ToDoListSection = () => {
                     : todo
                 )
               );
-              // console.log("TodoList Leavel", subTasksValues);
+              console.log("TodoList Leavel", subTasksValues);
               localStorage.setItem(
                 `subTask_${subTasksValues[0].perentTask}`,
                 JSON.stringify(subTasksValues)
               );
             }}
-            editTask={editTodo}
+            editTask={(id, name) => editTodo(id, name)}
             task={todos}
             currentTask={currentTask}
             onClose={() => {
@@ -100,7 +97,7 @@ const ToDoListSection = () => {
                 key={index}
                 task={todo}
                 editTask={(id) => {
-                  openModal1(id), console.log("taskPad todos", todos);
+                  openModal1(index), console.log("taskPad todos", todos);
                 }}
               />
             ))}
