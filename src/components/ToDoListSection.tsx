@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AddTask from "./UI Components/AddTasks";
 import { Box, Flex, VStack } from "@chakra-ui/layout";
 import TaskPad from "./UI Components/TaskPad";
 import AllModal from "./UI Components/AllModal";
 import EditTask from "./UI Components/EditTask";
+import { string } from "zod";
 
 const ToDoListSection = () => {
   const [isOpen1, setIsOpen1] = useState(false);
@@ -16,7 +17,11 @@ const ToDoListSection = () => {
 
   const [currentTodo, setCurrentTodo] = useState<number>();
 
-  const [subTasks, setSubTasks] = useState<any[]>([]);
+  const [subTasks, setSubTasks] = useState<number>(0);
+
+  // const [convertedSubTasks, setConvertedSubTasks] = useState<any[]>([]);
+
+  const [savedSubTasks, setSavedSubTasks] = useState<any[]>([]);
 
   const editTodo = (id: any) => {
     setTodos(
@@ -31,8 +36,14 @@ const ToDoListSection = () => {
     setTodos(newTodos);
   };
   const addTodo = (todo: any) => {
-    setTodos([...todos, { id: todos.length, task: todo, isEditing: false }]);
+    setTodos([
+      ...todos,
+      { id: todos.length, task: todo, isEditing: false, subTasks: 0 },
+    ]);
   };
+
+  const currentTask = todos.filter((t: any) => t.id == currentTodo);
+
   return (
     <>
       <AllModal
@@ -42,7 +53,14 @@ const ToDoListSection = () => {
         children={
           <EditTask
             subTasksValue={(subTasksValues) => {
-              setSubTasks(subTasksValues);
+              setTodos(
+                todos.map((todo) =>
+                  todo.task === subTasksValues[0].perentTask
+                    ? { ...todo, subTasks: subTasksValues.length }
+                    : todo
+                )
+              );
+              // console.log("TodoList Leavel", subTasksValues);
               localStorage.setItem(
                 `subTask_${subTasksValues[0].perentTask}`,
                 JSON.stringify(subTasksValues)
@@ -50,8 +68,13 @@ const ToDoListSection = () => {
             }}
             editTask={editTodo}
             task={todos}
-            currentTaskId={currentTodo}
-            onClose={() => setIsOpen1(false)}
+            currentTask={currentTask}
+            onClose={() => {
+              // console.log(currentTask);
+              // console.log("savedSubTasks", savedSubTasks);
+              // setSavedSubTasks(savedSubTasks.map((taska, index) => ) ),
+              setIsOpen1(false);
+            }}
           />
         }
       />
@@ -71,13 +94,13 @@ const ToDoListSection = () => {
           >
             {todos.map((todo, index) => (
               <TaskPad
-                children={subTasks.length}
+                children={todo.subTasks}
                 width={"190px"}
                 onDelete={deleteTask}
                 key={index}
                 task={todo}
                 editTask={(id) => {
-                  openModal1(id), console.log(subTasks);
+                  openModal1(id), console.log("taskPad todos", todos);
                 }}
               />
             ))}

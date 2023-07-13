@@ -9,7 +9,7 @@ import SectionButton from "./SectionButton";
 interface Props {
   task: any;
   editTask: (id: number) => void;
-  currentTaskId: number | undefined;
+  currentTask: any[];
   onClose: () => void;
   subTasksValue: (v: any[]) => void;
 }
@@ -17,7 +17,7 @@ interface Props {
 const EditTask = ({
   task,
   editTask,
-  currentTaskId,
+  currentTask,
   onClose,
   subTasksValue,
 }: Props) => {
@@ -27,7 +27,7 @@ const EditTask = ({
 
   const [subTasks, setSubTasks] = useState<any[]>([]);
 
-  const currentTask = task.filter((t: any) => t.id == currentTaskId);
+  // const currentTask = task.filter((t: any) => t.id == currentTaskId);
 
   // const otherTasks = task.filter((t: any) => t.id !== currentTaskId);
 
