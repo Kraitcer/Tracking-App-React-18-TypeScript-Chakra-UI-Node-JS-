@@ -1,6 +1,6 @@
 import { Input } from "@chakra-ui/input";
 import { Flex } from "@chakra-ui/layout";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AddSubTask from "./AddSubTask";
 import TaskPad from "./TaskPad";
 import EditSubTask from "./EditSubTask";
@@ -22,6 +22,18 @@ const EditTask = ({
   onClose,
   subTasksValue,
 }: Props) => {
+  useEffect(() => {
+    if (currentTask.length > 0) {
+      const subTasksFromStorage =
+        localStorage.getItem(`subTask_${currentTask[0].task}`) || [];
+      if (typeof subTasksFromStorage === "string") {
+        const savedSubTasks = JSON.parse(subTasksFromStorage);
+        setSubTasks(savedSubTasks);
+        console.log("from LS", savedSubTasks);
+      }
+    }
+  }, []);
+
   const [taskValue, setTaskValue] = useState("");
 
   const [subTasks, setSubTasks] = useState<any[]>([]);
@@ -43,6 +55,7 @@ const EditTask = ({
     if (subTasks.length > 0) subTasksValue(subTasks);
     if (taskValue) editTask(currentTask[0].id, taskValue);
     onClose();
+    console.log("currentTask from editTask", currentTask);
   };
 
   const deleteSubTask = (id: string) => {
