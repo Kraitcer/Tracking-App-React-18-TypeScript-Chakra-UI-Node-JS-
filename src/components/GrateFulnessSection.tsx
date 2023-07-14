@@ -10,6 +10,7 @@ import {
   Tr,
   Tbody,
   Td,
+  Text,
 } from "@chakra-ui/react";
 import { FieldValues, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -102,16 +103,6 @@ const GrateFulnessSection = ({ getData, setData }: Props) => {
         duration: 9000,
         isClosable: true,
       });
-    // if (errors.grateCategories)
-    //   toast({
-    //     title: "Gratefulness: Chose type of Gratefulness",
-    //     description: `${errors.grateCategories.message}`,
-    //     position: "top-right",
-    //     status: "warning",
-    //     duration: 9000,
-    //     isClosable: true,
-    //   });
-    // console.log(grateDataArrey);
   }
   const toDay = ["Firstly", "Secondary", "Thirdly", "Taday"];
 
@@ -163,7 +154,15 @@ const GrateFulnessSection = ({ getData, setData }: Props) => {
                 getData.map((grateElement, index) => (
                   <Tr key={index} fontSize={17}>
                     <Td ps={0} pb={2} pt={4} textAlign={"left"}>
-                      {grateElement.gratefulForDoday}
+                      <Text
+                        w={"150px"}
+                        m={0}
+                        textOverflow={"ellipsis"}
+                        whiteSpace={"nowrap"}
+                        overflow={"hidden"}
+                      >
+                        {grateElement.gratefulForDoday}
+                      </Text>
                     </Td>
                     <Td pb={2} pt={2} pe={0} textAlign={"right"}>
                       {grateElement.grateCategories}

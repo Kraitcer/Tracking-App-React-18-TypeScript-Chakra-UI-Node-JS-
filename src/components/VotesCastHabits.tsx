@@ -9,6 +9,7 @@ import {
   Tbody,
   Tr,
   Td,
+  Text,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
@@ -171,10 +172,21 @@ const VotesCastHabits = ({ setData, getData }: Props) => {
               {getData.map((habitsElement, index) => (
                 <Tr key={index} fontSize={16}>
                   <Td ps={0} pb={1.5} pt={1.5} textAlign={"left"}>
-                    {habitsElement.category}
+                    <Text m={0} w={"50px"}>
+                      {habitsElement.category}
+                    </Text>
                   </Td>
-                  <Td pb={1.5} pt={1.5} pe={0} textAlign={"right"}>
-                    {`${habitsElement.habitImprovement}(${habitsElement.habitImprovementDetails})`}
+                  <Td pb={1.5} pt={1.5} pe={0}>
+                    <Text
+                      w={"180px"}
+                      m={0}
+                      textAlign={"left"}
+                      textOverflow={"ellipsis"}
+                      whiteSpace={"nowrap"}
+                      overflow={"hidden"}
+                    >
+                      {`${habitsElement.habitImprovement}(${habitsElement.habitImprovementDetails})`}
+                    </Text>
                   </Td>
                 </Tr>
               ))}
