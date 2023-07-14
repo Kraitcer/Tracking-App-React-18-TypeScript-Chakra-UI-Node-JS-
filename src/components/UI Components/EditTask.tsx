@@ -118,9 +118,10 @@ const EditTask = ({
         <form onSubmit={handleSubmit}>
           <Flex mb={1}>
             <SectionButton
-              //   disabled={false}
               buttonName="fuck"
-              onClick={() => {}}
+              onClick={() => {
+                handleSubmit;
+              }}
             />
           </Flex>
         </form>

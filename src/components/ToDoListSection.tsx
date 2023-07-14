@@ -48,18 +48,21 @@ const ToDoListSection = () => {
         children={
           <EditTask
             subTasksValue={(subTasksValues) => {
-              setTodos(
-                todos.map((todo) =>
-                  todo.task === subTasksValues[0].perentTask
-                    ? { ...todo, subTasks: subTasksValues.length }
-                    : todo
-                )
-              );
-              console.log("TodoList Leavel", subTasksValues);
-              localStorage.setItem(
-                `subTask_${subTasksValues[0].perentTask}`,
-                JSON.stringify(subTasksValues)
-              );
+              if (subTasksValues.length > 0) {
+                // console.log("inishall", subTasksValues);
+                setTodos(
+                  todos.map((todo) =>
+                    todo.task === subTasksValues[0].perentTask
+                      ? { ...todo, subTasks: subTasksValues.length }
+                      : todo
+                  )
+                );
+                localStorage.setItem(
+                  `subTask_${subTasksValues[0].perentTask}`,
+                  JSON.stringify(subTasksValues)
+                );
+              }
+              // console.log("TodoList Leavel", subTasksValues);
             }}
             editTask={(id: string, name) => editTodo(id, name)}
             task={todos}
