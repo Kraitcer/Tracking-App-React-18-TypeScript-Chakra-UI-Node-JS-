@@ -22,22 +22,11 @@ const EditTask = ({
   onClose,
   subTasksValue,
 }: Props) => {
-  // const [editedTask, setEditedTask] = useState<any[]>([]);
-
   const [taskValue, setTaskValue] = useState("");
 
   const [subTasks, setSubTasks] = useState<any[]>([]);
 
-  // const currentTask = task.filter((t: any) => t.id == currentTaskId);
-
-  // const otherTasks = task.filter((t: any) => t.id !== currentTaskId);
-
-  // const editedTaskArray = currentTask.map((task: any) =>
-  //   !taskValue ? task : (task.task = taskValue)
-  // );
-
   const addSubTask = (subTask: any) => {
-    // console.log("addSubTask in editTask", currentTask[0].id, taskValue);
     setSubTasks([
       ...subTasks,
       {
@@ -50,13 +39,9 @@ const EditTask = ({
   };
 
   const handleSubmit = (e: any) => {
-    // prevent default action
     e.preventDefault();
-    // if (taskValue) editTask(taskValue.);
-    // console.log("editTasks", subTasks);
-    // add todo
+    if (subTasks.length > 0) subTasksValue(subTasks);
     if (taskValue) editTask(currentTask[0].id, taskValue);
-    if (subTasks) subTasksValue(subTasks);
     onClose();
   };
 

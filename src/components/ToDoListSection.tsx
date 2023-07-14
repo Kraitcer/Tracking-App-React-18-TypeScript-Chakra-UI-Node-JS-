@@ -10,7 +10,8 @@ const ToDoListSection = () => {
   const [isOpen1, setIsOpen1] = useState(false);
   const closeModal1 = () => setIsOpen1(false);
   const openModal1 = (id: string) => {
-    setIsOpen1(true), setCurrentTodo(id);
+    setIsOpen1(true);
+    setCurrentTodo(id);
   };
 
   const [todos, setTodos] = useState<any[]>([]);
@@ -47,6 +48,7 @@ const ToDoListSection = () => {
         onClose={closeModal1}
         children={
           <EditTask
+            editTask={(id: string, name) => editTodo(id, name)}
             subTasksValue={(subTasksValues) => {
               if (subTasksValues.length > 0) {
                 // console.log("inishall", subTasksValues);
@@ -62,9 +64,7 @@ const ToDoListSection = () => {
                   JSON.stringify(subTasksValues)
                 );
               }
-              // console.log("TodoList Leavel", subTasksValues);
             }}
-            editTask={(id: string, name) => editTodo(id, name)}
             task={todos}
             currentTask={currentTask}
             onClose={() => {
