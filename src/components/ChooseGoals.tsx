@@ -33,9 +33,10 @@ interface Props {
 }
 
 const schema = z.object({
-  projects: z.enum(projectsArray, {
-    errorMap: () => ({ message: "Choose Project" }),
-  }),
+  // projects: z.enum(projectsArray, {
+  //   errorMap: () => ({ message: "Choose Project" }),
+  // }),
+  projects: z.enum(projectsArray).optional(),
   goalOne_att_time_: z.string().optional(),
   goalTwo_att_time_: z.string().optional(),
   goalThree_att_time_: z.string().optional(),
@@ -217,6 +218,7 @@ const ChooseGoals = ({ onClose, changeTitle, getData, setData }: Props) => {
               </Text>
             </Flex>
             <SmartServey
+              onClick={() => {}}
               innerBtnDisplay="none"
               key={refreshKey}
               onChange={() => {

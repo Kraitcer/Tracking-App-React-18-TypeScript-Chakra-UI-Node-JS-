@@ -95,7 +95,7 @@ const ToDoListSection = () => {
                 key={index}
                 task={todo}
                 editTask={(id) => {
-                  openModal1(id), console.log("taskPad todos", todos);
+                  openModal1(id);
                 }}
               />
             ))}

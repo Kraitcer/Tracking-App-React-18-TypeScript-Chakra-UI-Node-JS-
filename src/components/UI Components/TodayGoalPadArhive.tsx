@@ -7,14 +7,42 @@ import { FormData } from "../TodayGoalsSection";
 import InnerButton from "./InnerButton";
 
 interface ChildComponentProps {
+  register: UseFormRegister<FormData>; // Assuming FormData is the same type used in the parent component
+  goalsData: FormData | string[] | number | any;
   children: string[];
+  display: string;
   onDelete: () => void;
+  onClick: () => void;
+  //   disabled: () => void;
 }
 
-export const TodayGoalPad = ({ children, onDelete }: ChildComponentProps) => {
+export const TodayGoalPad = ({
+  register,
+  goalsData,
+  children,
+  display,
+  onDelete,
+  onClick,
+}: ChildComponentProps) => {
   return (
     <>
-      <HStack mt={1} gap={0} w={"556px"}>
+      <HStack display={display}>
+        <Att_time_IWill_Smart register={register} goalsData={goalsData} />
+        <Flex>
+          <SectionButton
+            buttonName="S.M.A.R.T. ?"
+            onClick={() => {
+              onClick();
+            }}
+          />
+        </Flex>
+      </HStack>
+      <HStack
+        mt={1}
+        gap={0}
+        w={"556px"}
+        display={display === "flex" ? "none" : "flex"}
+      >
         <Flex
           bg={"blue.200"}
           // w={"29rem"}

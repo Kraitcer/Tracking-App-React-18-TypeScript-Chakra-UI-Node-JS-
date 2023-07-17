@@ -10,7 +10,6 @@ import TodayGoalPad from "./UI Components/TodayGoalPad";
 import InnerButton from "./UI Components/InnerButton";
 import AllModal from "./UI Components/AllModal";
 import SmartServey from "./UI Components/SmartServey";
-import TodayGoalInput from "./UI Components/TodayGoalInput";
 
 interface todayGoalsArray {
   id: number;
@@ -26,10 +25,9 @@ interface Props {
 }
 
 const schema = z.object({
-  // projects: z.enum(projectsArray, {
-  //   errorMap: () => ({ message: "Choose Project" }),
-  // }),
-  projects: z.enum(projectsArray).optional(),
+  projects: z.enum(projectsArray, {
+    errorMap: () => ({ message: "Choose Project" }),
+  }),
   goalOne_att_time_: z.string().optional(),
   goalTwo_att_time_: z.string().optional(),
   goalThree_att_time_: z.string().optional(),
@@ -71,7 +69,7 @@ Props) => {
 
   const todayGoalsArray = [
     {
-      id: 0,
+      id: 1,
       project: "",
       goalName: "goalOne",
       goalTime: "",
@@ -86,7 +84,7 @@ Props) => {
       },
     },
     {
-      id: 1,
+      id: 2,
       project: "",
       goalName: "goalTwo",
       goalTime: "",
@@ -101,7 +99,7 @@ Props) => {
       },
     },
     {
-      id: 2,
+      id: 3,
       project: "",
       goalName: "goalThree",
       goalTime: "",
@@ -148,6 +146,7 @@ Props) => {
     console.log("onSubmit goalArray", todayGoals);
     // ============================================================GOAL_ONE=================================
     if (data.goalOne_IWill_Smart) {
+      console.log("onSubmit goalName", data.goalOne_IWill_Smart);
       console.log("onSubmit goalArray", todayGoals);
       onClick(`${data.goalOne_IWill_Smart}`);
       setTodayGoals(
@@ -155,10 +154,10 @@ Props) => {
           tudayGoal.goalName === "goalOne"
             ? {
                 ...tudayGoal,
-                // project: data.projects,
+                project: data.projects,
                 goal: data.goalOne_IWill_Smart,
                 goalTime: data.goalOne_att_time_,
-                // display: "none",
+                display: "none",
                 isEditing: false,
               }
             : tudayGoal
@@ -175,10 +174,10 @@ Props) => {
           tudayGoal.goalName === "goalTwo"
             ? {
                 ...tudayGoal,
-                // project: data.projects,
+                project: data.projects,
                 goal: data.goalTwo_IWill_Smart,
                 goalTime: data.goalTwo_att_time_,
-                // display: "none",
+                display: "none",
                 isEditing: false,
               }
             : tudayGoal
@@ -196,10 +195,10 @@ Props) => {
           tudayGoal.goalName === "goalThree"
             ? {
                 ...tudayGoal,
-                // project: data.projects,
+                project: data.projects,
                 goal: data.goalThree_IWill_Smart,
                 goalTime: data.goalThree_att_time_,
-                // display: "none",
+                display: "none",
                 isEditing: false,
               }
             : tudayGoal
@@ -244,39 +243,38 @@ Props) => {
                 }}
               />
             </Flex>
-            {todayGoals.map((goal, index) =>
-              !goal.isEditing ? (
-                <TodayGoalPad
-                  key={index}
-                  children={[`${goal.goalTime}`, `${goal.goal}`]}
-                  onDelete={() => {
-                    setTodayGoals(
-                      todayGoals.map((tadayGoal) =>
-                        tadayGoal.id == goal.id
-                          ? {
-                              ...tadayGoal,
-                              goalTime: "",
-                              goal: "",
-                              isEditing: true,
-                            }
-                          : tadayGoal
-                      )
-                    );
-                    reset(goal.reset);
-                  }}
-                />
-              ) : (
-                <TodayGoalInput
-                  key={index}
-                  register={register}
-                  goalsData={[`${goal.goalDataTime}`, `${goal.goalDataName}`]}
-                  onClick={() => {
-                    console.log("TodayGoalPad_OnCLick", todayGoals);
-                    onSubmit;
-                  }}
-                />
-              )
-            )}
+            {todayGoals.map((goal, index) => (
+              <TodayGoalPad
+                key={index}
+                register={register}
+                goalsData={[`${goal.goalDataTime}`, `${goal.goalDataName}`]}
+                children={[`${goal.goalTime}`, `${goal.goal}`]}
+                display={goal.display}
+                onClick={() => {
+                  console.log("TodayGoalPad_OnCLick", todayGoals);
+                  onSubmit;
+                }}
+                onDelete={() => {
+                  console.log("ondelete", goal.id);
+                  setTodayGoals(
+                    todayGoals.map((tadayGoal) =>
+                      tadayGoal.id == goal.id
+                        ? {
+                            ...tadayGoal,
+                            goalTime: "",
+                            goal: "",
+                            display: "flex",
+                            // project: "",
+                            isEditing: true,
+                          }
+                        : tadayGoal
+                    )
+                  );
+                  reset(goal.reset);
+                  console.log("ondelete", todayGoals);
+                }}
+              />
+            ))}
           </VStack>
         </form>
       </Flex>
