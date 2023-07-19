@@ -28,9 +28,13 @@ function App() {
     >
       <GridItem pl="2" bg="blue.300" area="nav">
         <Flex gap={2} mt={1.5} mr={2}>
+          <SectionButton
+            buttonName="main"
+            onClick={() => console.log("week in rewiev")}
+          />
           <SectionButton buttonName="survey" onClick={() => {}} />
           <SectionButton
-            buttonName="last week"
+            buttonName="week"
             onClick={() => {
               setMain(<WeekInReview />),
                 setMainTitle([
@@ -38,10 +42,6 @@ function App() {
                   "It's your free day! Congratulations",
                 ]);
             }}
-          />
-          <SectionButton
-            buttonName="next week"
-            onClick={() => console.log("week in rewiev")}
           />
           <SectionButton
             buttonName="evening"

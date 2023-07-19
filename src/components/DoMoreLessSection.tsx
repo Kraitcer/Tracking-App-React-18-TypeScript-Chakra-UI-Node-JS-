@@ -135,7 +135,7 @@ const DoMoreLessSection = ({ getData, setData }: Props) => {
         </FormControl>
         <FormControl id="gratefulness">
           <FormLabel marginBottom={1} fontSize={"xl"}>
-            less:
+            & less:
           </FormLabel>
           <Input
             display={display}
