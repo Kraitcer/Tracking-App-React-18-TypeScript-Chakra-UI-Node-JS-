@@ -5,6 +5,7 @@ import ProgressSlider from "./UI Components/ProgressSlider";
 import { projectsArray } from "./Projects";
 import fitusArrow from "../assets/Image/week in Review section Icons/SVG/FITUS Bonus 8.svg";
 import { chakra } from "@chakra-ui/system";
+import SectionButton from "./UI Components/SectionButton";
 
 interface GoalsProps {
   sliderOneValue: (data: number) => void;
@@ -54,6 +55,12 @@ const GoalsSection = ({
         sliderName={sliderThreeName}
       />
       <Image src={fitusArrow} w={"220px"} />
+      <SectionButton
+        buttonName="FETUS-INDEX"
+        onClick={() => {
+          // openModal2(), onSubmit;
+        }}
+      />
     </Stack>
   );
 };

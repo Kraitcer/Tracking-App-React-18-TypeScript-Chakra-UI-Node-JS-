@@ -1,4 +1,4 @@
-import { Box, Flex, Input, Textarea } from "@chakra-ui/react";
+import { Box, Flex, HStack, Input, Textarea, VStack } from "@chakra-ui/react";
 import SectionHeader from "./UI Components/SectionHeader";
 import SectionButton from "./UI Components/SectionButton";
 import AllModal from "./UI Components/AllModal";
@@ -7,8 +7,9 @@ import { FieldValues, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { ProjectsOfTheWeek } from "./ProjectsOfTheWeek";
-import GoalsSection from "./GoalsSection";
+import Habitbuilder from "./habitbuilder";
 import ProjectsOfTheWeekSection from "./ProjectsOfTheWeekSection";
+import DoMoreLessSection from "./DoMoreLessSection";
 
 const EveningMain = () => {
   const [isOpen1, setIsOpen1] = useState(false);
@@ -35,6 +36,10 @@ const EveningMain = () => {
   const { handleSubmit, setValue } = useForm<FormData>({
     resolver: zodResolver(schema),
   });
+
+  const [habitsDataArrey, setHabitsDataArrey] = useState<any[]>([]);
+
+  const [grateDataArrey, setGrateDataArrey] = useState<any[]>([]);
 
   const onSubmit = (data: FieldValues) => {};
 
@@ -68,12 +73,12 @@ const EveningMain = () => {
             />
           </form>
 
-          <SectionHeader HeadingName={"habits"} />
+          <SectionHeader HeadingName={"tracking"} />
           <Textarea
             variant="brandPrimary"
             bg={"blue.100"}
             color={"white"}
-            placeholder="Write down some doodles"
+            placeholder="Record an improvement"
             resize={"none"}
             marginBottom={2}
             _hover={{
@@ -81,18 +86,25 @@ const EveningMain = () => {
               // placeholder: "",
             }}
           />
+          <SectionButton
+            onClick={() => {}}
+            buttonName="Refined projects & Target Life"
+          />
         </Box>
         <Box w="280px" flexDirection={"column"}>
           <SectionHeader HeadingName={"habits"} />
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <SectionHeader HeadingName={"tracking"} />
-            <SectionButton
-              buttonName="Note Bad Time"
-              onClick={() => {
-                openModal2(), onSubmit;
-              }}
-            />
-          </form>
+          <Habitbuilder
+            getData={habitsDataArrey}
+            setData={(data) => {
+              setHabitsDataArrey(data);
+            }}
+          />
+          {/* <habitbuilder /> */}
+          <SectionHeader HeadingName={"do more/less"} />
+          <DoMoreLessSection
+            getData={grateDataArrey}
+            setData={setGrateDataArrey}
+          />
         </Box>
       </Flex>
     </>
