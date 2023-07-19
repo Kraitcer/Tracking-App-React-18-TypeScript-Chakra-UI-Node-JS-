@@ -111,12 +111,14 @@ const DoMoreLessSection = ({ getData, setData }: Props) => {
       });
   }
 
+  const toDay = ["Firstly", "Secondary", "Thirdly", "Taday"];
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Flex gap={1} flexDirection={"column"}>
         <FormControl id="gratefulness">
           <FormLabel marginBottom={1} fontSize={"xl"}>
-            more:
+            {toDay[count]}, i will do more:
           </FormLabel>
           <Textarea
             display={display}
