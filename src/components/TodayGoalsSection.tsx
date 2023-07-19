@@ -77,7 +77,6 @@ Props) => {
       goalTime: "",
       goal: "",
       isEditing: true,
-      display: "flex",
       goalDataTime: "goalOne_att_time_",
       goalDataName: "goalOne_IWill_Smart",
       reset: {
@@ -92,7 +91,6 @@ Props) => {
       goalTime: "",
       goal: "",
       isEditing: true,
-      display: "flex",
       goalDataTime: "goalTwo_att_time_",
       goalDataName: "goalTwo_IWill_Smart",
       reset: {
@@ -107,7 +105,6 @@ Props) => {
       goalTime: "",
       goal: "",
       isEditing: true,
-      display: "flex",
       goalDataTime: "goalThree_att_time_",
       goalDataName: "goalThree_IWill_Smart",
       reset: {
@@ -127,25 +124,15 @@ Props) => {
 
   const [goals, setGoals] = useState("");
   // const
-  // if (
-  //   todayGoals[0].isEditing &&
-  //   todayGoals[1].isEditing &&
-  //   todayGoals[2].isEditing
-  // ) {
-  //   setDisabled(false);
-  //   console.log(
-  //     "one",
-  //     todayGoals[0].isEditing,
-  //     "two",
-  //     todayGoals[1].isEditing,
-  //     "three",
-  //     todayGoals[2].isEditing
-  //   );
-  // }
   const onSubmit = (data: FieldValues) => {
     setDisabled(true);
-    console.log("onSubmit RHF Data", data);
-    console.log("onSubmit goalArray", todayGoals);
+    // if (
+    //   todayGoals[0].isEditing &&
+    //   todayGoals[1].isEditing &&
+    //   todayGoals[2].isEditing
+    // ) {
+    //   setDisabled(false);
+    // }
     // ============================================================GOAL_ONE=================================
     if (data.goalOne_IWill_Smart) {
       console.log("onSubmit goalArray", todayGoals);

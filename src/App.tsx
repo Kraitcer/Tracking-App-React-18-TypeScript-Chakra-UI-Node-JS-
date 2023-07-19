@@ -3,6 +3,7 @@ import { Flex, Grid, GridItem, Text, VStack } from "@chakra-ui/react";
 import EveningMain from "./components/EveningMain";
 import SectionButton from "./components/UI Components/SectionButton";
 import MorningMain from "./components/MorningMain";
+import WeekInReview from "./components/WeekInReviewMain";
 
 function App() {
   const [main, setMain] = useState<any>();
@@ -27,13 +28,16 @@ function App() {
     >
       <GridItem pl="2" bg="blue.300" area="nav">
         <Flex gap={2} mt={1.5} mr={2}>
-          <SectionButton
-            buttonName="survey"
-            onClick={() => console.log("week in rewiev")}
-          />
+          <SectionButton buttonName="survey" onClick={() => {}} />
           <SectionButton
             buttonName="last week"
-            onClick={() => console.log("week in rewiev")}
+            onClick={() => {
+              setMain(<WeekInReview />),
+                setMainTitle([
+                  "WEEK IN REVIEW",
+                  "It's your free day! Congratulations",
+                ]);
+            }}
           />
           <SectionButton
             buttonName="next week"
