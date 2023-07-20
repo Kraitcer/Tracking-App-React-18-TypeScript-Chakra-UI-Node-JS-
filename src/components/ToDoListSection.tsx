@@ -43,6 +43,7 @@ const ToDoListSection = () => {
   return (
     <>
       <AllModal
+        size="lg"
         title={"Edit the task"}
         onOpen={isOpen1}
         onClose={closeModal1}

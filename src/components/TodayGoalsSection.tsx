@@ -201,6 +201,7 @@ Props) => {
   return (
     <>
       <AllModal
+        size={"lg"}
         title={`DOES YOUR GOAL ${goals} MATCH THE "SMART" PARAMETRS ?`}
         onOpen={isOpen1}
         onClose={closeModal1}

@@ -12,16 +12,18 @@ interface CustomModalProps {
   children: React.ReactNode;
   onOpen: boolean;
   onClose: () => void;
+  size: string;
 }
 export default function AllModal({
   title,
   children,
   onOpen,
   onClose,
+  size,
 }: CustomModalProps) {
   return (
     <>
-      <Modal size={"lg"} isOpen={onOpen} onClose={onClose} isCentered>
+      <Modal size={size} isOpen={onOpen} onClose={onClose} isCentered>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader textTransform={"uppercase"} fontSize={22} pr={"55px"}>

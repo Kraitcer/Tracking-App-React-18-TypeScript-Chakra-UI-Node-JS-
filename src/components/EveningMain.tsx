@@ -94,6 +94,7 @@ const EveningMain = () => {
   return (
     <>
       <AllModal
+        size={"lg"}
         title={chooseGolsTitle}
         onOpen={isOpen1}
         onClose={closeModal1}
@@ -107,6 +108,7 @@ const EveningMain = () => {
         }
       />
       <AllModal
+        size={"lg"}
         title="Note Bad Time & Submit"
         onOpen={isOpen2}
         onClose={closeModal2}

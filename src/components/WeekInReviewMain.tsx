@@ -12,7 +12,17 @@ import ProjectsOfTheWeekSection from "./ProjectsOfTheWeekSection";
 import DoMoreLessSection from "./DoMoreLessSection";
 import FetusIndex from "./FetusIndex";
 
-const EveningMain = () => {
+const schema = z.object({
+  projectOneProgress: z.number().optional(),
+  projectTwoProgress: z.number().optional(),
+  projectThreeProgress: z.number().optional(),
+  projectFourProgress: z.number().optional(),
+  projectFiveProgress: z.number().optional(),
+});
+
+type FormData = z.infer<typeof schema>;
+
+const WeekMain = () => {
   const [isOpen1, setIsOpen1] = useState(false);
   const [isOpen2, setIsOpen2] = useState(false);
 
@@ -22,21 +32,24 @@ const EveningMain = () => {
   const closeModal1 = () => setIsOpen1(false);
   const closeModal2 = () => setIsOpen2(false);
 
-  const schema = z.object({
-    projectOneProgress: z.number().optional(),
-    projectTwoProgress: z.number().optional(),
-    projectThreeProgress: z.number().optional(),
-    projectFourProgress: z.number().optional(),
-    projectFiveProgress: z.number().optional(),
-  });
-
-  type FormData = z.infer<typeof schema>;
-
   const { handleSubmit, setValue } = useForm<FormData>({
     resolver: zodResolver(schema),
+    // defaultValues: {
+    //   projectOneProgress: 70,
+    //   projectTwoProgress: 70,
+    //   projectThreeProgress: 70,
+    //   projectFourProgress: 70,
+    //   projectFiveProgress: 70,
+    // },
   });
 
-  const [projectsData, setProjectsData] = useState<any>();
+  const [projectsData, setProjectsData] = useState<any>({
+    // projectOneProgress: 70,
+    // projectTwoProgress: 70,
+    // projectThreeProgress: 70,
+    // projectFourProgress: 70,
+    // projectFiveProgress: 70,
+  });
 
   const [habitsDataArrey, setHabitsDataArrey] = useState<any[]>([]);
 
@@ -52,6 +65,8 @@ const EveningMain = () => {
   return (
     <>
       <AllModal
+        // size={"20px"}
+        size={"2xl"}
         title={"FETUS Index"}
         onOpen={isOpen1}
         onClose={closeModal1}
@@ -124,4 +139,4 @@ const EveningMain = () => {
   );
 };
 
-export default EveningMain;
+export default WeekMain;
