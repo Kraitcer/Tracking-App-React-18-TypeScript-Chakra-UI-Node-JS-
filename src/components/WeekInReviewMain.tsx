@@ -43,6 +43,7 @@ const EveningMain = () => {
   const [doMoreLessDataArrey, setDoMoreLessDataArrey] = useState<any[]>([]);
 
   const onSubmit = (data: FieldValues) => {
+    console.log(data);
     setProjectsData(data);
   };
 
