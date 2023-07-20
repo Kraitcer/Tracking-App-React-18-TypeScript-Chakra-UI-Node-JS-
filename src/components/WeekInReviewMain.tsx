@@ -6,10 +6,11 @@ import { useEffect, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { ProjectsOfTheWeek } from "./ProjectsOfTheWeek";
+import { projectsArray } from "../components/Projects";
 import Habitbuilder from "./habitbuilder";
 import ProjectsOfTheWeekSection from "./ProjectsOfTheWeekSection";
 import DoMoreLessSection from "./DoMoreLessSection";
+import FetusIndex from "./FetusIndex";
 
 const EveningMain = () => {
   const [isOpen1, setIsOpen1] = useState(false);
@@ -21,14 +22,12 @@ const EveningMain = () => {
   const closeModal1 = () => setIsOpen1(false);
   const closeModal2 = () => setIsOpen2(false);
 
-  const [chooseGolsTitle, setChooseGolsTitle] = useState(
-    "chose project for tommorow"
-  );
-
   const schema = z.object({
     projectOneProgress: z.number().optional(),
     projectTwoProgress: z.number().optional(),
     projectThreeProgress: z.number().optional(),
+    projectFourProgress: z.number().optional(),
+    projectFiveProgress: z.number().optional(),
   });
 
   type FormData = z.infer<typeof schema>;
@@ -37,30 +36,37 @@ const EveningMain = () => {
     resolver: zodResolver(schema),
   });
 
+  const [projectsData, setProjectsData] = useState<any>();
+
   const [habitsDataArrey, setHabitsDataArrey] = useState<any[]>([]);
 
-  const [grateDataArrey, setGrateDataArrey] = useState<any[]>([]);
+  const [doMoreLessDataArrey, setDoMoreLessDataArrey] = useState<any[]>([]);
 
-  const onSubmit = (data: FieldValues) => {};
+  const onSubmit = (data: FieldValues) => {
+    setProjectsData(data);
+  };
 
   useEffect(() => {}, []);
 
   return (
     <>
       <AllModal
-        title={chooseGolsTitle}
+        title={"FETUS Index"}
         onOpen={isOpen1}
         onClose={closeModal1}
-        children={<p>fuck</p>}
+        children={<FetusIndex projectsProgressData={projectsData} />}
       />
       <Flex justifyContent={"center"} gap={3}>
         <Box w="280px" h={727} bg="white" flexDirection={"column"} gap={0}>
           <SectionHeader HeadingName={"projects"} />
           <form onSubmit={handleSubmit(onSubmit)}>
             <ProjectsOfTheWeekSection
-              sliderOneName={ProjectsOfTheWeek[0]}
-              sliderTwoName={ProjectsOfTheWeek[1]}
-              sliderThreeName={ProjectsOfTheWeek[2]}
+              onOpen={() => openModal1()}
+              sliderOneName={projectsArray[0]}
+              sliderTwoName={projectsArray[1]}
+              sliderThreeName={projectsArray[2]}
+              sliderFourName={projectsArray[3]}
+              sliderFiveName={projectsArray[4]}
               sliderOneValue={(data: number) => {
                 setValue("projectOneProgress", data);
               }}
@@ -69,6 +75,12 @@ const EveningMain = () => {
               }}
               sliderThreeValue={(date: number) => {
                 setValue("projectThreeProgress", date);
+              }}
+              sliderFourValue={(date: number) => {
+                setValue("projectFourProgress", date);
+              }}
+              sliderFiveValue={(date: number) => {
+                setValue("projectFiveProgress", date);
               }}
             />
           </form>
@@ -102,8 +114,8 @@ const EveningMain = () => {
           {/* <habitbuilder /> */}
           <SectionHeader HeadingName={"do more/less"} />
           <DoMoreLessSection
-            getData={grateDataArrey}
-            setData={setGrateDataArrey}
+            getData={doMoreLessDataArrey}
+            setData={setDoMoreLessDataArrey}
           />
         </Box>
       </Flex>
