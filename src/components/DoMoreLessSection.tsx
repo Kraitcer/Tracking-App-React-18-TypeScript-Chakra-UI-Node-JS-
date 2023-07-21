@@ -158,7 +158,7 @@ const DoMoreLessSection = ({ getData, setData }: Props) => {
           <Flex gap={2} mt={1}>
             <Select
               {...register("grateCategories")}
-              placeholder="Choose type"
+              placeholder="Choose action"
               w={"200%"}
             >
               {grateCategories.map((grateType, index) => (
