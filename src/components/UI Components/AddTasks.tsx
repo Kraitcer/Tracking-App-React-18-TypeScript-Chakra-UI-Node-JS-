@@ -5,9 +5,11 @@ import SectionButton from "./SectionButton";
 
 interface Prop {
   addTodo: (data: string) => void;
+  placeHolder: string;
+  buttonName: string;
 }
 
-const AddTask = ({ addTodo }: Prop) => {
+const AddTask = ({ addTodo, placeHolder, buttonName }: Prop) => {
   const [value, setValue] = useState("");
 
   const handleSubmit = (e: any) => {
@@ -28,13 +30,13 @@ const AddTask = ({ addTodo }: Prop) => {
           type="text"
           borderRightRadius={0}
           borderColor={"blue.400"}
-          placeholder="What is the task today?"
+          placeholder={placeHolder}
           value={value}
           onChange={(e) => setValue(e.target.value)}
         />
         <Flex>
           <SectionButton
-            buttonName="ADD TASK"
+            buttonName={buttonName}
             onClick={() => {
               // console.log(value);
             }}

@@ -75,7 +75,11 @@ const ToDoListSection = () => {
         }
       />
       <VStack>
-        <AddTask addTodo={addTodo} />
+        <AddTask
+          addTodo={addTodo}
+          placeHolder="Choose New Task"
+          buttonName="Add Task"
+        />
         <Flex w={"560px"} h={"168px"} flexDirection={"row"} mb={0}>
           <Flex
             overflowY={"auto"}

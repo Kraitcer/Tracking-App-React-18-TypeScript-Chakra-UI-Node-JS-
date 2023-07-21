@@ -38,35 +38,35 @@ interface Props {
 
 const schema = z.object({
   projectOneFun: z.number().optional(),
-  //   projectOneEffect: z.number().optional(),
-  //   projectOneTime: z.number().optional(),
-  //   projectOneUrgency: z.number().optional(),
-  //   projectOneStrategy: z.number().optional(),
-  //   projectOneBonus: z.number().optional(),
+  projectOneEffect: z.number().optional(),
+  projectOneTime: z.number().optional(),
+  projectOneUrgency: z.number().optional(),
+  projectOneStrategy: z.number().optional(),
+  projectOneTotal: z.number().optional(),
   projectTwoFun: z.number().optional(),
-  //   projectTwoEffect: z.number().optional(),
-  //   projectTwoTime: z.number().optional(),
-  //   projectTwoUrgency: z.number().optional(),
-  //   projectTwoStrategy: z.number().optional(),
-  //   projectTwoBonus: z.number().optional(),
+  projectTwoEffect: z.number().optional(),
+  projectTwoTime: z.number().optional(),
+  projectTwoUrgency: z.number().optional(),
+  projectTwoStrategy: z.number().optional(),
+  projectTwoTotal: z.number().optional(),
   projectThreeFun: z.number().optional(),
-  //   projectThreeEffect: z.number().optional(),
-  //   projectThreeTime: z.number().optional(),
-  //   projectThreeUrgency: z.number().optional(),
-  //   projectThreeStrategy: z.number().optional(),
-  //   projectThreeBonus: z.number().optional(),
+  projectThreeEffect: z.number().optional(),
+  projectThreeTime: z.number().optional(),
+  projectThreeUrgency: z.number().optional(),
+  projectThreeStrategy: z.number().optional(),
+  projectThreeTotal: z.number().optional(),
   projectFourFun: z.number().optional(),
-  //   projectFourEffect: z.number().optional(),
-  //   projectFourTime: z.number().optional(),
-  //   projectFourUrgency: z.number().optional(),
-  //   projectFourStrategy: z.number().optional(),
-  //   projectFourBonus: z.number().optional(),
+  projectFourEffect: z.number().optional(),
+  projectFourTime: z.number().optional(),
+  projectFourUrgency: z.number().optional(),
+  projectFourStrategy: z.number().optional(),
+  projectFourTotal: z.number().optional(),
   projectFiveFun: z.number().optional(),
-  //   projectFiveEffect: z.number().optional(),
-  //   projectFiveTime: z.number().optional(),
-  //   projectFiveUrgency: z.number().optional(),
-  //   projectFiveStrategy: z.number().optional(),
-  //   projectFiveBonus: z.number().optional(),
+  projectFiveEffect: z.number().optional(),
+  projectFiveTime: z.number().optional(),
+  projectFiveUrgency: z.number().optional(),
+  projectFiveStrategy: z.number().optional(),
+  projectFiveTotal: z.number().optional(),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -143,43 +143,6 @@ const FetusIndex = ({ projectsProgressData }: Props) => {
       total: 0,
     },
   ];
-  //   const fitusDatas = [
-  //     {
-  //       funIndex: "projectOneFun",
-  //       effectIndex: "projectOneEffect",
-  //       timeIndex: "projectOneTime",
-  //       urgencyIndex: "projectOneUrgency",
-  //       strategyIndex: "projectOneStrategy",
-  //     },
-  //     {
-  //       funIndex: "projectTwoFun",
-  //       effectIndex: "projectTwoEffect",
-  //       timeIndex: "projectTwoTime",
-  //       urgencyIndex: "projectTwoUrgency",
-  //       strategyIndex: "projectTwoStrategy",
-  //     },
-  //     {
-  //       funIndex: "projectThreeFun",
-  //       effectIndex: "projectThreeEffect",
-  //       timeIndex: "projectThreeTime",
-  //       urgencyIndex: "projectThreeUrgency",
-  //       strategyIndex: "projectThreeStrategy",
-  //     },
-  //     {
-  //       funIndex: "projectFourFun",
-  //       effectIndex: "projectFourEffect",
-  //       timeIndex: "projectFourTime",
-  //       urgencyIndex: "projectFourUrgency",
-  //       strategyIndex: "projectFourStrategy",
-  //     },
-  //     {
-  //       funIndex: "projectFiveFun",
-  //       effectIndex: "projectFiveEffect",
-  //       timeIndex: "projectFiveTime",
-  //       urgencyIndex: "projectFiveUrgency",
-  //       strategyIndex: "projectFiveStrategy",
-  //     },
-  //   ];
 
   const [fitusData, setFitusData] = useState(fitusArray);
   const onSubmit = (data: FieldValues) => {
@@ -192,11 +155,6 @@ const FetusIndex = ({ projectsProgressData }: Props) => {
         project.projectName === projectName ? newData : project
       )
     );
-    // setFitusData(
-    //   fitusData.map((project) =>
-    //     project.projectIndex === projectIndex ? newData : project
-    //   )
-    // );
   };
 
   const [doneAmount, setDoneAmount] = useState(0);
@@ -243,6 +201,8 @@ const FetusIndex = ({ projectsProgressData }: Props) => {
     <Flex justifyContent={"center"} mb={3} flexDirection={"column"}>
       <Flex justifyContent={"center"} mb={2}>
         <AddTask
+          placeHolder="Choose New Project"
+          buttonName="Add Project"
           addTodo={(data) => {
             addProject(data);
           }}
@@ -303,7 +263,16 @@ const FetusIndex = ({ projectsProgressData }: Props) => {
                     color={"white"}
                     p={0}
                   >
-                    <Text m={0}>{project.projectName}</Text>
+                    <Flex ml={7} w={"100px"}>
+                      <Text
+                        m={0}
+                        textOverflow={"ellipsis"}
+                        whiteSpace={"nowrap"}
+                        overflow={"hidden"}
+                      >
+                        {project.projectName}
+                      </Text>
+                    </Flex>
                   </Td>
                   <Td
                     textAlign={"left"}
