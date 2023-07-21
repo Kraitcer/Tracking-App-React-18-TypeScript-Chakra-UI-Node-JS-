@@ -198,6 +198,21 @@ const FetusIndex = ({ projectsProgressData }: Props) => {
     // if (name === "projectFiveFun") setValue("projectFiveFun", data);
   };
 
+  const [doneAmount, setDoneAmount] = useState(0);
+
+  const [redefinedAmount, setRedefinedAmount] = useState(0);
+
+  const doneProject = (id: number) => {
+    const newTodos = fitusData.filter((todo) => todo.id !== id);
+    setFitusData(newTodos);
+    setDoneAmount(doneAmount + 1);
+  };
+  const redefinedProject = (id: number) => {
+    const newTodos = fitusData.filter((todo) => todo.id !== id);
+    setFitusData(newTodos);
+    setRedefinedAmount(redefinedAmount + 1);
+  };
+
   useEffect(() => {}, []);
 
   return (
@@ -502,11 +517,16 @@ const FetusIndex = ({ projectsProgressData }: Props) => {
                     }
                   >
                     {projectsProgressData[project.projectIndex] < 100 ? (
-                      <IoTrashBinSharp size={"30px"} onClick={() => {}} />
+                      <IoTrashBinSharp
+                        size={"30px"}
+                        onClick={() => redefinedProject(project.id)}
+                      />
                     ) : (
                       <BsFillBookmarkCheckFill
                         size={"28px"}
-                        onClick={() => {}}
+                        onClick={() => {
+                          doneProject(project.id);
+                        }}
                       />
                       //   <FaTrashRestoreAlt size={"28px"} onClick={() => {}} />
                     )}
@@ -516,6 +536,84 @@ const FetusIndex = ({ projectsProgressData }: Props) => {
             </Tbody>
           </Table>
         </TableContainer>
+        <HStack mt={1}>
+          <Flex
+            h={"40px"}
+            mt={0}
+            pr={2}
+            pl={3}
+            pt={0}
+            bg={"blue.400"}
+            justifyContent={"center"}
+            alignItems={"center"}
+            gap={2}
+          >
+            <BsFillBookmarkCheckFill
+              color="white"
+              size={"28px"}
+              onClick={() => {}}
+            />
+            <Text
+              color={"white"}
+              m={0}
+              textTransform={"uppercase"}
+              fontSize={"1.5rem"}
+            >
+              {" "}
+              done
+            </Text>
+            <Badge
+              w={7}
+              h={7}
+              p={0}
+              pt={"1px"}
+              textAlign={"center"}
+              borderRadius={50}
+              fontSize={"1rem"}
+              colorScheme="purple"
+            >
+              {doneAmount}
+              {/* {project.projectProgress} */}
+              {/* {projectsProgressData[project.projectIndex]} */}
+            </Badge>
+          </Flex>
+          <Flex
+            h={"40px"}
+            mt={0}
+            pr={2}
+            pl={3}
+            pt={0}
+            bg={"orange.400"}
+            justifyContent={"center"}
+            alignItems={"center"}
+            gap={2}
+          >
+            <IoTrashBinSharp color="white" size={"30px"} onClick={() => {}} />
+            <Text
+              color={"white"}
+              m={0}
+              textTransform={"uppercase"}
+              fontSize={"1.5rem"}
+            >
+              redefine
+            </Text>
+            <Badge
+              w={7}
+              h={7}
+              p={0}
+              pt={"1px"}
+              textAlign={"center"}
+              borderRadius={50}
+              fontSize={"1rem"}
+              colorScheme="purple"
+            >
+              {redefinedAmount}
+              {/* {project.projectProgress} */}
+              {/* {projectsProgressData[project.projectIndex]} */}
+            </Badge>
+          </Flex>
+          <SectionButton onClick={() => {}} buttonName="SUBMIT" />
+        </HStack>
       </form>
     </Flex>
   );
