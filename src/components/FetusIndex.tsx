@@ -29,6 +29,7 @@ import SectionButton from "./UI Components/SectionButton";
 import { v4 as uuidv4 } from "uuid";
 import { IoTrashBinSharp } from "react-icons/io5";
 import { BsFillBookmarkCheckFill } from "react-icons/bs";
+import AddTask from "./UI Components/AddTasks";
 
 interface Props {
   projectsProgressData: any;
@@ -76,9 +77,9 @@ const FetusIndex = ({ projectsProgressData }: Props) => {
 
   const fitusArray = [
     {
-      id: 0,
+      id: "0",
       projectIndex: "projectOneProgress",
-      projectName: "",
+      projectName: "Project 1",
       projectProgress: 0,
       fun: 0,
       effect: 0,
@@ -89,9 +90,9 @@ const FetusIndex = ({ projectsProgressData }: Props) => {
       total: 0,
     },
     {
-      id: 1,
+      id: "1",
       projectIndex: "projectTwoProgress",
-      projectName: "",
+      projectName: "Project 2",
       projectProgress: 0,
       fun: 0,
       effect: 0,
@@ -102,9 +103,9 @@ const FetusIndex = ({ projectsProgressData }: Props) => {
       total: 0,
     },
     {
-      id: 2,
+      id: "2",
       projectIndex: "projectThreeProgress",
-      projectName: "",
+      projectName: "Project 3",
       projectProgress: 0,
       fun: 0,
       effect: 0,
@@ -115,9 +116,9 @@ const FetusIndex = ({ projectsProgressData }: Props) => {
       total: 0,
     },
     {
-      id: 3,
+      id: "3",
       projectIndex: "projectFourProgress",
-      projectName: "",
+      projectName: "Project 4",
       projectProgress: 0,
       fun: 0,
       effect: 0,
@@ -128,9 +129,9 @@ const FetusIndex = ({ projectsProgressData }: Props) => {
       total: 0,
     },
     {
-      id: 4,
+      id: "4",
       projectIndex: "projectFiveProgress",
-      projectName: "",
+      projectName: "Project 5",
       projectProgress: 0,
       fun: 0,
       effect: 0,
@@ -184,30 +185,52 @@ const FetusIndex = ({ projectsProgressData }: Props) => {
     console.log(data);
   };
 
-  const setFitusValue = (projectIndex: string, newData: any) => {
+  const setFitusValue = (projectName: string, newData: any) => {
     setFitusData(
       fitusData.map((project) =>
-        project.projectIndex === projectIndex ? newData : project
+        project.projectName === projectName ? newData : project
       )
     );
-    // console.log(fitusData);
-    // if (name === "projectOneFun") setValue("projectOneFun", data);
-    // if (name === "projectTwoFun") setValue("projectTwoFun", data);
-    // if (name === "projectThreeFun") setValue("projectThreeFun", data);
-    // if (name === "projectFourFun") setValue("projectFourFun", data);
-    // if (name === "projectFiveFun") setValue("projectFiveFun", data);
+    // setFitusData(
+    //   fitusData.map((project) =>
+    //     project.projectIndex === projectIndex ? newData : project
+    //   )
+    // );
   };
 
   const [doneAmount, setDoneAmount] = useState(0);
 
   const [redefinedAmount, setRedefinedAmount] = useState(0);
 
-  const doneProject = (id: number) => {
+  const [projectIndexes, setProjectIndexes] = useState([""]);
+
+  const addProject = (todo: string) => {
+    console.log(fitusData);
+
+    setFitusData([
+      ...fitusData,
+      {
+        id: uuidv4(),
+        projectIndex: `${projectIndexes[projectIndexes.length]}`,
+        projectName: todo,
+        projectProgress: 0,
+        fun: 0,
+        effect: 0,
+        time: 0,
+        urgency: 0,
+        strategy: 0,
+        fitusBonus: 0,
+        total: 0,
+      },
+    ]);
+  };
+
+  const doneProject = (id: string) => {
     const newTodos = fitusData.filter((todo) => todo.id !== id);
     setFitusData(newTodos);
     setDoneAmount(doneAmount + 1);
   };
-  const redefinedProject = (id: number) => {
+  const redefinedProject = (id: string) => {
     const newTodos = fitusData.filter((todo) => todo.id !== id);
     setFitusData(newTodos);
     setRedefinedAmount(redefinedAmount + 1);
@@ -216,7 +239,14 @@ const FetusIndex = ({ projectsProgressData }: Props) => {
   useEffect(() => {}, []);
 
   return (
-    <Flex justifyContent={"center"} mb={3}>
+    <Flex justifyContent={"center"} mb={3} flexDirection={"column"}>
+      <Flex justifyContent={"center"} mb={2}>
+        <AddTask
+          addTodo={(data) => {
+            addProject(data);
+          }}
+        />
+      </Flex>
       <form onSubmit={handleSubmit(onSubmit)}>
         <TableContainer>
           <Table variant="simple">
@@ -263,7 +293,7 @@ const FetusIndex = ({ projectsProgressData }: Props) => {
             </Thead>
             <Tbody>
               {fitusData.map((project, index) => (
-                <Tr key={index} fontSize={16}>
+                <Tr key={project.id} fontSize={16}>
                   <Td
                     borderTopLeftRadius={30}
                     textAlign={"center"}
@@ -272,7 +302,8 @@ const FetusIndex = ({ projectsProgressData }: Props) => {
                     color={"white"}
                     p={0}
                   >
-                    <Text m={0}>{projectsArray[index]}</Text>
+                    <Text m={0}>{project.projectName}</Text>
+                    {/* <Text m={0}>{projectsArray[index]}</Text> */}
                   </Td>
                   <Td
                     textAlign={"left"}
@@ -309,7 +340,7 @@ const FetusIndex = ({ projectsProgressData }: Props) => {
                       min={0}
                       max={10}
                       onChange={(data) => {
-                        setFitusValue(project.projectIndex, {
+                        setFitusValue(project.projectName, {
                           ...project,
                           fun: parseInt(data),
                         });
@@ -337,7 +368,7 @@ const FetusIndex = ({ projectsProgressData }: Props) => {
                       min={0}
                       max={10}
                       onChange={(data) => {
-                        setFitusValue(project.projectIndex, {
+                        setFitusValue(project.projectName, {
                           ...project,
                           effect: parseInt(data),
                         });
@@ -367,7 +398,7 @@ const FetusIndex = ({ projectsProgressData }: Props) => {
                       min={0}
                       max={10}
                       onChange={(data) => {
-                        setFitusValue(project.projectIndex, {
+                        setFitusValue(project.projectName, {
                           ...project,
                           time: parseInt(data),
                         });
@@ -403,7 +434,7 @@ const FetusIndex = ({ projectsProgressData }: Props) => {
                       min={0}
                       max={10}
                       onChange={(data) => {
-                        setFitusValue(project.projectIndex, {
+                        setFitusValue(project.projectName, {
                           ...project,
                           urgency: parseInt(data),
                         });
@@ -439,7 +470,7 @@ const FetusIndex = ({ projectsProgressData }: Props) => {
                       min={0}
                       max={10}
                       onChange={(data) => {
-                        setFitusValue(project.projectIndex, {
+                        setFitusValue(project.projectName, {
                           ...project,
                           strategy: parseInt(data),
                         });
@@ -519,13 +550,35 @@ const FetusIndex = ({ projectsProgressData }: Props) => {
                     {projectsProgressData[project.projectIndex] < 100 ? (
                       <IoTrashBinSharp
                         size={"30px"}
-                        onClick={() => redefinedProject(project.id)}
+                        onClick={() => {
+                          redefinedProject(project.id),
+                            setProjectIndexes([
+                              ...projectIndexes,
+                              `${project.projectIndex}`,
+                            ]);
+                        }}
+                      />
+                    ) : projectsProgressData[project.projectIndex] ===
+                      undefined ? (
+                      <IoTrashBinSharp
+                        size={"30px"}
+                        onClick={() => {
+                          redefinedProject(project.id),
+                            setProjectIndexes([
+                              ...projectIndexes,
+                              `${project.projectIndex}`,
+                            ]);
+                        }}
                       />
                     ) : (
                       <BsFillBookmarkCheckFill
                         size={"28px"}
                         onClick={() => {
                           doneProject(project.id);
+                          setProjectIndexes([
+                            ...projectIndexes,
+                            `${project.projectIndex}`,
+                          ]);
                         }}
                       />
                       //   <FaTrashRestoreAlt size={"28px"} onClick={() => {}} />
@@ -550,7 +603,7 @@ const FetusIndex = ({ projectsProgressData }: Props) => {
           >
             <BsFillBookmarkCheckFill
               color="white"
-              size={"28px"}
+              size={"24px"}
               onClick={() => {}}
             />
             <Text
@@ -588,7 +641,7 @@ const FetusIndex = ({ projectsProgressData }: Props) => {
             alignItems={"center"}
             gap={2}
           >
-            <IoTrashBinSharp color="white" size={"30px"} onClick={() => {}} />
+            <IoTrashBinSharp color="white" size={"24px"} onClick={() => {}} />
             <Text
               color={"white"}
               m={0}
@@ -612,7 +665,12 @@ const FetusIndex = ({ projectsProgressData }: Props) => {
               {/* {projectsProgressData[project.projectIndex]} */}
             </Badge>
           </Flex>
-          <SectionButton onClick={() => {}} buttonName="SUBMIT" />
+          <SectionButton
+            onClick={() => {
+              console.log(projectIndexes);
+            }}
+            buttonName="SUBMIT"
+          />
         </HStack>
       </form>
     </Flex>
