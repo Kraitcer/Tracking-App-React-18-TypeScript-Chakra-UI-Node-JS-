@@ -29,6 +29,7 @@ import SectionButton from "./UI Components/SectionButton";
 import { v4 as uuidv4 } from "uuid";
 import { IoTrashBinSharp } from "react-icons/io5";
 import { BsFillBookmarkCheckFill } from "react-icons/bs";
+import { MdStart } from "react-icons/md";
 import AddTask from "./UI Components/AddTasks";
 
 interface Props {
@@ -205,24 +206,24 @@ const FetusIndex = ({ projectsProgressData }: Props) => {
   const [projectIndexes, setProjectIndexes] = useState([""]);
 
   const addProject = (todo: string) => {
-    console.log(fitusData);
-
-    setFitusData([
-      ...fitusData,
-      {
-        id: uuidv4(),
-        projectIndex: `${projectIndexes[projectIndexes.length]}`,
-        projectName: todo,
-        projectProgress: 0,
-        fun: 0,
-        effect: 0,
-        time: 0,
-        urgency: 0,
-        strategy: 0,
-        fitusBonus: 0,
-        total: 0,
-      },
-    ]);
+    // console.log(fitusData);
+    if (fitusData.length < 5)
+      setFitusData([
+        ...fitusData,
+        {
+          id: uuidv4(),
+          projectIndex: `${projectIndexes[projectIndexes.length]}`,
+          projectName: todo,
+          projectProgress: 0,
+          fun: 0,
+          effect: 0,
+          time: 0,
+          urgency: 0,
+          strategy: 0,
+          fitusBonus: 0,
+          total: 0,
+        },
+      ]);
   };
 
   const doneProject = (id: string) => {
@@ -292,7 +293,7 @@ const FetusIndex = ({ projectsProgressData }: Props) => {
               </Tr>
             </Thead>
             <Tbody>
-              {fitusData.map((project, index) => (
+              {fitusData.map((project) => (
                 <Tr key={project.id} fontSize={16}>
                   <Td
                     borderTopLeftRadius={30}
@@ -303,7 +304,6 @@ const FetusIndex = ({ projectsProgressData }: Props) => {
                     p={0}
                   >
                     <Text m={0}>{project.projectName}</Text>
-                    {/* <Text m={0}>{projectsArray[index]}</Text> */}
                   </Td>
                   <Td
                     textAlign={"left"}
@@ -313,7 +313,7 @@ const FetusIndex = ({ projectsProgressData }: Props) => {
                     pt={1}
                     pb={"1px"}
                   >
-                    <Text m={0}>
+                    {project.projectIndex !== "undefined" ? (
                       <Badge
                         w={12}
                         h={12}
@@ -324,10 +324,13 @@ const FetusIndex = ({ projectsProgressData }: Props) => {
                         fontSize={"1.5rem"}
                         colorScheme="purple"
                       >
-                        {/* {project.projectProgress} */}
                         {projectsProgressData[project.projectIndex]}
                       </Badge>
-                    </Text>
+                    ) : (
+                      <Flex ml={1}>
+                        <MdStart color="white" size={"40px"} />
+                      </Flex>
+                    )}
                   </Td>
                   {/* ==================================================FUN============================ */}
                   <Td bg={"blue.100"} color={"white"} pl={1} pr={1}>
