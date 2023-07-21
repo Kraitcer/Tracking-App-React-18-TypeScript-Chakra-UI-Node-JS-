@@ -80,15 +80,10 @@ const FetusIndex = ({ projectsProgressData }: Props) => {
       projectIndex: "projectOneProgress",
       projectName: "",
       projectProgress: 0,
-      funIndex: "projectOneFun",
-      fun: 2,
-      effectIndex: "projectOneEffect",
-      effect: 4,
-      timeIndex: "projectOneTime",
+      fun: 0,
+      effect: 0,
       time: 0,
-      urgencyIndex: "projectOneUrgency",
       urgency: 0,
-      strategyIndex: "projectOneStrategy",
       strategy: 0,
       fitusBonus: 0,
       total: 0,
@@ -98,15 +93,10 @@ const FetusIndex = ({ projectsProgressData }: Props) => {
       projectIndex: "projectTwoProgress",
       projectName: "",
       projectProgress: 0,
-      funIndex: "projectTwoFun",
-      fun: 2,
-      effectIndex: "projectTwoEffect",
-      effect: 4,
-      timeIndex: "projectTwoTime",
+      fun: 0,
+      effect: 0,
       time: 0,
-      urgencyIndex: "projectTwoUrgency",
       urgency: 0,
-      strategyIndex: "projectTwoStrategy",
       strategy: 0,
       fitusBonus: 0,
       total: 0,
@@ -116,15 +106,10 @@ const FetusIndex = ({ projectsProgressData }: Props) => {
       projectIndex: "projectThreeProgress",
       projectName: "",
       projectProgress: 0,
-      funIndex: "projectThreeFun",
-      fun: 2,
-      effectIndex: "projectThreeEffect",
-      effect: 4,
-      timeIndex: "projectThreeTime",
+      fun: 0,
+      effect: 0,
       time: 0,
-      urgencyIndex: "projectThreeUrgency",
       urgency: 0,
-      strategyIndex: "projectThreeStrategy",
       strategy: 0,
       fitusBonus: 0,
       total: 0,
@@ -134,15 +119,10 @@ const FetusIndex = ({ projectsProgressData }: Props) => {
       projectIndex: "projectFourProgress",
       projectName: "",
       projectProgress: 0,
-      funIndex: "projectFourFun",
-      fun: 2,
-      effectIndex: "projectFourEffect",
-      effect: 4,
-      timeIndex: "projectFourTime",
+      fun: 0,
+      effect: 0,
       time: 0,
-      urgencyIndex: "projectFourUrgency",
       urgency: 0,
-      strategyIndex: "projectFourStrategy",
       strategy: 0,
       fitusBonus: 0,
       total: 0,
@@ -152,15 +132,10 @@ const FetusIndex = ({ projectsProgressData }: Props) => {
       projectIndex: "projectFiveProgress",
       projectName: "",
       projectProgress: 0,
-      funIndex: "projectFiveFun",
-      fun: 2,
-      effectIndex: "projectFiveEffect",
-      effect: 4,
-      timeIndex: "projectFiveTime",
+      fun: 0,
+      effect: 0,
       time: 0,
-      urgencyIndex: "projectFiveUrgency",
       urgency: 0,
-      strategyIndex: "projectFiveStrategy",
       strategy: 0,
       fitusBonus: 0,
       total: 0,
@@ -207,6 +182,20 @@ const FetusIndex = ({ projectsProgressData }: Props) => {
   const [fitusData, setFitusData] = useState(fitusArray);
   const onSubmit = (data: FieldValues) => {
     console.log(data);
+  };
+
+  const setFitusValue = (projectIndex: string, newData: any) => {
+    setFitusData(
+      fitusData.map((project) =>
+        project.projectIndex === projectIndex ? newData : project
+      )
+    );
+    // console.log(fitusData);
+    // if (name === "projectOneFun") setValue("projectOneFun", data);
+    // if (name === "projectTwoFun") setValue("projectTwoFun", data);
+    // if (name === "projectThreeFun") setValue("projectThreeFun", data);
+    // if (name === "projectFourFun") setValue("projectFourFun", data);
+    // if (name === "projectFiveFun") setValue("projectFiveFun", data);
   };
 
   useEffect(() => {}, []);
@@ -294,19 +283,26 @@ const FetusIndex = ({ projectsProgressData }: Props) => {
                       </Badge>
                     </Text>
                   </Td>
+                  {/* ==================================================FUN============================ */}
                   <Td bg={"blue.100"} color={"white"} pl={1} pr={1}>
                     <NumberInput
                       // {...register(project.funIndex)}
                       size="md"
                       // maxW={0}
                       defaultValue={0}
+                      value={project.fun}
                       min={0}
                       max={10}
-                      //   onChange={(data) =>
-                      //     setValue(project.funIndex, parseInt(data))
-                      //   }
+                      onChange={(data) => {
+                        setFitusValue(project.projectIndex, {
+                          ...project,
+                          fun: parseInt(data),
+                        });
+                      }}
                     >
                       <NumberInputField
+                        textAlign={"center"}
+                        border={"none"}
                         m={0}
                         p={0}
                         pl={2}
@@ -315,41 +311,26 @@ const FetusIndex = ({ projectsProgressData }: Props) => {
                         w={"40px"}
                       />
                     </NumberInput>
-                    {/* <Controller
-                      name={project.funIndex && project.funIndex}
-                      control={control}
-                      render={({ field }) => (
-                        <NumberInput
-                          {...field}
-                          size="md"
-                          // maxW={0}
-                          defaultValue={0}
-                          min={0}
-                          max={10}
-                        >
-                          <NumberInputField
-                            m={0}
-                            p={0}
-                            pl={2}
-                            fontSize={"1.5rem"}
-                            color={"black"}
-                            w={"40px"}
-                          />
-                        </NumberInput>
-                      )}
-                    /> */}
                   </Td>
+                  {/* ======================================================EFFECT========================= */}
                   <Td bg={"blue.200"} color={"white"} pl={1} pr={1}>
                     <NumberInput
-                      // color={"black"}
-                      // m={0}
                       size="md"
                       // maxW={0}
                       defaultValue={0}
+                      value={project.effect}
                       min={0}
                       max={10}
+                      onChange={(data) => {
+                        setFitusValue(project.projectIndex, {
+                          ...project,
+                          effect: parseInt(data),
+                        });
+                      }}
                     >
                       <NumberInputField
+                        textAlign={"center"}
+                        border={"none"}
                         m={0}
                         p={0}
                         pl={2}
@@ -359,6 +340,7 @@ const FetusIndex = ({ projectsProgressData }: Props) => {
                       />
                     </NumberInput>
                   </Td>
+                  {/* ==========================================================TIME======================== */}
                   <Td bg={"blue.100"} color={"white"} pl={1} pr={1}>
                     <NumberInput
                       // color={"black"}
@@ -366,10 +348,19 @@ const FetusIndex = ({ projectsProgressData }: Props) => {
                       size="md"
                       // maxW={0}
                       defaultValue={0}
+                      value={project.time}
                       min={0}
                       max={10}
+                      onChange={(data) => {
+                        setFitusValue(project.projectIndex, {
+                          ...project,
+                          time: parseInt(data),
+                        });
+                      }}
                     >
                       <NumberInputField
+                        textAlign={"center"}
+                        border={"none"}
                         m={0}
                         p={0}
                         pl={2}
@@ -379,17 +370,33 @@ const FetusIndex = ({ projectsProgressData }: Props) => {
                       />
                     </NumberInput>
                   </Td>
-                  <Td bg={"blue.100"} color={"white"} pl={1} pr={1}>
+                  {/* =================================================URGENCY============================= */}
+                  <Td
+                    borderLeft={"1px"}
+                    bg={"blue.100"}
+                    color={"white"}
+                    pl={1}
+                    pr={1}
+                  >
                     <NumberInput
                       // color={"black"}
                       // m={0}
                       size="md"
                       // maxW={0}
                       defaultValue={0}
+                      value={project.urgency}
                       min={0}
                       max={10}
+                      onChange={(data) => {
+                        setFitusValue(project.projectIndex, {
+                          ...project,
+                          urgency: parseInt(data),
+                        });
+                      }}
                     >
                       <NumberInputField
+                        textAlign={"center"}
+                        border={"none"}
                         m={0}
                         p={0}
                         pl={2}
@@ -399,6 +406,7 @@ const FetusIndex = ({ projectsProgressData }: Props) => {
                       />
                     </NumberInput>
                   </Td>
+                  {/* ================================================STRATEGY============================= */}
                   <Td
                     bg={"blue.200"}
                     color={"white"}
@@ -412,10 +420,19 @@ const FetusIndex = ({ projectsProgressData }: Props) => {
                       size="md"
                       // maxW={0}
                       defaultValue={0}
+                      value={project.strategy}
                       min={0}
                       max={10}
+                      onChange={(data) => {
+                        setFitusValue(project.projectIndex, {
+                          ...project,
+                          strategy: parseInt(data),
+                        });
+                      }}
                     >
                       <NumberInputField
+                        textAlign={"center"}
+                        border={"none"}
                         m={0}
                         p={0}
                         pl={2}
@@ -425,6 +442,7 @@ const FetusIndex = ({ projectsProgressData }: Props) => {
                       />
                     </NumberInput>
                   </Td>
+                  {/* ===================================================+3/5============================== */}
                   <Td
                     bg={"purple.100"}
                     color={"white"}
@@ -444,6 +462,7 @@ const FetusIndex = ({ projectsProgressData }: Props) => {
                       </Text>
                     )}
                   </Td>
+                  {/* ===================================================TOTAL==================================== */}
                   <Td
                     bg={"blue.400"}
                     color={"white"}
@@ -457,7 +476,11 @@ const FetusIndex = ({ projectsProgressData }: Props) => {
                         project.time +
                         project.urgency +
                         project.strategy * 2 +
-                        project.fitusBonus}
+                        (projectsProgressData[project.projectIndex] >= 15
+                          ? +3
+                          : +5)}
+
+                      {/* {project.total} */}
                     </Text>
                   </Td>
                   <Td
