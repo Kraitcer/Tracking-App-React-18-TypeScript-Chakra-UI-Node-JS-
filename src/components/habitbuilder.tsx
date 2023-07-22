@@ -23,21 +23,31 @@ import vateFour from "../assets/Image/EveningPage_VoteCastSection_Icons/vote-cas
 import vateFive from "../assets/Image/EveningPage_VoteCastSection_Icons/vote-cast-icon-5.svg";
 import vateSix from "../assets/Image/EveningPage_VoteCastSection_Icons/vote-cast-icon-6.svg";
 import { habitCategories } from "./habitCategories";
+import { BadhabitCategories } from "./badHabitCategories";
 
 const schema = z.object({
-  habitImprovement: z
+  habitSimplification: z
     .string()
     .min(3, {
       message: "improvement required and must be at least 3 characters",
     })
-    .max(18),
-  habitImprovementDetails: z
+    .max(180),
+  habitTrigger: z
     .string()
     .min(3, {
       message: "improvement details required and must be at least 3 characters",
     })
-    .max(120),
-  category: z.enum(habitCategories, {
+    .max(180),
+  BadhabitComplication: z
+    .string()
+    .min(3, {
+      message: "improvement details required and must be at least 3 characters",
+    })
+    .max(180),
+  habits: z.enum(habitCategories, {
+    errorMap: () => ({ message: "choose habit is required" }),
+  }),
+  badHabits: z.enum(BadhabitCategories, {
     errorMap: () => ({ message: "choose habit is required" }),
   }),
 });
@@ -61,13 +71,11 @@ const habitbuilder = ({ setData, getData }: Props) => {
   });
   const [currentIcon, setCurrentIcon] = useState(0);
 
-  const [habitsDataArrey, setHabitsDataArrey] = useState<any[]>([]);
-
   const [display, setDisplay] = useState("");
 
   useEffect(() => {
-    if (getData.length === 6)
-      localStorage.setItem("Habits array", JSON.stringify(getData));
+    if (getData.length === 2)
+      localStorage.setItem("Good & Bad Habits array", JSON.stringify(getData));
   }, [getData]);
   // useEffect(() => {
   //   if (habitsDataArrey.length === 6)
@@ -77,31 +85,32 @@ const habitbuilder = ({ setData, getData }: Props) => {
   const voteIcons = [vateOne, vateTwo, vateThree, vateFour, vateFive, vateSix];
 
   function nextHabit() {
-    if (errors.category)
+    console.log(getData);
+    if (errors.habits)
       toast({
         title: "Vote Cast: Chose habis",
-        description: `${errors.category.message}`,
+        description: `${errors.habits.message}`,
         status: "warning",
         duration: 9000,
         isClosable: true,
       });
-    if (errors.habitImprovement)
+    if (errors.habitSimplification)
       toast({
         title: "Vote Cast: improvement",
-        description: `${errors.habitImprovement.message}`,
+        description: `${errors.habitSimplification.message}`,
         status: "warning",
         duration: 9000,
         isClosable: true,
       });
-    if (errors.habitImprovementDetails)
+    if (errors.habitTrigger)
       toast({
         title: "Vote Cast: improvement details",
-        description: `${errors.habitImprovementDetails.message}`,
+        description: `${errors.habitTrigger.message}`,
         status: "warning",
         duration: 9000,
         isClosable: true,
       });
-    if (getData.length === 5) {
+    if (getData.length === 2) {
       setDisplay("none");
     }
   }
@@ -124,14 +133,14 @@ const habitbuilder = ({ setData, getData }: Props) => {
     <>
       <HStack marginTop={2} marginBottom={2} display={display}>
         <Text m={0} fontSize={22}>
-          Simplify one good habit:
+          Simplify good habits:
         </Text>
         <form name="voteCast" onSubmit={handleSubmit(onSubmit)}>
           <Flex gap={2} flexDirection={"column"} w={"17.5rem"}>
             <HStack alignItems={"center"}>
               <Image boxSize="50px" src={voteIcons[currentIcon]} />
               <select
-                {...register("category")}
+                {...register("habits")}
                 id="category"
                 className="form-select form-select-lg w-100"
                 aria-label=".form-select-lg example"
@@ -146,35 +155,35 @@ const habitbuilder = ({ setData, getData }: Props) => {
               </select>
             </HStack>
             <Input
-              {...register("habitImprovement")}
-              id="habitImprovement"
+              {...register("habitSimplification")}
+              id="habitSimplification"
               border={"none"}
               variant="filled"
               type="text"
               placeholder="Write down simplification"
             />
             <Input
-              // {...register("habitImprovement")}
-              id="habitImprovement"
+              {...register("habitTrigger")}
+              id="habitTrigger"
               border={"none"}
               variant="filled"
               type="text"
               placeholder="trigger"
             />
             <Text m={0} fontSize={22}>
-              Complicate one bad habit:
+              Complicate bad habits:
             </Text>
             <HStack alignItems={"center"}>
               {/* <Image boxSize="50px" src={voteIcons[currentIcon]} /> */}
               <select
-                {...register("category")}
+                {...register("badHabits")}
                 id="category"
                 className="form-select form-select-lg w-100"
                 aria-label=".form-select-lg example"
                 placeholder="Choose habit"
               >
                 <option value={""}>Bad habit...</option>
-                {habitCategories.map((habit) => (
+                {BadhabitCategories.map((habit) => (
                   <option key={habit} value={habit}>
                     {habit}
                   </option>
@@ -182,8 +191,8 @@ const habitbuilder = ({ setData, getData }: Props) => {
               </select>
             </HStack>
             <Input
-              {...register("habitImprovementDetails")}
-              id="habitImprovementDetails"
+              {...register("BadhabitComplication")}
+              id="BadhabitComplication"
               border={"none"}
               variant="filled"
               type="text"
@@ -196,18 +205,27 @@ const habitbuilder = ({ setData, getData }: Props) => {
           </Flex>
         </form>
       </HStack>
-      <Flex h={"204px"} display={display === "none" ? "" : "none"} bg={""}>
+      {/* <Flex h={"380px"} display={display === "none" ? "" : "none"} bg={""}> */}
+      <Flex
+        h={"380px"}
+        pt={2}
+        display={display === "none" ? "" : "none"}
+        bg={""}
+      >
+        <Text m={0} fontSize={22}>
+          Good habits Simplifyed:
+        </Text>
         <TableContainer>
           <Table variant="simple">
             <Tbody>
               {getData.map((habitsElement, index) => (
                 <Tr key={index} fontSize={16}>
-                  <Td ps={0} pb={1.5} pt={1.5} textAlign={"left"}>
+                  <Td ps={0} pb={3.5} pt={3.5} textAlign={"left"}>
                     <Text m={0} w={"50px"}>
-                      {habitsElement.category}
+                      {habitsElement.habits}
                     </Text>
                   </Td>
-                  <Td pb={1.5} pt={1.5} pe={0}>
+                  <Td pb={3.5} pt={3.5} pe={0}>
                     <Text
                       w={"180px"}
                       m={0}
@@ -216,7 +234,39 @@ const habitbuilder = ({ setData, getData }: Props) => {
                       whiteSpace={"nowrap"}
                       overflow={"hidden"}
                     >
-                      {`${habitsElement.habitImprovement}(${habitsElement.habitImprovementDetails})`}
+                      {`${habitsElement.habitSimplification}(${habitsElement.habitTrigger})`}
+                    </Text>
+                  </Td>
+                </Tr>
+              ))}
+            </Tbody>
+          </Table>
+        </TableContainer>
+
+        <Text m={0} fontSize={22}>
+          Bad habits Complicated:
+        </Text>
+        <TableContainer>
+          <Table variant="simple">
+            <Tbody>
+              {getData.map((habitsElement, index) => (
+                <Tr key={index} fontSize={16}>
+                  <Td ps={0} pb={3.5} pt={3.5} textAlign={"left"}>
+                    <Text m={0} w={"80px"}>
+                      {habitsElement.badHabits}
+                    </Text>
+                  </Td>
+                  <Td pb={3.5} pt={3.5} pe={0}>
+                    <Text
+                      w={"120px"}
+                      m={0}
+                      textAlign={"left"}
+                      textOverflow={"ellipsis"}
+                      whiteSpace={"nowrap"}
+                      overflow={"hidden"}
+                    >
+                      {habitsElement.BadhabitComplication}
+                      {/* {`${habitsElement.badHabits}(${habitsElement.BadhabitComplication})`} */}
                     </Text>
                   </Td>
                 </Tr>

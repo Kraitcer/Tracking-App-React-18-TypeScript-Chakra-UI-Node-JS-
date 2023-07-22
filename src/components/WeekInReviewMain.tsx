@@ -131,7 +131,7 @@ const WeekMain = () => {
           <SectionHeader HeadingName={"do more/less"} />
           <DoMoreLessSection
             getData={doMoreLessDataArrey}
-            setData={setDoMoreLessDataArrey}
+            setData={(data) => setDoMoreLessDataArrey(data)}
           />
         </Box>
       </Flex>

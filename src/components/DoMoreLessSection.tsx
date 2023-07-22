@@ -26,14 +26,19 @@ interface Props {
 }
 
 const schema = z.object({
-  gratefulForDoday: z
+  doMore: z
     .string()
     .min(3, {
-      message:
-        "Today's gratefulness is required and must be at least 3 characters",
+      message: "More is required and must be at least 3 characters",
     })
     .max(120),
-  grateCategories: z.enum(grateCategories, {
+  doLess: z
+    .string()
+    .min(3, {
+      message: "Less is required and must be at least 3 characters",
+    })
+    .max(120),
+  action: z.enum(grateCategories, {
     errorMap: () => ({ message: "Type of Gratefulness is required" }),
   }),
 });
@@ -60,7 +65,7 @@ const DoMoreLessSection = ({ getData, setData }: Props) => {
 
   useEffect(() => {
     if (getData.length === 3)
-      localStorage.setItem("gratefulness array", JSON.stringify(getData));
+      localStorage.setItem("Do More/Less array", JSON.stringify(getData));
     JSON.stringify(getData);
     // console.log(getData);
   }, [getData]);
@@ -99,9 +104,9 @@ const DoMoreLessSection = ({ getData, setData }: Props) => {
   ] as const;
   function nexGratefulness() {
     if (count === 2) setDisplay("none");
-    if (errors.gratefulForDoday || errors.grateCategories)
+    if (errors.doMore || errors.action)
       toast({
-        title: `${errors.gratefulForDoday?.message}`,
+        title: `${errors.doMore?.message}`,
         description:
           "be gratefull for your self and choose why. But that why shoold be at least 3 charakters",
         status: "warning",
@@ -122,7 +127,7 @@ const DoMoreLessSection = ({ getData, setData }: Props) => {
           </FormLabel>
           <Textarea
             display={display}
-            {...register("gratefulForDoday", { required: true })}
+            {...register("doMore", { required: true })}
             variant="brandPrimary"
             bg={"blue.100"}
             color={"white"}
@@ -141,7 +146,7 @@ const DoMoreLessSection = ({ getData, setData }: Props) => {
           </FormLabel>
           <Input
             display={display}
-            // {...register("gratefulForDoday", { required: true })}
+            {...register("doLess", { required: true })}
             variant="brandPrimary"
             bg={"blue.100"}
             color={"white"}
@@ -157,7 +162,7 @@ const DoMoreLessSection = ({ getData, setData }: Props) => {
         <FormControl id="grateCategories" display={display}>
           <Flex gap={2} mt={1}>
             <Select
-              {...register("grateCategories")}
+              {...register("action")}
               placeholder="Choose action"
               w={"200%"}
             >
